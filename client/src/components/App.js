@@ -1,11 +1,12 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { Data } from "../utils/Data";
-import PieChart from "../components/test/PieChart"
-import BarChart from './test/BarChart';
-import LineChart from './test/LineChart';
 import '../css/App.css';
+
+const PieChart = lazy(() => import("../components/test/PieChart"));
+const BarChart = lazy(() => import("../components/test/BarChart"));
+const LineChart = lazy(() => import("../components/test/LineChart"));
 
 Chart.register(CategoryScale);
 
@@ -36,18 +37,18 @@ function App() {
     setChartData(newObj)
   }, [])
 
-  console.log(chartData);
-
-  if (Object.keys(chartData).length === 0) {
-    return (<div></div>)
-  }
+  // if (Object.keys(chartData).length === 0) {
+  //   return (<div></div>)
+  // }
 
   return (
     <div className="App">
       <h1>Test</h1>
-      <PieChart chartData={chartData} />
-      <BarChart chartData={chartData} />
-      <LineChart chartData={chartData} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PieChart chartData={chartData} />
+        <BarChart chartData={chartData} />
+        <LineChart chartData={chartData} />
+      </Suspense>
     </div>
   );
 }
