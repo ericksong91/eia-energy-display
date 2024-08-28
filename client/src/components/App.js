@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { Data } from "../utils/Data";
+import { Data, EIAData, responseWarningExample } from "../utils/Data";
 import EIAAPIFetchTest from './test/EIAAPIFetchTest';
 import '../css/App.css';
 
