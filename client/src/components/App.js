@@ -1,7 +1,8 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { Data } from "../utils/Data";
+import { Data } from "../utils/sampleData";
+import EIAAPIFetchTest from './test/EIAAPIFetchTest';
 import '../css/App.css';
 
 const PieChart = lazy(() => import("../components/test/PieChart"));
@@ -45,6 +46,7 @@ function App() {
     <div className="App">
       <h1>Test</h1>
       <Suspense fallback={<div>Loading...</div>}>
+        <EIAAPIFetchTest />
         <PieChart chartData={chartData} />
         <BarChart chartData={chartData} />
         <LineChart chartData={chartData} />
