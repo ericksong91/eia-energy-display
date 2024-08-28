@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { Data, EIAData, responseWarningExample } from "../utils/Data";
+import { Data, EIAData } from "../utils/Data";
 import EIAAPIFetchTest from './test/EIAAPIFetchTest';
 import '../css/App.css';
 
@@ -12,17 +12,19 @@ const LineChart = lazy(() => import("../components/test/LineChart"));
 Chart.register(CategoryScale);
 
 function App() {
+  const testArr = EIAData.map((data) => data.response.data)
   const [chartData, setChartData] = useState({});
+  // const testArr2 = testArr[0].map((d) => d.period)
+
+  // console.log(testArr2)
 
   useEffect(() => {
     const newObj = {
-      labels: Data.map((data) => data.year),
+      labels: testArr[0].map((data) => data.period),
       datasets: [
-        //Inserting an object 
         {
-          label: "Users Gained",
-          data: Data.map((data) => data.userGain),
-          // Background color is an array of values for determining color
+          label: "Emissions in Maryland by All Sectors by Year",
+          data: testArr[0].map((data) => data.value),
           backgroundColor: [
             "rgba(75,192,192,1)",
             "#ecf0f1",
