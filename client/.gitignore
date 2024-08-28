@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # api
-tempkey.txt
+api.key
+notes.txt
