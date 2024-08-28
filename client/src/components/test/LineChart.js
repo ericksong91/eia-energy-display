@@ -7,17 +7,27 @@ function LineChart({ chartData }) {
             <h2 style={{ textAlign: "center" }}>Line Graph</h2>
             <Line
                 data={chartData}
-                options={{
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "Maryland Emissions from 1971 to 2021"
+                options={
+                    {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value, index, ticks){
+                                        return 'MMT' + ' ' + value
+                                    }
+                                }
+                            }
                         },
-                        legend: {
-                            display: true
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Maryland Emissions from 1971 to 2021"
+                            },
+                            legend: {
+                                display: true
+                            }
                         }
-                    }
-                }}
+                    }}
             />
         </div>
     )

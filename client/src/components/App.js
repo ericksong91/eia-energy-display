@@ -20,11 +20,11 @@ function App() {
 
   useEffect(() => {
     const newObj = {
-      labels: testArr[0].map((data) => data.period),
+      labels: testArr[0].map((data) => parseInt(data.period)),
       datasets: [
         {
-          label: "Emissions in Maryland by All Sectors by Year",
-          data: testArr[0].map((data) => data.value),
+          label: "Million Metric Tons",
+          data: testArr[0].map((data) => parseInt(data.value)),
           backgroundColor: [
             "rgba(75,192,192,1)",
             "#ecf0f1",
@@ -49,9 +49,9 @@ function App() {
       <h1>Test</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <EIAAPIFetchTest />
-        <PieChart chartData={chartData} />
         <BarChart chartData={chartData} />
         <LineChart chartData={chartData} />
+        <PieChart chartData={chartData} />
       </Suspense>
     </div>
   );
