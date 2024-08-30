@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
-// import { Data, EIAData } from "../utils/Data";
+import { Data, EIAData } from "../utils/Data";
 import EIAAPIFetchTest from './test/EIAAPIFetchTest';
 import '../css/App.css';
 
@@ -15,40 +15,42 @@ function App() {
   const [chartData, setChartData] = useState({});
   const [errors, setErrors] = useState([]);
 
-  useEffect(() => {
-    fetch('https://api.eia.gov/v2/co2-emissions/co2-emissions-aggregates/data/?frequency=annual&data[0]=value&facets[stateId][]=MD&facets[sectorId][]=TT&facets[fuelId][]=TO&sort[0][column]=period&sort[0][direction]=asc&offset=0&length=5000' + '&api_key=' + process.env.REACT_APP_API_KEY)
-      .then(r => {
-        if (r.ok) {
-          r.json().then((d) => {
-            const data = d.response.data
-            const newObj = {
-              labels: data.map((d) => parseInt(d.period)),
-              datasets: [
-                {
-                  label: "Million Metric Tons",
-                  data: data.map((d) => parseInt(d.value)),
-                  backgroundColor: [
-                    "rgba(75,192,192,1)",
-                    "#ecf0f1",
-                    "#50AF95",
-                    "#f3ba2f",
-                    "#2a71d0"
-                  ],
-                  borderColor: "black",
-                  borderWidth: 2
-                }
-              ]
-            }
-            setChartData(newObj)
-          });
-        } else {
-          r.json().then((e) => setErrors(e))
-        }
-      })
-  }, [])
+  // useEffect(() => {
+  //   fetch('https://api.eia.gov/v2/co2-emissions/co2-emissions-aggregates/data/?frequency=annual&data[0]=value&facets[stateId][]=MD&facets[sectorId][]=TT&facets[fuelId][]=TO&sort[0][column]=period&sort[0][direction]=asc&offset=0&length=5000' + '&api_key=' + process.env.REACT_APP_API_KEY)
+  //     .then(r => {
+  //       if (r.ok) {
+  //         r.json().then((d) => {
+  //           const data = d.response.data
+  //           const newObj = {
+  //             labels: data.map((d) => parseInt(d.period)),
+  //             datasets: [
+  //               {
+  //                 label: "Million Metric Tons",
+  //                 data: data.map((d) => parseInt(d.value)),
+  //                 backgroundColor: [
+  //                   "rgba(75,192,192,1)",
+  //                   "#ecf0f1",
+  //                   "#50AF95",
+  //                   "#f3ba2f",
+  //                   "#2a71d0"
+  //                 ],
+  //                 borderColor: "black",
+  //                 borderWidth: 2
+  //               }
+  //             ]
+  //           }
+  //           setChartData(newObj)
+  //         });
+  //       } else {
+  //         r.json().then((e) => setErrors(e))
+  //       }
+  //     })
+  // }, [])
+
+  useEffect(() => setChartData({}), [])
 
   if (Object.keys(chartData).length === 0) {
-    return(<div>Loading...2</div>)
+    return(<div>asdf...2</div>)
   }
 
   return (

@@ -21,7 +21,7 @@ function LineChart({ chartData }) {
                         plugins: {
                             title: {
                                 display: true,
-                                text: "Maryland Emissions from 1971 to 2021"
+                                text: "Maryland Emissions from 1971 to 2021 in MMT"
                             },
                             legend: {
                                 display: true
