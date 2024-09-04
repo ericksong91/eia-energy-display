@@ -2,7 +2,7 @@ import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
 import { Data, EIAData } from "../utils/Data";
-import EIAAPIFetchTest from './test/EIAAPIFetchTest';
+import Home from './Home';
 import '../css/App.css';
 
 const PieChart = lazy(() => import("../components/test/PieChart"));
@@ -49,18 +49,18 @@ function App() {
 
   useEffect(() => setChartData({}), [])
 
-  if (Object.keys(chartData).length === 0) {
-    return(<div>asdf...2</div>)
-  }
+  // if (Object.keys(chartData).length === 0) {
+  //   return(<div>asdf...2</div>)
+  // }
 
   return (
     <div className="App">
       <h1>Test</h1>
       <Suspense fallback={<div>Loading...</div>}>
-        <EIAAPIFetchTest />
-        <BarChart chartData={chartData} />
+        <Home />
+        {/* <BarChart chartData={chartData} />
         <LineChart chartData={chartData} />
-        <PieChart chartData={chartData} />
+        <PieChart chartData={chartData} /> */}
       </Suspense>
     </div>
   );
