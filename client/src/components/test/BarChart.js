@@ -2,6 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 function BarChart({ chartData }) {
+    console.log(chartData)
     return (
         <div className='chart-container'>
             <h2 style={{ textAlign: "center" }}>Bar Chart</h2>
