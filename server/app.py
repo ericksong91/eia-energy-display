@@ -4,8 +4,7 @@ from flask import Flask, jsonify, make_response
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
-from models import db
-# from models import Bird
+from models import db, State
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
@@ -17,10 +16,10 @@ db.init_app(app)
 
 api = Api(app)
 
-# class Birds(Resource):
+class States(Resource):
 
-#     def get(self):
-#         birds = [bird.to_dict() for bird in Bird.query.all()]
-#         return make_response(jsonify(birds), 200)
+    def get(self):
+        states = [state.to_dict() for state in State.query.all()]
+        return make_response(jsonify(states), 200)
 
-# api.add_resource(Birds, '/birds')
+api.add_resource(State, '/states')
