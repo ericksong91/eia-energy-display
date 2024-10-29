@@ -13,8 +13,8 @@ class BaseTable(db.Model, SerializerMixin):
     __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
 class State(BaseTable):
     __tablename__ = 'states'
@@ -31,8 +31,7 @@ class State(BaseTable):
     fuels = db.relationship('Fuel', backref='state')
 
     def __repr__(self):
-        return f'<State: {self.name}, {self.abbrev}, Total Generated Energy: {self.total_generated}, Total NOx Emissions: {self.total_nox}, 
-            Total SOx Emissions: {self.total_sox}, Total CO2 Emissions: {self.total_co2}>'
+        return f'<State: {self.name}, {self.abbrev}, Total Generated Energy: {self.total_generated}, Total NOx Emissions: {self.total_nox}, Total SOx Emissions: {self.total_sox}, Total CO2 Emissions: {self.total_co2}>'
 
 class Fuel(BaseTable):
     __tablename__ = 'fuels'
@@ -49,5 +48,4 @@ class Fuel(BaseTable):
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
 
     def __repr__(self):
-        return f'<Fuel: {self.name}, Period: {self.period}, Total Consumption: {self.consumption}, Total NOx Emissions: {self.nox}, 
-            Total SOx Emissions: {self.sox}, Total CO2 Emissions: {self.co2}>'
+        return f'<Fuel: {self.name}, Period: {self.period}, Total Consumption: {self.consumption}, Total NOx Emissions: {self.nox}, Total SOx Emissions: {self.sox}, Total CO2 Emissions: {self.co2}>'
