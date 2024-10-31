@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request, render_template
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
@@ -9,13 +9,25 @@ load_dotenv()
 
 from models import db, State, Fuel
 
-app = Flask(__name__)
+# app = Flask(__name__)
+
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder="../client/build",
+    template_folder="../client/build"
+)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
 migrate = Migrate(app, db)
 db.init_app(app)
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 api = Api(app)
 
