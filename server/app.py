@@ -38,7 +38,6 @@ class States(Resource):
     #     return make_response(jsonify(states), 200)
 
     def get(self):
-        states = [state.to_dict() for state in State.query.all()]
-        return make_response(jsonify(states), 200)
+        return "Hello"
 
 api.add_resource(State, '/states')
