@@ -1,13 +1,13 @@
 import os
 
-from flask import Flask, jsonify, make_response, request, render_template
-from flask_migrate import Migrate
-from flask_restful import Api, Resource
-
 from dotenv import load_dotenv
 load_dotenv()
 
-from models import db, State, Fuel
+from flask import Flask, jsonify, make_response, render_template
+from flask_migrate import Migrate
+from flask_restful import Api, Resource
+
+from models import db, State
 
 # app = Flask(__name__)
 
@@ -32,6 +32,10 @@ def not_found(e):
 api = Api(app)
 
 class States(Resource):
+
+    # def get(self):
+    #     states = [state.to_dict() for state in State.query.all()]
+    #     return make_response(jsonify(states), 200)
 
     def get(self):
         states = [state.to_dict() for state in State.query.all()]
