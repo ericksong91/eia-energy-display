@@ -9,8 +9,6 @@ from flask_restful import Api, Resource
 
 from models import db, State
 
-# app = Flask(__name__)
-
 app = Flask(
     __name__,
     static_url_path='',
@@ -31,13 +29,9 @@ def not_found(e):
 
 api = Api(app)
 
-class States(Resource):
-
-    # def get(self):
-    #     states = [state.to_dict() for state in State.query.all()]
-    #     return make_response(jsonify(states), 200)
-
+class ShowStates(Resource):
     def get(self):
-        return "Hello"
-
-api.add_resource(State, '/states')
+        states = [state.to_dict() for state in State.query.all()]
+        return make_response(jsonify(states), 200)
+    
+api.add_resource(ShowStates, '/states')
