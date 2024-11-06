@@ -1,8 +1,8 @@
-"""Create tables, states, fuels, period
+"""initialize tables for State, Fuel, Period
 
-Revision ID: 1fe4076e9b94
+Revision ID: 352fa8c01e54
 Revises: 
-Create Date: 2024-11-06 14:54:52.478149
+Create Date: 2024-11-06 16:50:34.411178
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1fe4076e9b94'
+revision = '352fa8c01e54'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,7 +34,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('periods',
-    sa.Column('year', sa.String(), nullable=True),
+    sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('state_id', sa.Integer(), nullable=True),
     sa.Column('fuel_id', sa.Integer(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),

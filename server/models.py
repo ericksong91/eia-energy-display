@@ -19,7 +19,7 @@ class BaseTable(db.Model, SerializerMixin):
 class State(BaseTable):
     __tablename__ = 'states'
 
-    # serialize_rules = ('-fuels.state_id',)
+    serialize_rules = ('-fuels.states',)
 
     name = db.Column(db.String)
     abbrev = db.Column(db.String)
@@ -29,12 +29,15 @@ class State(BaseTable):
 
     def __repr__(self):
         # return f'<State: {self.name}, {self.abbrev}, Total Generated Energy: {self.total_generated}, Total NOx Emissions: {self.total_nox}, Total SOx Emissions: {self.total_sox}, Total CO2 Emissions: {self.total_co2}>'
-        return f'ID: <{self.id}>, State: <{self.name}>' 
+        # return f'ID: <{self.id}>, State: <{self.name}>, Periods: <{self.periods}, Fuels: <{self.fuels}>'
+        return f'ID: <{self.id}>, State: <{self.name}>'
 
 class Period(BaseTable):
     __tablename__="periods"
 
-    year = db.Column(db.String)
+    serialize_rules = ('-fuel.periods', '-state.periods')
+
+    year = db.Column(db.Integer)
 
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
     fuel_id = db.Column(db.Integer, db.ForeignKey('fuels.id'))
@@ -44,7 +47,7 @@ class Period(BaseTable):
 
     def __repr__(self):
         # return f'<Fuel: {self.name}, Period: {self.period}, Total Consumption: {self.consumption}, Total NOx Emissions: {self.nox}, Total SOx Emissions: {self.sox}, Total CO2 Emissions: {self.co2}>'
-        return f'Join Table Period: <{self.name}>' + f'<State ID: {self.state_id}>' + f'<Fuel ID: {self.fuel_id}>'
+        return f'Period: <{self.year}>' + f' <State ID: {self.state_id}>' + f' <Fuel ID: {self.fuel_id}>'
 
     # total_generated = db.Column(db.Integer)
     # total_nox = db.Column(db.Integer)
@@ -54,7 +57,7 @@ class Period(BaseTable):
 class Fuel(BaseTable):
     __tablename__ = 'fuels'
 
-    # serialize_rules = ('-state.fuels',)
+    serialize_rules = ('-states.fuels',)
 
     name = db.Column(db.String)
     # consumption = db.Column(db.Integer)
@@ -68,6 +71,7 @@ class Fuel(BaseTable):
 
     def __repr__(self):
         # return f'<Fuel: {self.name}, Period: {self.period}, Total Consumption: {self.consumption}, Total NOx Emissions: {self.nox}, Total SOx Emissions: {self.sox}, Total CO2 Emissions: {self.co2}>'
+        # return f'ID: <{self.id}>, Fuel: <{self.name}>, Periods: <{self.periods}, States: <{self.states}>'
         return f'ID: <{self.id}>, Fuel: <{self.name}>'
 
 # ### Testing 
