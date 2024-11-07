@@ -240,9 +240,30 @@ states = [
     }
 ]
 
-fuels = ["Coal", "Natural Gas", "Nuclear", "Coal"]
+fuels = ["Coal", "Natural Gas", "Petroleum"]
 
-# periods = [1999, 2000, 2001]
+period = [x for x in range(1999, 2023)]
+
+nebraska_emissions_2023 = [
+    {
+        "name": "coal",
+        "co2": 18854,
+        "nox": 18126,
+        "sox": 42097
+    },
+    {
+        "name": "petroleum",
+        "co2": 41,
+        "nox": 229,
+        "sox": 39
+    },
+    {
+        "name": "natural gas",
+        "co2": 875,
+        "nox": 821,
+        "sox": 4
+    }
+]
 
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
@@ -254,18 +275,22 @@ with app.app_context():
     for st in states:
         state = State(name=st['name'], abbrev=st['abbreviation'])
         db.session.add(state)
-        db.session.commit()
 
     print('Creating Fuel objects...')
     for fu in fuels:
         fuel = Fuel(name=fu)
         db.session.add(fuel)
-        db.session.commit()
-
-# Use .append
 
     # print('Adding state objects to transaction...')
     # db.session.add_all([maryland, delaware, virginia])
-    # print('Committing transaction...')
-    # db.session.commit()
+    print('Committing transaction...')
+    db.session.commit()
     print('Complete.')
+
+
+# states = [ 
+#     {
+#         "name": "Nebraska",
+#         "abbreviation": "NE"
+#     }
+# ]
