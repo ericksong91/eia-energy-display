@@ -5,9 +5,9 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-}) # investigate this later
+})
 
-db = SQLAlchemy(metadata=metadata) # investigate this later
+db = SQLAlchemy(metadata=metadata)
 
 class BaseTable(db.Model, SerializerMixin):
     __abstract__ = True
@@ -29,7 +29,6 @@ class State(BaseTable):
 
     def __repr__(self):
         # return f'<State: {self.name}, {self.abbrev}, Total Generated Energy: {self.total_generated}, Total NOx Emissions: {self.total_nox}, Total SOx Emissions: {self.total_sox}, Total CO2 Emissions: {self.total_co2}>'
-        # return f'ID: <{self.id}>, State: <{self.name}>, Periods: <{self.periods}, Fuels: <{self.fuels}>'
         return f'ID: <{self.id}>, State: <{self.name}>'
 
 class Period(BaseTable):
