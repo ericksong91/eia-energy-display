@@ -36,3 +36,34 @@ class ShowStates(Resource):
         return make_response(jsonify(states), 200)
     
 api.add_resource(ShowStates, '/states')
+
+# Example
+# class BirdByID(Resource):
+    
+#     def get(self, id):
+#         bird = Bird.query.filter_by(id=id).first().to_dict()
+#         return make_response(jsonify(bird), 200)
+
+#     def patch(self, id):
+
+#         data = request.get_json()
+
+#         bird = Bird.query.filter_by(id=id).first()
+
+#         for attr in data:
+#             setattr(bird, attr, data[attr])
+
+#         db.session.add(bird)
+#         db.session.commit()
+
+#         return make_response(bird.to_dict(), 200)
+
+#     def delete(self, id):
+
+#         bird = Bird.query.filter_by(id=id).first()
+#         db.session.delete(bird)
+#         db.session.commit()
+
+#         return make_response('', 204)
+
+# api.add_resource(BirdByID, '/birds/<int:id>')
