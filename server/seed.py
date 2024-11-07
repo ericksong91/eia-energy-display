@@ -250,12 +250,6 @@ with app.app_context():
     Fuel.query.delete()
     Period.query.delete()
 
-    # print('Creating Period (years) objects...')
-    # for p in periods:
-    #     period = Period(year=p)
-    #     db.session.add(period)
-    #     db.session.commit()
-
     print('Creating State objects...')
     for st in states:
         state = State(name=st['name'], abbrev=st['abbreviation'])
