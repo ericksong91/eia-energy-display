@@ -29,7 +29,7 @@ class State(BaseTable):
     fuels = association_proxy('periods', 'fuel', creator=lambda fu: Period(fuel=fu))
 
     def __repr__(self):
-        return f'<ID: {self.id}, Name: {self.name}>'
+        return f'<ID: {self.id} | Name: {self.name}>'
 
 class Period(BaseTable):
     __tablename__="periods"
@@ -51,7 +51,7 @@ class Period(BaseTable):
     fuel = db.relationship('Fuel', back_populates="periods")
 
     def __repr__(self):
-        return f'<Period: {self.year}' + f' <State ID: {self.state_id}' + f' Fuel ID: {self.fuel_id}>'
+        return f'<ID: {self.id} | State: {self.state_id} | Fuel ID: {self.fuel_id}> | Period: {self.year} | State: '
 
 class Fuel(BaseTable):
     __tablename__ = 'fuels'
@@ -65,4 +65,4 @@ class Fuel(BaseTable):
     states = association_proxy('periods', 'state', creator=lambda st: Period(state=st))
 
     def __repr__(self):
-        return f'<ID: <{self.id}, Fuel Name: {self.name}?'
+        return f'<ID: {self.id} | Fuel Name: {self.name}>'

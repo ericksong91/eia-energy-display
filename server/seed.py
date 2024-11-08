@@ -1,5 +1,6 @@
 from app import app
 from models import db, State, Fuel, Period
+import random
 
 states = [
     {
@@ -9,10 +10,6 @@ states = [
     {
         "name": "Alaska",
         "abbreviation": "AK"
-    },
-    {
-        "name": "American Samoa",
-        "abbreviation": "AS"
     },
     {
         "name": "Arizona",
@@ -43,20 +40,12 @@ states = [
         "abbreviation": "DC"
     },
     {
-        "name": "Federated States Of Micronesia",
-        "abbreviation": "FM"
-    },
-    {
         "name": "Florida",
         "abbreviation": "FL"
     },
     {
         "name": "Georgia",
         "abbreviation": "GA"
-    },
-    {
-        "name": "Guam",
-        "abbreviation": "GU"
     },
     {
         "name": "Hawaii",
@@ -93,10 +82,6 @@ states = [
     {
         "name": "Maine",
         "abbreviation": "ME"
-    },
-    {
-        "name": "Marshall Islands",
-        "abbreviation": "MH"
     },
     {
         "name": "Maryland",
@@ -159,10 +144,6 @@ states = [
         "abbreviation": "ND"
     },
     {
-        "name": "Northern Mariana Islands",
-        "abbreviation": "MP"
-    },
-    {
         "name": "Ohio",
         "abbreviation": "OH"
     },
@@ -175,16 +156,8 @@ states = [
         "abbreviation": "OR"
     },
     {
-        "name": "Palau",
-        "abbreviation": "PW"
-    },
-    {
         "name": "Pennsylvania",
         "abbreviation": "PA"
-    },
-    {
-        "name": "Puerto Rico",
-        "abbreviation": "PR"
     },
     {
         "name": "Rhode Island",
@@ -215,10 +188,6 @@ states = [
         "abbreviation": "VT"
     },
     {
-        "name": "Virgin Islands",
-        "abbreviation": "VI"
-    },
-    {
         "name": "Virginia",
         "abbreviation": "VA"
     },
@@ -244,27 +213,6 @@ fuels = ["Coal", "Natural Gas", "Petroleum"]
 
 period = [x for x in range(1999, 2023)]
 
-nebraska_emissions_2023 = [
-    {
-        "name": "coal",
-        "co2": 18854,
-        "nox": 18126,
-        "sox": 42097
-    },
-    {
-        "name": "petroleum",
-        "co2": 41,
-        "nox": 229,
-        "sox": 39
-    },
-    {
-        "name": "natural gas",
-        "co2": 875,
-        "nox": 821,
-        "sox": 4
-    }
-]
-
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
     State.query.delete()
@@ -281,16 +229,18 @@ with app.app_context():
         fuel = Fuel(name=fu)
         db.session.add(fuel)
 
-    # print('Adding state objects to transaction...')
-    # db.session.add_all([maryland, delaware, virginia])
+    print('Creating Period objects....')
+    for p in period:
+        first_state_id = State.query.first().id
+        last_state_id = State.query.order_by(State.id.desc()).first().id
+
+        current_state = random.randint(first_state_id, last_state_id) # each period gives a random state
+
+        for f in range(3):
+            # each period with the set State gets Coal, Petroleum and Natural Gas
+            period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), sox=random.randint(0, 50000), co2=random.randint(0, 50000))
+            db.session.add(period)
+
     print('Committing transaction...')
     db.session.commit()
     print('Complete.')
-
-
-# states = [ 
-#     {
-#         "name": "Nebraska",
-#         "abbreviation": "NE"
-#     }
-# ]
