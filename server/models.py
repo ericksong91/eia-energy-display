@@ -19,7 +19,7 @@ class BaseTable(db.Model, SerializerMixin):
 class State(BaseTable):
     __tablename__ = 'states'
 
-    serialize_rules = ('-fuels.states',)
+    # serialize_rules = ('-fuels.states')
 
     name = db.Column(db.String)
     abbrev = db.Column(db.String)
@@ -34,7 +34,7 @@ class State(BaseTable):
 class Period(BaseTable):
     __tablename__="periods"
 
-    serialize_rules = ('-fuel.periods', '-state.periods')
+    # serialize_rules = ('-fuel.periods', '-state.periods')
 
     year = db.Column(db.Integer)
     # consumption = db.Column(db.Integer)
@@ -51,12 +51,12 @@ class Period(BaseTable):
     fuel = db.relationship('Fuel', back_populates="periods")
 
     def __repr__(self):
-        return f'<ID: {self.id} | Period: {self.year} | State: {self.state} | Fuel: {self.fuel}>'
+        return f'<ID: {self.id} | Period: {self.year} || State: {self.state} || Fuel: {self.fuel}>'
 
 class Fuel(BaseTable):
     __tablename__ = 'fuels'
 
-    serialize_rules = ('-states.fuels',)
+    # serialize_rules = ('-states.fuels', '-states.periods')
 
     name = db.Column(db.String)
 
