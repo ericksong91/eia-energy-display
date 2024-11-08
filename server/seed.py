@@ -6,6 +6,10 @@ from models import db, State, Fuel, Period
 
 states = [
     {
+        "name": "United States",
+        "abbreviation": "USA"
+    },
+    {
         "name": "Alabama",
         "abbreviation": "AL"
     },
@@ -38,7 +42,7 @@ states = [
         "abbreviation": "DE"
     },
     {
-        "name": "District Of Columbia",
+        "name": "District of Columbia",
         "abbreviation": "DC"
     },
     {
@@ -211,7 +215,7 @@ states = [
     }
 ]
 
-fuels = ["Coal", "Natural Gas", "Petroleum"]
+fuels = ["Coal", "Natural Gas", "Petroleum", "Other"]
 
 period = [x for x in range(1999, 2024)]
 
@@ -232,7 +236,7 @@ with app.app_context():
         db.session.add(fuel)
 
     print('Creating Period objects....')
-    ## RANDOM DATA ##
+    # RANDOM DATA ##
     # for p in period:
     #     first_state_id = State.query.first().id
     #     last_state_id = State.query.order_by(State.id.desc()).first().id
@@ -249,7 +253,7 @@ with app.app_context():
 
     for i in data['response']['data']:
         period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
-                        nox=i['nox-short-tons'], so2=i['so2-short-tons'], co2=i['co2-thousand-metric-tons'])
+                        nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
         db.session.add(period)
 
     print('Committing transaction...')
