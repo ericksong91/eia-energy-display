@@ -10,6 +10,8 @@ client/coverage
 
 # production
 client/build
+server/instance/
+server/testdata.json
 
 # misc
 .DS_Store
