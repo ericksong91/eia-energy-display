@@ -1,6 +1,8 @@
+import random
+import json
+
 from app import app
 from models import db, State, Fuel, Period
-import random
 
 states = [
     {
@@ -230,16 +232,25 @@ with app.app_context():
         db.session.add(fuel)
 
     print('Creating Period objects....')
-    for p in period:
-        first_state_id = State.query.first().id
-        last_state_id = State.query.order_by(State.id.desc()).first().id
+    ## RANDOM DATA ##
+    # for p in period:
+    #     first_state_id = State.query.first().id
+    #     last_state_id = State.query.order_by(State.id.desc()).first().id
 
-        current_state = random.randint(first_state_id, last_state_id) # each period gives a random state
+    #     current_state = random.randint(first_state_id, last_state_id) # each period gives a random state
 
-        for f in range(1, 4):
-            # each period with the set State gets Coal, Petroleum and Natural Gas
-            period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), sox=random.randint(0, 50000), co2=random.randint(0, 50000))
-            db.session.add(period)
+    #     for f in range(1, 4):
+    #         # each period with the set State gets Coal, Petroleum and Natural Gas
+    #         period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), so2=random.randint(0, 50000), co2=random.randint(0, 50000))
+    #         db.session.add(period)
+
+    f = open('testdata.json')
+    data = json.load(f)
+
+    for i in data['response']['data']:
+        period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
+                        nox=i['nox-short-tons'], so2=i['so2-short-tons'], co2=i['co2-thousand-metric-tons'])
+        db.session.add(period)
 
     print('Committing transaction...')
     db.session.commit()

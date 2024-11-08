@@ -40,7 +40,7 @@ class Period(BaseTable):
     # consumption = db.Column(db.Integer)
     # price = db.Column(db.Integer)
     nox = db.Column(db.Integer) # short-tons
-    sox = db.Column(db.Integer) # short-tons
+    so2 = db.Column(db.Integer) # short-tons
     co2 = db.Column(db.Integer) # co2-thousand-metric-tons
 
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
