@@ -14,12 +14,12 @@ class BaseTable(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, server_default=func.now())
-    updated_at = db.Column(db.DateTime, onupdate=func.now())
+    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
 
 class State(BaseTable):
     __tablename__ = 'states'
 
-    # serialize_rules = ('-fuels.states')
+    serialize_rules = ('-periods.state', '-periods.fuel', '-periods.state_id')
 
     name = db.Column(db.String)
     abbrev = db.Column(db.String)
@@ -32,9 +32,9 @@ class State(BaseTable):
         return f'<ID: {self.id} | Name: {self.name}>'
 
 class Period(BaseTable):
-    __tablename__="periods"
+    __tablename__= 'periods'
 
-    # serialize_rules = ('-fuel.periods', '-state.periods')
+    serialize_rules = ('-state.periods', '-fuel.periods')
 
     year = db.Column(db.Integer)
     # consumption = db.Column(db.Integer)
@@ -56,7 +56,7 @@ class Period(BaseTable):
 class Fuel(BaseTable):
     __tablename__ = 'fuels'
 
-    # serialize_rules = ('-states.fuels', '-states.periods')
+    serialize_rules = ('-periods.fuel', '-periods.state', '-periods.fuel_id')
 
     name = db.Column(db.String)
 

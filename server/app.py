@@ -30,12 +30,50 @@ def not_found(e):
 
 api = Api(app)
 
+### STATES ###
 class ShowStates(Resource):
     def get(self):
         states = [state.to_dict() for state in State.query.all()]
         return make_response(jsonify(states), 200)
     
 api.add_resource(ShowStates, '/states')
+
+class StateByID(Resource):
+    def get(self, id):
+        state = State.query.filter_by(id=id).first().to_dict()
+        return make_response(jsonify(state), 200)
+
+api.add_resource(StateByID, '/states/<int:id>')
+
+# ### FUELS ###
+class ShowFuels(Resource):
+    def get(self):
+        fuels = [fuel.to_dict() for fuel in Fuel.query.all()]
+        return make_response(jsonify(fuels), 200)
+    
+api.add_resource(ShowFuels, '/fuels')
+
+class FuelByID(Resource):
+    def get(self, id):
+        fuel = Fuel.query.filter_by(id=id).first().to_dict()
+        return make_response(jsonify(fuel), 200)
+
+api.add_resource(FuelByID, '/fuels/<int:id>')
+
+# ### PERIODS ###
+class ShowPeriods(Resource):
+    def get(self):
+        periods = [period.to_dict() for period in Period.query.all()]
+        return make_response(jsonify(periods), 200)
+    
+api.add_resource(ShowPeriods, '/periods')
+
+class PeriodByID(Resource):
+    def get(self, id):
+        period = Period.query.filter_by(id=id).first().to_dict()
+        return make_response(jsonify(period), 200)
+
+api.add_resource(PeriodByID, '/periods/<int:id>')
 
 # Example
 # class BirdByID(Resource):
