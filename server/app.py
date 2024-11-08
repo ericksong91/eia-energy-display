@@ -7,7 +7,7 @@ from flask import Flask, jsonify, make_response, render_template
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
-from models import db, State
+from models import db, State, Fuel, Period
 
 app = Flask(
     __name__,

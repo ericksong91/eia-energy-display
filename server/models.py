@@ -51,7 +51,7 @@ class Period(BaseTable):
     fuel = db.relationship('Fuel', back_populates="periods")
 
     def __repr__(self):
-        return f'<ID: {self.id} | State: {self.state_id} | Fuel ID: {self.fuel_id}> | Period: {self.year} | State: '
+        return f'<ID: {self.id} | Period: {self.year} | State: {self.state} | Fuel: {self.fuel}>'
 
 class Fuel(BaseTable):
     __tablename__ = 'fuels'

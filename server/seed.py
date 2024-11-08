@@ -211,7 +211,7 @@ states = [
 
 fuels = ["Coal", "Natural Gas", "Petroleum"]
 
-period = [x for x in range(1999, 2023)]
+period = [x for x in range(1999, 2024)]
 
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
@@ -236,7 +236,7 @@ with app.app_context():
 
         current_state = random.randint(first_state_id, last_state_id) # each period gives a random state
 
-        for f in range(3):
+        for f in range(1, 4):
             # each period with the set State gets Coal, Petroleum and Natural Gas
             period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), sox=random.randint(0, 50000), co2=random.randint(0, 50000))
             db.session.add(period)
