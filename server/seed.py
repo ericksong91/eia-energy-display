@@ -1,6 +1,7 @@
-import random
-import json
+# import random
+# import json
 import requests
+import os
 
 from app import app
 from models import db, State, Fuel, Period
@@ -221,16 +222,16 @@ fuels = ["Coal", "Natural Gas", "Petroleum", "Other"]
 period = [x for x in range(1999, 2024)]
 
 ## API Helper Method ##
+sample_url = 'https://api.eia.gov/v2/electricity/state-electricity-profiles/emissions-by-state-by-fuel/data/?frequency=annual&data[0]=co2-thousand-metric-tons&data[1]=nox-short-tons&data[2]=so2-short-tons&facets[fuelid][]=COL&facets[fuelid][]=NG&facets[fuelid][]=OTH&facets[fuelid][]=PET&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000' + '&api_key=' + os.environ.get('EIA_API_KEY')
 
 def api_request(url):
-    r = requests.get('url')
+    r = requests.get(url)
 
     if r.status_code == requests.codes.ok:
         return r.json()
     else:
         r.raise_for_status()
         return {}
-
 
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
@@ -265,12 +266,12 @@ with app.app_context():
     # f = open('testdata.json')
     # data = json.load(f)
 
-    # for i in data['response']['data']:
-    #     period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
-    #                     nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
-    #     db.session.add(period)
+    data = api_request(sample_url)
 
-    ## API Call ##
+    for i in data['response']['data']:
+        period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
+                        nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
+        db.session.add(period)
 
     print('Committing transaction...')
     db.session.commit()
