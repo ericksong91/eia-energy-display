@@ -1,3 +1,9 @@
-// When app first starts, it should pull from the Python backend, Flask, to update the local data.
+import { useEffect, useState } from 'react'
 
-// When app first runs, maybe it can tell Python to update data with new data
+const EmissionsDataContext = React.createContext();
+
+function EmissionsDataProvider({ children }) {
+
+};
+
+export { EmissionsDataContext, EmissionsDataProvider};
