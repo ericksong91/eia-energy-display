@@ -1,5 +1,5 @@
 import Chart from 'chart.js/auto'
-import { Data } from '../sample_data/testdata'
+// import { Data } from '../sample_data/testdata'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
 import Home from './Home';
@@ -27,7 +27,7 @@ const styles = [
 
 function App() {
   const [emissions, setEmissions] = useState([]);
-  const [chartData, setChartData] = useState([{}]);
+  const [chartData, setChartData] = useState({});
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -41,15 +41,43 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    // Maryland data
+    if (emissions.length === 0) {
+      setChartData({});
+    } else {
+      const stateData = emissions.filter((data) => { if (data.abbrev === "MD") return data }).map((d) => d.periods)[0]
+      const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
+      const newDataSets = [
+        {
+          label: "Maryland Fuel",
+          data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+        }
+      ];
+      const dataObj = {
+        labels: dataLabel,
+        datasets: newDataSets
+      };
+
+      setChartData(dataObj);
+    };
+  }, [emissions]);
+
+  const emissionsData = emissions.map((d, i) => <li key={i}>{d.name}</li>)
+
   if (Object.keys(chartData).length === 0) {
-    return (<div>LOADING...</div>)
+    return (<div>Loading...</div>)
   }
 
   return (
     <div className="App">
-      <h1>Test</h1>
+      <h1>App Header</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <Home />
+        <ul>
+          States:
+          {emissionsData}
+        </ul>
         <BarChart chartData={chartData} />
         <LineChart chartData={chartData} />
         <PieChart chartData={chartData} />
