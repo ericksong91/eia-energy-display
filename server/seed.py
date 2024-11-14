@@ -1,5 +1,6 @@
 import random
 import json
+import requests
 
 from app import app
 from models import db, State, Fuel, Period
@@ -219,6 +220,18 @@ fuels = ["Coal", "Natural Gas", "Petroleum", "Other"]
 
 period = [x for x in range(1999, 2024)]
 
+## API Helper Method ##
+
+def api_request(url):
+    r = requests.get('url')
+
+    if r.status_code == requests.codes.ok:
+        return r.json()
+    else:
+        r.raise_for_status()
+        return {}
+
+
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
     State.query.delete()
@@ -248,13 +261,16 @@ with app.app_context():
     #         period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), so2=random.randint(0, 50000), co2=random.randint(0, 50000))
     #         db.session.add(period)
 
-    f = open('testdata.json')
-    data = json.load(f)
+    ## Pulling test data from testdata.json in client folder ##
+    # f = open('testdata.json')
+    # data = json.load(f)
 
-    for i in data['response']['data']:
-        period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
-                        nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
-        db.session.add(period)
+    # for i in data['response']['data']:
+    #     period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
+    #                     nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
+    #     db.session.add(period)
+
+    ## API Call ##
 
     print('Committing transaction...')
     db.session.commit()

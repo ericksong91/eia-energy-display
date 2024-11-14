@@ -33,6 +33,10 @@ api = Api(app)
 ### STATES ###
 class ShowStates(Resource):
     def get(self):
+        # When request is made to the resource, it should start pulling data but asnychronously
+        # Deliver old data to the user
+        # Is there any way to run a job async ONLY if the date on the last updated is different?
+
         states = [state.to_dict() for state in State.query.all()]
         return make_response(jsonify(states), 200)
     
@@ -74,34 +78,3 @@ class PeriodByID(Resource):
         return make_response(jsonify(period), 200)
 
 api.add_resource(PeriodByID, '/periods/<int:id>')
-
-# Example
-# class BirdByID(Resource):
-    
-#     def get(self, id):
-#         bird = Bird.query.filter_by(id=id).first().to_dict()
-#         return make_response(jsonify(bird), 200)
-
-#     def patch(self, id):
-
-#         data = request.get_json()
-
-#         bird = Bird.query.filter_by(id=id).first()
-
-#         for attr in data:
-#             setattr(bird, attr, data[attr])
-
-#         db.session.add(bird)
-#         db.session.commit()
-
-#         return make_response(bird.to_dict(), 200)
-
-#     def delete(self, id):
-
-#         bird = Bird.query.filter_by(id=id).first()
-#         db.session.delete(bird)
-#         db.session.commit()
-
-#         return make_response('', 204)
-
-# api.add_resource(BirdByID, '/birds/<int:id>')

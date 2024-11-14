@@ -11,7 +11,7 @@ client/coverage
 # production
 client/build
 server/instance/
-server/testdata.json
+client/src/data/testdata.json
 
 # misc
 .DS_Store
@@ -26,5 +26,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # api
+.env
 .env.local
 notes.txt

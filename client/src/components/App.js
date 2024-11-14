@@ -15,7 +15,7 @@ function App() {
   const [errors, setErrors] = useState([]);
 
   // useEffect(() => {
-  //   fetch('https://api.eia.gov/v2/co2-emissions/co2-emissions-aggregates/data/?frequency=annual&data[0]=value&facets[stateId][]=MD&facets[sectorId][]=TT&facets[fuelId][]=TO&sort[0][column]=period&sort[0][direction]=asc&offset=0&length=5000' + '&api_key=' + process.env.REACT_APP_API_KEY)
+  //   fetch('')
   //     .then(r => {
   //       if (r.ok) {
   //         r.json().then((d) => {
