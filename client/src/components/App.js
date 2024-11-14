@@ -26,25 +26,49 @@ const styles = [
 ]
 
 function App() {
-  const [chartData, setChartData] = useState({
-    labels: Data.filter((data) => {
-      if(data["fuelid"] === "OTH"){
-        return data
-      }
-    }).map((data) => data.period),
-    datasets: [
-      {
-        label: "Other Fuel Source CO2 Emissions",
-        data: Data.filter((data) => {
-          if (data["fuelid"] === "OTH") {
-            return data
-          }
-        }).map((d) => d['co2-thousand-metric-tons'])
-      }
-    ]
-  });
+  const [chartData, setChartData] = useState([{}]);
   const [errors, setErrors] = useState([]);
-  
+
+  if (Object.keys(chartData).length === 0) {
+    return (<div>LOADING...</div>)
+  }
+
+  return (
+    <div className="App">
+      <h1>Test</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Home />
+        <BarChart chartData={chartData} />
+        <LineChart chartData={chartData} />
+        <PieChart chartData={chartData} />
+      </Suspense>
+    </div>
+  );
+}
+
+export default App;
+
+  /* EXAMPLE FOR LOADING CHART DATA */
+
+  // const [chartData, setChartData] = useState({
+  //   labels: Data.filter((data) => {
+  //     if(data["fuelid"] === "OTH"){
+  //       return data
+  //     }
+  //   }).map((data) => parseInt(data.period)),
+  //   datasets: [
+  //     {
+  //       label: "Other Fuel Source CO2 Emissions",
+  //       data: Data.filter((data) => {
+  //         if (data["fuelid"] === "OTH") {
+  //           return data
+  //         }
+  //       }).map((d) => d['co2-thousand-metric-tons'])
+  //     }
+  //   ]
+  // });
+  // const [errors, setErrors] = useState([]);
+
   // useEffect(() => {
   //   fetch('')
   //     .then(r => {
@@ -78,22 +102,3 @@ function App() {
   // }, [])
 
   // useEffect(() => setChartData({}), [])
-
-  if (Object.keys(chartData).length === 0) {
-    return (<div>WE ARE LOADING</div>)
-  }
-
-  return (
-    <div className="App">
-      <h1>Test</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Home />
-        <BarChart chartData={chartData} />
-        <LineChart chartData={chartData} />
-        <PieChart chartData={chartData} />
-      </Suspense>
-    </div>
-  );
-}
-
-export default App;
