@@ -11,7 +11,7 @@ client/coverage
 # production
 client/build
 server/instance/
-client/src/data/testdata.json
+client/src/data/completeStateEmissions.js
 
 # misc
 .DS_Store

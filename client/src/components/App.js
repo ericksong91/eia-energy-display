@@ -1,4 +1,5 @@
 import Chart from 'chart.js/auto'
+import { Data } from '../data/testdata'
 import { CategoryScale } from 'chart.js/auto';
 import { useState, useEffect, Suspense, lazy } from 'react';
 import Home from './Home';
@@ -10,10 +11,40 @@ const LineChart = lazy(() => import("../components/graphs/LineChart"));
 
 Chart.register(CategoryScale);
 
-function App() {
-  const [chartData, setChartData] = useState({});
-  const [errors, setErrors] = useState([]);
+const styles = [
+  {
+    backgroundColor: [
+      "rgba(75,192,192,1)",
+      "#ecf0f1",
+      "#50AF95",
+      "#f3ba2f",
+      "#2a71d0"
+    ],
+    borderColor: "black",
+    borderWidth: 2
+  }
+]
 
+function App() {
+  const [chartData, setChartData] = useState({
+    labels: Data.filter((data) => {
+      if(data["fuelid"] === "OTH"){
+        return data
+      }
+    }).map((data) => data.period),
+    datasets: [
+      {
+        label: "Other Fuel Source CO2 Emissions",
+        data: Data.filter((data) => {
+          if (data["fuelid"] === "OTH") {
+            return data
+          }
+        }).map((d) => d['co2-thousand-metric-tons'])
+      }
+    ]
+  });
+  const [errors, setErrors] = useState([]);
+  
   // useEffect(() => {
   //   fetch('')
   //     .then(r => {
@@ -46,10 +77,10 @@ function App() {
   //     })
   // }, [])
 
-  useEffect(() => setChartData({}), [])
+  // useEffect(() => setChartData({}), [])
 
   if (Object.keys(chartData).length === 0) {
-    return(<div>WE ARE LOADING</div>)
+    return (<div>WE ARE LOADING</div>)
   }
 
   return (
