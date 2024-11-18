@@ -13,7 +13,7 @@ function LineChart({ chartData }) {
                             y: {
                                 ticks: {
                                     callback: function(value, index, ticks){
-                                        return 'MMT' + ' ' + value
+                                        return 'MMT' + value
                                     }
                                 }
                             }

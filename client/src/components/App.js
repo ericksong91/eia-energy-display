@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense } from 'react';
-import MainContainer from './MainContainer';
-import Header from '../header/Header';
-import Footer from '../footer/Footer';
+import MainContainer from './pages/MainContainer';
+import Header from './header/Header';
+import Footer from './footer/Footer';
 import '../css/App.css';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
     if (emissions.length === 0) {
       setChartData({});
     } else {
-      const stateData = emissions.filter((data) => { if (data.abbrev === "MD") return data }).map((d) => d.periods)[0]
+      const stateData = emissions.filter((data) => data.abbrev === "MD").map((d) => d.periods)[0]
       const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
       const newDataSets = [
         {

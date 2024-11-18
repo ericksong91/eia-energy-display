@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 
-const LineChart = lazy(() => import("./graphs/LineChart"));
+const LineChart = lazy(() => import("../graphs/LineChart"));
 
 Chart.register(CategoryScale);
 

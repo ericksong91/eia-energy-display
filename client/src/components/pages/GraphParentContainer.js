@@ -1,5 +1,5 @@
-import React, { lazy } from 'react'
-import GraphCard from './cards/GraphCard';
+import React from 'react'
+import GraphCard from './child/GraphCard';
 // import Chart from 'chart.js/auto'
 // import { CategoryScale } from 'chart.js/auto';
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import SearchBar from './SearchBar';
+import FilterAccordion from './child/FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
 
 function MainContainer({ chartData }) {
@@ -10,6 +11,7 @@ function MainContainer({ chartData }) {
   return (
     <main className="main">
       <SearchBar />
+      <FilterAccordion />
       <GraphParentContainer chartData={chartData} />
     </main>
   )
