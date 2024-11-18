@@ -1,25 +1,13 @@
 import { useState, useEffect, Suspense } from 'react';
 import MainContainer from './MainContainer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import '../css/App.css';
-
-const styles = [
-  {
-    backgroundColor: [
-      "rgba(75,192,192,1)",
-      "#ecf0f1",
-      "#50AF95",
-      "#f3ba2f",
-      "#2a71d0"
-    ],
-    borderColor: "black",
-    borderWidth: 2
-  }
-]
 
 function App() {
   const [emissions, setEmissions] = useState([]);
   const [chartData, setChartData] = useState({});
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     fetch('/states')
@@ -30,7 +18,7 @@ function App() {
           r.json().then(error => alert(error.errors))
         }
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     // Maryland data
@@ -56,35 +44,16 @@ function App() {
 
   if (Object.keys(chartData).length === 0) {
     return (<div>Loading...</div>)
-  }
-
-  /* 
-  
-  THINK ABOUT STRUCTURE REORGNIZATION ON THE THREE SECTIONS
-  MAKE SEARCH BAR
-  MAKE ACCORDION FILTER
-  STYLIZE THE PAGE
-  
-  */
+  };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className='app'>
-        <header className='header' >
-          <section className='hero'>
-            <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
-          </section>
-        </header>
-
+    <div className='app'>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
         <MainContainer chartData={chartData} />
-        
-        <footer className='footer'>
-          <section className='hero'>
-            <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
-          </section>
-        </footer>
-      </div>
-    </Suspense>
+        <Footer />
+      </Suspense>
+    </div >
   );
 }
 
