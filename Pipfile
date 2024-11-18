@@ -13,6 +13,7 @@ sqlalchemy-serializer = "*"
 flask-restful = "*"
 honcho = "*"
 requests = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
