@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { lazy } from 'react'
+import Chart from 'chart.js/auto'
+import { CategoryScale } from 'chart.js/auto';
 
-function Home() {
+const PieChart = lazy(() => import("../components/graphs/PieChart"));
+const BarChart = lazy(() => import("../components/graphs/BarChart"));
+const LineChart = lazy(() => import("../components/graphs/LineChart"));
+
+Chart.register(CategoryScale);
+
+function Home({ chartData }) {
   return (
     <div className="Home">
-      ASDF
-        {/* <p>Spitballing ideas for chart options</p>
-        <h1>Emissions per State</h1>
-        <h1>Energy Generation per State</h1>
-        <h1>Total Emissions for USA</h1>
-        <h1>Total Energy Generation for USA</h1>
-        <h1>Nuclear Generators in USA</h1>
-        <h2>Locations, Energy Generation?, Which Gen reactor?</h2> */}
+      <BarChart chartData={chartData} />
+      <LineChart chartData={chartData} />
+      <PieChart chartData={chartData} />
     </div>
   )
 }

@@ -1,15 +1,6 @@
-import Chart from 'chart.js/auto'
-// import { Data } from '../sample_data/testdata'
-import { CategoryScale } from 'chart.js/auto';
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Home from './Home';
 import '../css/App.css';
-
-const PieChart = lazy(() => import("../components/graphs/PieChart"));
-const BarChart = lazy(() => import("../components/graphs/BarChart"));
-const LineChart = lazy(() => import("../components/graphs/LineChart"));
-
-Chart.register(CategoryScale);
 
 const styles = [
   {
@@ -63,26 +54,39 @@ function App() {
     };
   }, [emissions]);
 
-  const emissionsData = emissions.map((d, i) => <li key={i}>{d.name}</li>)
-
   if (Object.keys(chartData).length === 0) {
     return (<div>Loading...</div>)
   }
 
   return (
-    <div className="App">
-      <h1>App Header</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Home />
-        <ul>
-          States:
-          {emissionsData}
-        </ul>
-        <BarChart chartData={chartData} />
-        <LineChart chartData={chartData} />
-        <PieChart chartData={chartData} />
-      </Suspense>
-    </div>
+    <>
+      <header>
+        <section className='hero'>
+          <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
+        </section>
+      </header>
+
+      <main className='App'>
+        <section className='searchbar'>
+          <div className="container mx-auto px-3">
+            Searchbar goes here
+          </div>
+        </section>
+        <section className="graphs">
+          <div className="container mx-auto px-3">
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home chartData={chartData} />
+            </Suspense>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <section className='hero'>
+          <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
+        </section>
+      </footer>
+    </>
   );
 }
 
