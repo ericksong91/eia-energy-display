@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import Home from './Home';
+import Home from './main/Home';
 import '../css/App.css';
 
 const styles = [
@@ -59,34 +59,25 @@ function App() {
   }
 
   return (
-    <>
-      <header>
+    <div className='app'>
+      <header className='header' >
         <section className='hero'>
           <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
         </section>
       </header>
 
-      <main className='App'>
-        <section className='searchbar'>
-          <div className="container mx-auto px-3">
-            Searchbar goes here
-          </div>
-        </section>
-        <section className="graphs">
-          <div className="container mx-auto px-3">
-            <Suspense fallback={<div>Loading...</div>}>
-              <Home chartData={chartData} />
-            </Suspense>
-          </div>
-        </section>
+      <main className='main'>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Home chartData={chartData} />
+        </Suspense>
       </main>
 
-      <footer>
+      <footer className='footer'>
         <section className='hero'>
           <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
         </section>
       </footer>
-    </>
+    </div>
   );
 }
 
