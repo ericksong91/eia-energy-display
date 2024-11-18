@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from 'react';
-import Home from './main/Home';
+import MainContainer from './MainContainer';
 import '../css/App.css';
 
 const styles = [
@@ -58,26 +58,33 @@ function App() {
     return (<div>Loading...</div>)
   }
 
+  /* 
+  
+  THINK ABOUT STRUCTURE REORGNIZATION ON THE THREE SECTIONS
+  MAKE SEARCH BAR
+  MAKE ACCORDION FILTER
+  STYLIZE THE PAGE
+  
+  */
+
   return (
-    <div className='app'>
-      <header className='header' >
-        <section className='hero'>
-          <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
-        </section>
-      </header>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className='app'>
+        <header className='header' >
+          <section className='hero'>
+            <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
+          </section>
+        </header>
 
-      <main className='main'>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Home chartData={chartData} />
-        </Suspense>
-      </main>
-
-      <footer className='footer'>
-        <section className='hero'>
-          <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
-        </section>
-      </footer>
-    </div>
+        <MainContainer chartData={chartData} />
+        
+        <footer className='footer'>
+          <section className='hero'>
+            <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" />
+          </section>
+        </footer>
+      </div>
+    </Suspense>
   );
 }
 
