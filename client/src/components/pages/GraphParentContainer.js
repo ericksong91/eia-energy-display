@@ -25,10 +25,8 @@ import GraphCard from './child/GraphCard';
 
 function GraphParentContainer({ chartData }) {
     return (
-        <section className='graphs'>
-            <div className="container mx-auto px-3">
-                <GraphCard chartData={chartData} />
-            </div>
+        <section className='graphs container flex-auto mx-auto'>
+            <GraphCard chartData={chartData} />
         </section>
     )
 };

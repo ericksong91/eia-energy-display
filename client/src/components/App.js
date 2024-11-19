@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import '../css/App.css';
+import FilterAccordion from './pages/child/FilterAccordion';
 
 function App() {
   const [emissions, setEmissions] = useState([]);
@@ -47,7 +47,7 @@ function App() {
   };
 
   return (
-    <div className='app'>
+    <div className='app h-screen w-full bg-gradient-to-b from-blue-100 to-lime-200' >
       <Suspense fallback={<div>Loading...</div>}>
         <Header />
         <MainContainer chartData={chartData} />

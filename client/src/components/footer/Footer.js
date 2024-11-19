@@ -2,10 +2,9 @@ import React from 'react'
 
 function Footer() {
     return (
-        <footer className='footer'>
-            <section className='hero'>
-                <img className="w-full" src="https://www.clearvoice.com/wp-content/uploads/2021/02/Hero-Image_Hero_1360x646.png" alt="example of a hero" />
-            </section>
+        <footer className='footer w-full bg-lime-900 bg-opacity-35 fixed bottom-0 p-3 text-xs'>
+            <p>App built by Eric Song</p>
+            <p>Data from https://www.eia.gov/opendata/</p>
         </footer>
     )
 }
