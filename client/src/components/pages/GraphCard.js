@@ -8,7 +8,7 @@ Chart.register(CategoryScale);
 
 function GraphCard({ chartData }) {
     return (
-        <div className='graph-card'>
+        <div className='graph-card checking'>
             <LineChart chartData={chartData} />
         </div>
     )

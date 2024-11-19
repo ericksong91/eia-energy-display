@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 2dfe04953cbc58f7f491cae1ab35bab05f530c9f Eric Song <ericksong91@gmail.com> 1732057757 -0500	clone: from https://github.com/ericksong91/eia-energy-display.git
+2dfe04953cbc58f7f491cae1ab35bab05f530c9f 526f933e78dec4ba1776f8db78fb278ea255b140 Eric Song <ericksong91@gmail.com> 1732058211 -0500	commit: Reinitializing project
+526f933e78dec4ba1776f8db78fb278ea255b140 60db55d62c5cf428bcdff478758382c941299320 Eric Song <ericksong91@gmail.com> 1732058301 -0500	commit: Adding styling to app as well as accordion component
+60db55d62c5cf428bcdff478758382c941299320 7a94f0be5e18215ac2f02b675e53ba4134ea9f6b Eric Song <ericksong91@gmail.com> 1732058783 -0500	commit: Rearranged components to make it easier to read
