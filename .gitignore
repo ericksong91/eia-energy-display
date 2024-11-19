@@ -11,7 +11,7 @@ client/coverage
 # production
 client/build
 server/instance/
-client/src/sample_data/completeStateEmissions.js
+notes.txt
 
 # misc
 .DS_Store
@@ -24,8 +24,3 @@ client/src/sample_data/completeStateEmissions.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# api
-.env
-.env.local
-notes.txt
