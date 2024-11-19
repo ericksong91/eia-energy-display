@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBar from './SearchBar';
-import FilterAccordion from './child/FilterAccordion';
+import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
 
 function MainContainer({ chartData }) {

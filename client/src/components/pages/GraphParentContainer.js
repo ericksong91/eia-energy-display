@@ -1,5 +1,5 @@
 import React from 'react'
-import GraphCard from './child/GraphCard';
+import GraphCard from './GraphCard';
 // import Chart from 'chart.js/auto'
 // import { CategoryScale } from 'chart.js/auto';
 

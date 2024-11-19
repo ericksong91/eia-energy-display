@@ -2,7 +2,6 @@ import { useState, useEffect, Suspense } from 'react';
 import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import FilterAccordion from './pages/child/FilterAccordion';
 
 function App() {
   const [emissions, setEmissions] = useState([]);
