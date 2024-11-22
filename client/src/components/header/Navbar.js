@@ -17,7 +17,7 @@ function Navbar() {
   });
 
   return (
-    <nav className='navbar grow'>
+    <nav className='navbar'>
       <ul className='flex'>
           {buttonsList}
       </ul>

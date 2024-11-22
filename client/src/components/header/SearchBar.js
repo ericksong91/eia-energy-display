@@ -2,7 +2,7 @@ import React from 'react'
 
 function SearchBar() {
   return (
-    <section className='searchbar'>
+    <div className='searchbar'>
       <div className="container mx-auto px-3">
         <form className="max-w-md mx-auto">
           <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -23,7 +23,7 @@ function SearchBar() {
           </div>
         </form>
       </div>
-    </section>
+    </div>
   )
 };
 
