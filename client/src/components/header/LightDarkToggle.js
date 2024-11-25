@@ -1,6 +1,7 @@
-import React from 'react'
+import { useState } from "react";
 
 function LightDarkToggle() {
+    const [isToggled, setIsToggled] = useState(false);
 
     const moonIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
@@ -12,13 +13,13 @@ function LightDarkToggle() {
 
     return (
         <div className='lightdark-mode'>
-            <label class="inline-flex items-center cursor-pointer">
-                <span class="ms-3 mr-3">
-                    {sunIcon}
+            <label className="inline-flex items-center cursor-pointer">
+                <span className="ms-3 mr-3">
+                    {isToggled ? moonIcon : sunIcon}
                 </span>
 
-                <input type="checkbox" value="" class="sr-only peer" />
-                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                <input type="checkbox" value="" className="sr-only peer" onClick={() => setIsToggled(!isToggled)} />
+                <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                     dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
                     peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                     after:bg-white after:border-gray-300 after:border after:rounded-full 

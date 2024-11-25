@@ -2,9 +2,8 @@ import React from 'react'
 
 function SearchBar() {
   return (
-    <div className='searchbar mx-auto p-3'>
-        <form className="searchbar-form">
-          
+    <div className='searchbar container mx-auto'>
+        <form className="searchbar-form p-3">
           <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search for States or Fuels</label>
 
           <div className="relative">

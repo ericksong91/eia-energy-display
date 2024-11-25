@@ -10,14 +10,14 @@ function Navbar() {
     <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
   </svg>;
 
-  const buttonsList = [homeIcon, aboutIcon].map((x) => {
-    return <li><button className='bg-slate-200 rounded p-2 mx-3'>
+  const buttonsList = [homeIcon, aboutIcon].map((x, i) => {
+    return <li><button key={`ID: ` + i} className='bg-slate-200 rounded p-2 mx-3'>
       {x}
     </button></li>
   });
 
   return (
-    <nav className='navbar'>
+    <nav className='navbar grow'>
       <ul className='flex'>
           {buttonsList}
       </ul>
