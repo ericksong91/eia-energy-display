@@ -21,20 +21,19 @@ const LineChart = lazy(() => import("./graphs/LineChart"));
 
 Chart.register(CategoryScale);
 
-
-function GraphCard(chartData, type, title, description) {
+function GraphCard({ chartData, type, title, description }) {
 
     return (
         <div className='graphcard'>
             {
-            type === "line" 
-            ? <LineChart chartData={chartData} title={title} description={description} /> 
-            : type === "pie" 
-                ? <PieChart chartData={chartData} title={title} description={description} /> 
-                : <BarChart chartData={chartData} title={title} description={description} />
+                type === "line"
+                    ? <LineChart chartData={chartData} title={title} description={description} />
+                    : type === "pie"
+                        ? <PieChart chartData={chartData} title={title} description={description} />
+                        : <BarChart chartData={chartData} title={title} description={description} />
             }
         </div>
     )
-}
+};
 
-export default GraphCard
+export default GraphCard;
