@@ -11,7 +11,7 @@ function Navbar() {
   </svg>;
 
   const buttonsList = [homeIcon, aboutIcon].map((x, i) => {
-    return <li><button key={`ID: ` + i} className='bg-slate-200 rounded p-2 mx-3'>
+    return <li key={`ID: ` + i}><button className='bg-slate-200 rounded p-2 mx-3'>
       {x}
     </button></li>
   });
