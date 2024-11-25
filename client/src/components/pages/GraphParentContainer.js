@@ -25,21 +25,23 @@ const styles = [
 function GraphParentContainer({ chartData, title, description }) {
     const chartTypes = ["line", "bar", "pie"];
 
-    const graphList = chartTypes.map((type) => {
-        if (type === "line") {
-            return <LineChart chartData={chartData} title={title} description={description} />
-        } else if (type === "bar") {
-            return <BarChart chartData={chartData} title={title} description={description} />
-        } else if (type === "pie") {
-            return <PieChart chartData={chartData} title={title} description={description} />
-        } else {
-            return <div>Empty Chart</div>
-        }
-    });
+    console.log(chartData)
+
+    // const graphList = chartTypes.map((type) => {
+    //     if (type === "line") {
+    //         return <LineChart chartData={chartData} title={title} description={description} />
+    //     } else if (type === "bar") {
+    //         return <BarChart chartData={chartData} title={title} description={description} />
+    //     } else if (type === "pie") {
+    //         return <PieChart chartData={chartData} title={title} description={description} />
+    //     } else {
+    //         return <div>Empty Chart</div>
+    //     }
+    // });
 
     return (
         <section className='graphs container mx-auto'>
-            {graphList}
+            {/* {graphList} */}
         </section>
     )
 };
