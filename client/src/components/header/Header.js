@@ -2,7 +2,6 @@ import React from 'react'
 import logo from '../../images/logo.png'
 import Navbar from './Navbar'
 import LightDarkToggle from './LightDarkToggle';
-import SearchBar from './SearchBar';
 
 function Header() {
     return (
@@ -11,7 +10,6 @@ function Header() {
                 <div className='flex items-center'>
                     <img src={logo} alt="EIA Energy Data Logo has a lightbulb with the website name" className='logo w-32 object-cover rounded-lg border-2 mx-4 my-2' />
                     <Navbar />
-                    <SearchBar />
                     <LightDarkToggle />
                 </div>
             </div>
