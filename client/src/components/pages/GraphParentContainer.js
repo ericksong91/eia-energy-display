@@ -9,7 +9,7 @@ function GraphParentContainer({ chartData, title, description }) {
 
     return (
         <section className='graphs container mx-auto'>
-            {graphList}
+            {/* {graphList} */}
         </section>
     )
 };

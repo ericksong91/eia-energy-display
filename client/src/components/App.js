@@ -6,6 +6,7 @@ import Footer from './footer/Footer';
 function App() {
   const [emissions, setEmissions] = useState([]);
   const [chartData, setChartData] = useState({});
+  const [isToggled, setIsToggled] = useState(false);
   // const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -46,9 +47,9 @@ function App() {
   };
 
   return (
-    <div className='app h-screen w-full bg-gradient-to-b from-blue-100 to-lime-200' >
+    <div className='app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200' >
       <Suspense fallback={<div>Loading...</div>}>
-        <Header />
+        <Header onIsToggled={setIsToggled} onToggled={isToggled} />
         <MainContainer chartData={chartData} />
         <Footer />
       </Suspense>
