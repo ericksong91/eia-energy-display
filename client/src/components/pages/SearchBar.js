@@ -1,6 +1,15 @@
 import React from 'react'
 
 function SearchBar() {
+  // Search for Predictive search 
+  // Searching on incomplete term with a dropdown (?)
+
+  // Design philosophy; you don't want it to search and return results based on partial results
+  // 
+
+  //BASE LEVEL: RETURN THE RESULT instead of thinking of this first, AFTER they click the search button, no predictive dropdowns yet
+
+
   return (
     <div className='searchbar container mx-auto'>
         <form className="searchbar-form p-3">

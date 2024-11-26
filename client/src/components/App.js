@@ -47,13 +47,15 @@ function App() {
   };
 
   return (
-    <div className='app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200' >
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header onIsToggled={setIsToggled} onToggled={isToggled} />
-        <MainContainer chartData={chartData} />
-        <Footer />
-      </Suspense>
-    </div >
+    <div className={`${isToggled ? "dark" : ""}`}>
+      <div className={`app min-h-screen dark:bg-slate-800 dark:bg-none bg-gradient-to-b from-blue-100 to-lime-200` } >
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header onIsToggled={setIsToggled} onToggled={isToggled} />
+          <MainContainer chartData={chartData} />
+          <Footer />
+        </Suspense>
+      </div >
+    </div>
   );
 }
 
