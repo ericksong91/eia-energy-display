@@ -12,7 +12,7 @@ function MainContainer({ chartData }) {
   // Maybe a bunch of cards to pick a state?
 
   return (
-    <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md">
+    <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
       <SearchBar />
       <FilterAccordion />
       <GraphParentContainer chartData={chartData} title={title} description={description} />

@@ -8,8 +8,8 @@ function GraphParentContainer({ chartData, title, description }) {
     });
 
     return (
-        <section className='graphs container mx-auto'>
-            {/* {graphList} */}
+        <section className='graphs container mx-auto pb-5'>
+            {graphList}
         </section>
     )
 };

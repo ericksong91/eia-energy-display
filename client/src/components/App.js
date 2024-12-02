@@ -6,7 +6,7 @@ import Footer from './footer/Footer';
 function App() {
   const [emissions, setEmissions] = useState([]);
   const [chartData, setChartData] = useState({});
-  const [isToggled, setIsToggled] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   // const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -49,10 +49,11 @@ function App() {
   };
 
   return (
-    <div className={`${isToggled ? "dark" : ""}`}>
-      <div className={`app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none`} >
+    <div className={`${darkMode ? "dark" : ""}`}>
+      {/* <div className="app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none"> */}
+      <div className="app flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none">
         <Suspense fallback={<div>Loading...</div>}> {/** check out what suspense does */}
-          <Header onIsToggled={setIsToggled} onToggled={isToggled} />
+          <Header onDarkMode={setDarkMode} darkMode={darkMode} />
           <MainContainer chartData={chartData} />
           <Footer />
         </Suspense>
