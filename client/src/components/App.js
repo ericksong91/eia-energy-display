@@ -20,6 +20,8 @@ function App() {
       })
   }, []);
 
+
+  // Get Data Back First from API, use search terms from user
   useEffect(() => {
     // Maryland data
     if (emissions.length === 0) {
@@ -48,8 +50,8 @@ function App() {
 
   return (
     <div className={`${isToggled ? "dark" : ""}`}>
-      <div className={`app min-h-screen dark:bg-slate-800 dark:bg-none bg-gradient-to-b from-blue-100 to-lime-200` } >
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className={`app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none`} >
+        <Suspense fallback={<div>Loading...</div>}> {/** check out what suspense does */}
           <Header onIsToggled={setIsToggled} onToggled={isToggled} />
           <MainContainer chartData={chartData} />
           <Footer />
@@ -57,7 +59,7 @@ function App() {
       </div >
     </div>
   );
-}
+};
 
 export default App;
 
