@@ -50,7 +50,6 @@ function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      {/* <div className="app min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none"> */}
       <div className="app flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none">
         <Suspense fallback={<div>Loading...</div>}> {/** check out what suspense does */}
           <Header onDarkMode={setDarkMode} darkMode={darkMode} />
