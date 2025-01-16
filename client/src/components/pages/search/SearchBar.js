@@ -4,7 +4,6 @@ function SearchBar({ onStatesFilter }) {
   const [searchText, setSearchText] = useState("");
 
   function handleChange(value) {
-    console.log(value);
     setSearchText(value);
     onStatesFilter(value);
   };
