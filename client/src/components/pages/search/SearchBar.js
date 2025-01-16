@@ -3,6 +3,7 @@ import SearchResult from './SearchResult';
 
 function SearchBar({ onStatesFilter, stateResults }) {
   const [searchText, setSearchText] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   function handleChange(value) {
     setSearchText(value);
@@ -11,7 +12,7 @@ function SearchBar({ onStatesFilter, stateResults }) {
 
   return (
     <div className='searchbar container mx-auto'>
-      <form className="searchbar-form p-3">
+      <form className="searchbar-form p-3" onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search for States</label>
 
         <div className="relative">
@@ -34,8 +35,8 @@ function SearchBar({ onStatesFilter, stateResults }) {
             focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Search
           </button>
-          
-          <SearchResult stateResults={stateResults} />
+
+          {isFocused ? <SearchResult stateResults={stateResults} onSearchText={setSearchText} /> : <></>}
         </div>
 
       </form>
