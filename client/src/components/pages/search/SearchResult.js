@@ -1,10 +1,21 @@
-function SearchResult({ stateResults, onSearchText }) {
+function SearchResult({ stateResults, onSearchText, onIsFocused }) {
 
     const stateList = stateResults.map((state, index) => {
-        return <p key={index} className={`${state.name} hover:bg-blue-100 hover:cursor-pointer`} onChange={(e) => {console.log(e)}}>{state.name}</p>
+        return <p key={state.name} className={`${state.name} hover:bg-blue-100 hover:cursor-pointer`}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => handleClick(state.name)}
+        >
+            {state.name}
+        </p>
     });
 
-    if(stateResults.length === 0) {
+    function handleClick(value) {
+        console.log(value);
+        onSearchText(value);
+        onIsFocused(false);
+    };
+
+    if (stateResults.length === 0) {
         return (<div></div>)
     };
 

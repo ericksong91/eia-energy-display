@@ -215,7 +215,7 @@ const states = [
 ];
 
 function MainContainer({ chartData }) {
-  const [stateResults, setStateResults] = useState([]);
+  const [stateResults, setStateResults] = useState(states);
 
   const title = "Emissions";
   const description = "Emissions of State";

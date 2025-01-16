@@ -6,6 +6,7 @@ function SearchBar({ onStatesFilter, stateResults }) {
   const [isFocused, setIsFocused] = useState(false);
 
   function handleChange(value) {
+    setIsFocused(true);
     setSearchText(value);
     onStatesFilter(value);
   };
@@ -36,9 +37,8 @@ function SearchBar({ onStatesFilter, stateResults }) {
             Search
           </button>
 
-          {isFocused ? <SearchResult stateResults={stateResults} onSearchText={setSearchText} /> : <></>}
+          {isFocused ? <SearchResult stateResults={stateResults} onSearchText={setSearchText} onIsFocused={setIsFocused}/> : <></>}
         </div>
-
       </form>
 
     </div>
@@ -46,3 +46,8 @@ function SearchBar({ onStatesFilter, stateResults }) {
 };
 
 export default SearchBar;
+
+// onBlur={() => {
+//   // Onblur was overriding onclick event, so had to add a delay
+//   setTimeout(() => setIsFocused(false), 100);
+// }}>
