@@ -17,7 +17,7 @@ const upArrow = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0
 function FilterAccordion() {
   const [accordionOpen, setAccordionOpen] = useState(false);
 
-  const fuelsList = ["Coal", "Petroleum", "Natural Gas"];
+  const fuelsList = ["Coal", "Petroleum", "Natural Gas", "Other"];
 
   const fuelCheckboxes = fuelsList.map((e) => {
     return unchecked(e);

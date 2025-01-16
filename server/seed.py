@@ -221,9 +221,6 @@ fuels = ["Coal", "Natural Gas", "Petroleum", "Other"]
 
 period = [x for x in range(1999, 2024)]
 
-offset_value = 0
-value_tracker = 0
-
 ## API Helper Method ##
 
 def eia_url_offset(offset, url):
@@ -265,7 +262,10 @@ with app.app_context():
         db.session.add(fuel)
 
     print('Creating Period objects....')
+    offset_value = 0
+    value_tracker = 0
     emissions_url = 'https://api.eia.gov/v2/electricity/state-electricity-profiles/emissions-by-state-by-fuel/data/?frequency=annual&data[0]=co2-thousand-metric-tons&data[1]=nox-short-tons&data[2]=so2-short-tons&facets[fuelid][]=COL&facets[fuelid][]=NG&facets[fuelid][]=OTH&facets[fuelid][]=PET&facets[stateid][]=AK&facets[stateid][]=AL&facets[stateid][]=AR&facets[stateid][]=AZ&facets[stateid][]=CA&facets[stateid][]=CO&facets[stateid][]=CT&facets[stateid][]=DC&facets[stateid][]=DE&facets[stateid][]=FL&facets[stateid][]=GA&facets[stateid][]=HI&facets[stateid][]=IA&facets[stateid][]=ID&facets[stateid][]=IL&facets[stateid][]=IN&facets[stateid][]=KS&facets[stateid][]=KY&facets[stateid][]=LA&facets[stateid][]=MA&facets[stateid][]=MD&facets[stateid][]=ME&facets[stateid][]=MI&facets[stateid][]=MN&facets[stateid][]=MO&facets[stateid][]=MS&facets[stateid][]=MT&facets[stateid][]=NC&facets[stateid][]=ND&facets[stateid][]=NE&facets[stateid][]=NH&facets[stateid][]=NJ&facets[stateid][]=NM&facets[stateid][]=NV&facets[stateid][]=NY&facets[stateid][]=OH&facets[stateid][]=OK&facets[stateid][]=OR&facets[stateid][]=PA&facets[stateid][]=RI&facets[stateid][]=SC&facets[stateid][]=SD&facets[stateid][]=TN&facets[stateid][]=TX&facets[stateid][]=UT&facets[stateid][]=VA&facets[stateid][]=VT&facets[stateid][]=WA&facets[stateid][]=WI&facets[stateid][]=WV&facets[stateid][]=WY&sort[0][column]=period&sort[0][direction]=asc'
+    
     data = api_request(eia_url_offset(0, emissions_url))
     pull_period_data(data)
 
