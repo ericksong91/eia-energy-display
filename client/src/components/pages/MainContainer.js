@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
-import SearchContainer from './search/SearchContainer';
+import SearchBar from './search/SearchBar';
 
 const states = [
   {
@@ -231,7 +231,7 @@ function MainContainer({ chartData }) {
 
   return (
     <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
-      <SearchContainer onStatesFilter={handleStatesFilter} stateResults={stateResults} />
+      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} />
       <FilterAccordion />
       <GraphParentContainer chartData={chartData} title={title} description={description} />
     </main>
