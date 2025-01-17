@@ -218,19 +218,16 @@ const states = [
 const resource = fetchData('/states');
 
 function MainContainer() {
-  const [emissions, setEmissions] = useState(resource.read());
   const [chartData, setChartData] = useState({});
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
   const [stateResults, setStateResults] = useState(states);
+  const emissions = resource.read();
+  // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
 
   function handleUpdateGraphs(searchResult) {
-    console.log(emissions)
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0];
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year);
-
-    console.log(emissions)
 
     const newDataSets = [
       {
@@ -238,6 +235,7 @@ function MainContainer() {
         data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
       }
     ];
+    
     const dataObj = {
       labels: dataLabel,
       datasets: newDataSets
