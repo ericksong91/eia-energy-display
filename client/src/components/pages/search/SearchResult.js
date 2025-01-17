@@ -1,4 +1,9 @@
-function SearchResult({ stateResults, onSearchText, onIsFocused }) {
+function SearchResult({ stateResults, onSearchConfirmation, onIsFocused }) {
+    
+    function handleClick(value) {
+        onSearchConfirmation(value);
+        onIsFocused(false);
+    };
 
     const stateList = stateResults.map((state) => {
         return <p key={state.name} className={`${state.name} hover:bg-blue-100 hover:cursor-pointer`}
@@ -8,11 +13,6 @@ function SearchResult({ stateResults, onSearchText, onIsFocused }) {
             {state.name}
         </p>
     });
-
-    function handleClick(value) {
-        onSearchText(value);
-        onIsFocused(false);
-    };
 
     if (stateResults.length === 0) {
         return (<div></div>)

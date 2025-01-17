@@ -11,14 +11,22 @@ function SearchBar({ onStatesFilter, stateResults, onUpdateGraphs }) {
     onStatesFilter(value);
   };
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    console.log(e.target.value)
-  }
+  function handleSearchConfirmation(searchTerm) {
+    setSearchText(searchTerm);
+    onUpdateGraphs(searchTerm);
+  };
+
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+
+  // };
 
   return (
     <div className='searchbar container mx-auto'>
-      <form className="searchbar-form p-3">
+      <form className="searchbar-form p-3" 
+      // onSubmit={(e) => handleSubmit(e)}
+      onSubmit={(e) => e.preventDefault()}
+      >
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search for States</label>
 
         <div className="relative">
@@ -33,22 +41,18 @@ function SearchBar({ onStatesFilter, stateResults, onUpdateGraphs }) {
             dark:focus:border-blue-500"
             placeholder="Search for States..."
             value={searchText}
-            onFocus={() => setIsFocused(true)} 
+            onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onChange={(e) => handleChange(e.target.value)}
             required
           />
 
-          <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
-            focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onSubmit={(e) => {
-              e.preventDefault()
-            }}
-            >
+          {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
+            focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Search
-          </button>
+          </button> */}
 
-          {isFocused ? <SearchResult stateResults={stateResults} onSearchText={setSearchText} onIsFocused={setIsFocused}/> : <></>}
+          {isFocused ? <SearchResult stateResults={stateResults} onSearchConfirmation={handleSearchConfirmation} onIsFocused={setIsFocused} /> : <></>}
         </div>
       </form>
 

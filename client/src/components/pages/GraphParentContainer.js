@@ -1,7 +1,8 @@
 import GraphCard from "./GraphCard";
 
 function GraphParentContainer({ chartData, title, description }) {
-    const chartTypes = ["line", "bar", "pie"];
+    const chartTypes = ["line"];
+    // Include "Pie", "Bar" to get pie chart back
 
     if (Object.keys(chartData).length === 0) {
         return (<div></div>)

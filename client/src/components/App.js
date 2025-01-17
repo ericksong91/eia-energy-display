@@ -6,6 +6,9 @@ import Footer from './footer/Footer';
 function App() {
   const [emissions, setEmissions] = useState([]);
   const [chartData, setChartData] = useState({});
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
   const [darkMode, setDarkMode] = useState(false);
   // const [errors, setErrors] = useState([]);
 
@@ -21,26 +24,46 @@ function App() {
   }, []);
 
   function handleUpdateGraphs(searchResult) {
-    console.log(searchResult)
+    const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0];
+    const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year);
 
-    // if (emissions.length === 0) {
-    //   setChartData({});
-    // } else {
-    //   const stateData = emissions.filter((data) => data.abbrev === "MD").map((d) => d.periods)[0]
-    //   const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
-    //   const newDataSets = [
+    console.log(stateData)
+
+    const newDataSets = [
+      {
+        label: `${searchResult}'s Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+      }
+    ];
+    const dataObj = {
+      labels: dataLabel,
+      datasets: newDataSets
+    };
+
+    // const dataObj = {
+    //   labels: dataLabel,
+    //   datasets: [
     //     {
-    //       label: "Maryland Fuel",
-    //       data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+    //       label: 'CO2',
+    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.co2),
+    //       yAxisID: 'y',
+    //     },
+    //     {
+    //       label: 'NOx',
+    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.nox),
+    //       yAxisID: 'y',
+    //     },
+    //     {
+    //       label: 'SOx',
+    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.so2),
+    //       yAxisID: 'y',
     //     }
-    //   ];
-    //   const dataObj = {
-    //     labels: dataLabel,
-    //     datasets: newDataSets
-    //   };
-
-    //   setChartData(dataObj);
+    //   ]
     // };
+
+    setChartData(dataObj);
+    setTitle(searchResult);
+    setDescription(`${searchResult}'s CO2 Emissions from Coal`);
   };
 
   return (
@@ -48,7 +71,7 @@ function App() {
       <div className="app flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none">
         <Suspense fallback={<div>Loading...</div>}> {/** check out what suspense does */}
           <Header onDarkMode={setDarkMode} darkMode={darkMode} />
-          <MainContainer chartData={chartData} onUpdateGraphs={handleUpdateGraphs} />
+          <MainContainer chartData={chartData} onUpdateGraphs={handleUpdateGraphs} title={title} description={description} />
           <Footer />
         </Suspense>
       </div >
@@ -136,3 +159,24 @@ export default App;
 //     setChartData(dataObj);
 //   };
 // }, [emissions]);
+
+// function handleUpdateGraphs(searchResult) {
+//   const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0];
+//   const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year);
+
+//   console.log(stateData)
+//   const newDataSets = [
+//     {
+//       label: `${searchResult}'s Emissions from 1990 to 2023`,
+//       data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+//     }
+//   ];
+//   const dataObj = {
+//     labels: dataLabel,
+//     datasets: newDataSets
+//   };
+
+//   setChartData(dataObj);
+//   setTitle(searchResult);
+//   setDescription(`${searchResult}'s CO2 Emissions from Coal`);
+// };

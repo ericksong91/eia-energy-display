@@ -214,11 +214,8 @@ const states = [
   }
 ];
 
-function MainContainer({ chartData, onUpdateGraphs }) {
+function MainContainer({ chartData, onUpdateGraphs, title, description }) {
   const [stateResults, setStateResults] = useState(states);
-
-  const title = "Emissions";
-  const description = "Emissions of State";
 
   function handleStatesFilter(value) {
     const result = states.filter((state) => {
