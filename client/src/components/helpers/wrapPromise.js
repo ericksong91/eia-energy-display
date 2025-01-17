@@ -1,6 +1,6 @@
 function wrapPromise(promise) {
     let status = "pending";
-    let response = null;
+    let response
 
     const suspender = promise.then(
         (res) => {
@@ -8,8 +8,8 @@ function wrapPromise(promise) {
             response = res;
         },
         (err) => {
-            status = "error",
-                response = err
+            status = "error"
+            response = err;
         }
     );
 
@@ -24,7 +24,7 @@ function wrapPromise(promise) {
         };
     };
 
-    return read;
+    return { read };
 };
 
 export default wrapPromise;

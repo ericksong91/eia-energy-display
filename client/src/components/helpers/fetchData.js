@@ -1,9 +1,7 @@
 import wrapPromise from "./wrapPromise";
 
 function fetchData(url) {
-    const promise = fetch(url)
-        .then((res) => res.json())
-        .then((res) => res.json())
+    const promise = fetch(url).then((r) => r.json()).then(data => data);
 
     return wrapPromise(promise)
 };

@@ -1,4 +1,4 @@
-import { useState, use } from 'react';
+import { useState, useEffect } from 'react';
 import fetchData from '../helpers/fetchData';
 import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
@@ -218,11 +218,11 @@ const states = [
 const resource = fetchData('/states');
 
 function MainContainer() {
-  const [emissions, setEmissions] = useState(use(useFetchData('/states')));
+  const [emissions, setEmissions] = useState(resource.read());
   const [chartData, setChartData] = useState({});
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
+  // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
   const [stateResults, setStateResults] = useState(states);
 
   function handleUpdateGraphs(searchResult) {
@@ -280,7 +280,7 @@ function MainContainer() {
 
   return (
     <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
-      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs}/>
+      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
       <FilterAccordion />
       <GraphParentContainer chartData={chartData} title={title} description={description} />
     </main>
