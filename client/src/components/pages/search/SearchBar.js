@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SearchResult from './SearchResult';
 
-function SearchBar({ onStatesFilter, stateResults }) {
+function SearchBar({ onStatesFilter, stateResults, onUpdateGraphs }) {
   const [searchText, setSearchText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -11,9 +11,14 @@ function SearchBar({ onStatesFilter, stateResults }) {
     onStatesFilter(value);
   };
 
+  function handleSubmit(e) {
+    e.preventDefault()
+    console.log(e.target.value)
+  }
+
   return (
     <div className='searchbar container mx-auto'>
-      <form className="searchbar-form p-3" onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
+      <form className="searchbar-form p-3">
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search for States</label>
 
         <div className="relative">
@@ -28,12 +33,18 @@ function SearchBar({ onStatesFilter, stateResults }) {
             dark:focus:border-blue-500"
             placeholder="Search for States..."
             value={searchText}
+            onFocus={() => setIsFocused(true)} 
+            onBlur={() => setIsFocused(false)}
             onChange={(e) => handleChange(e.target.value)}
             required
           />
 
           <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
-            focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onSubmit={(e) => {
+              e.preventDefault()
+            }}
+            >
             Search
           </button>
 
@@ -46,8 +57,3 @@ function SearchBar({ onStatesFilter, stateResults }) {
 };
 
 export default SearchBar;
-
-// onBlur={() => {
-//   // Onblur was overriding onclick event, so had to add a delay
-//   setTimeout(() => setIsFocused(false), 100);
-// }}>

@@ -1,6 +1,6 @@
 function SearchResult({ stateResults, onSearchText, onIsFocused }) {
 
-    const stateList = stateResults.map((state, index) => {
+    const stateList = stateResults.map((state) => {
         return <p key={state.name} className={`${state.name} hover:bg-blue-100 hover:cursor-pointer`}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleClick(state.name)}
@@ -10,7 +10,6 @@ function SearchResult({ stateResults, onSearchText, onIsFocused }) {
     });
 
     function handleClick(value) {
-        console.log(value);
         onSearchText(value);
         onIsFocused(false);
     };

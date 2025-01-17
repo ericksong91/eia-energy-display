@@ -20,32 +20,27 @@ function App() {
       })
   }, []);
 
+  function handleUpdateGraphs(searchResult) {
+    console.log(searchResult)
 
-  // Get Data Back First from API, use search terms from user
-  useEffect(() => {
-    // Maryland data
-    if (emissions.length === 0) {
-      setChartData({});
-    } else {
-      const stateData = emissions.filter((data) => data.abbrev === "MD").map((d) => d.periods)[0]
-      const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
-      const newDataSets = [
-        {
-          label: "Maryland Fuel",
-          data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
-        }
-      ];
-      const dataObj = {
-        labels: dataLabel,
-        datasets: newDataSets
-      };
+    // if (emissions.length === 0) {
+    //   setChartData({});
+    // } else {
+    //   const stateData = emissions.filter((data) => data.abbrev === "MD").map((d) => d.periods)[0]
+    //   const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
+    //   const newDataSets = [
+    //     {
+    //       label: "Maryland Fuel",
+    //       data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+    //     }
+    //   ];
+    //   const dataObj = {
+    //     labels: dataLabel,
+    //     datasets: newDataSets
+    //   };
 
-      setChartData(dataObj);
-    };
-  }, [emissions]);
-
-  if (Object.keys(chartData).length === 0) {
-    return (<div>Loading...</div>)
+    //   setChartData(dataObj);
+    // };
   };
 
   return (
@@ -53,7 +48,7 @@ function App() {
       <div className="app flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-lime-200 dark:bg-slate-800 dark:bg-none">
         <Suspense fallback={<div>Loading...</div>}> {/** check out what suspense does */}
           <Header onDarkMode={setDarkMode} darkMode={darkMode} />
-          <MainContainer chartData={chartData} />
+          <MainContainer chartData={chartData} onUpdateGraphs={handleUpdateGraphs} />
           <Footer />
         </Suspense>
       </div >
@@ -117,3 +112,27 @@ export default App;
 // }, [])
 
 // useEffect(() => setChartData({}), [])
+
+
+// Get Data Back First from API, use search terms from user
+// useEffect(() => {
+//   // Maryland data
+//   if (emissions.length === 0) {
+//     setChartData({});
+//   } else {
+//     const stateData = emissions.filter((data) => data.abbrev === "MD").map((d) => d.periods)[0]
+//     const dataLabel = stateData.filter((data) => data.fuel_id === 3).map((d) => d.year)
+//     const newDataSets = [
+//       {
+//         label: "Maryland Fuel",
+//         data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+//       }
+//     ];
+//     const dataObj = {
+//       labels: dataLabel,
+//       datasets: newDataSets
+//     };
+
+//     setChartData(dataObj);
+//   };
+// }, [emissions]);

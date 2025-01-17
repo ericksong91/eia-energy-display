@@ -3,6 +3,10 @@ import GraphCard from "./GraphCard";
 function GraphParentContainer({ chartData, title, description }) {
     const chartTypes = ["line", "bar", "pie"];
 
+    if (Object.keys(chartData).length === 0) {
+        return (<div></div>)
+    };
+
     const graphList = chartTypes.map((type) => {
         return <GraphCard key={type} chartData={chartData} type={type} title={title} description={description} />
     });
