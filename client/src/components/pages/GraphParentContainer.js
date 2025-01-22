@@ -1,6 +1,6 @@
 import GraphCard from "./GraphCard";
 
-function GraphParentContainer({ chartData, title, description }) {
+function GraphParentContainer({ chartData, chartLabels }) {
     const chartTypes = ["line"];
     // Include "Pie", "Bar" to get pie chart back
 
@@ -9,7 +9,7 @@ function GraphParentContainer({ chartData, title, description }) {
     // };
 
     const graphList = chartTypes.map((type) => {
-        return <GraphCard key={type} chartData={chartData} type={type} title={title} description={description} />
+        return <GraphCard key={type} chartData={chartData} type={type} chartLabels={chartLabels} />
     });
 
     return (

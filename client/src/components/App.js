@@ -3,19 +3,18 @@ import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 
+/*
+
+Tasks: 
+  -Add ability to look at multiple datapoints for all fuels
+  -Add ability to update graph based on what checkmarks are marked on application
+  -Add loading icon on app load using suspense or make a fallback component
+  -error handling fallback component
+
+*/
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-
-  // useEffect(() => {
-  //   fetch('/states')
-  //     .then(r => {
-  //       if (r.ok) {
-  //         r.json().then(data => setEmissions(data))
-  //       } else {
-  //         r.json().then(error => alert(error.errors))
-  //       }
-  //     })
-  // }, []);
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>

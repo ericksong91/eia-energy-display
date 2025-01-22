@@ -219,15 +219,14 @@ const resource = fetchData('/states');
 
 function MainContainer() {
   const [chartData, setChartData] = useState({});
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [chartLabels, setChartLabels] = useState({});
   const [stateResults, setStateResults] = useState(states);
   const emissions = resource.read();
   // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
 
   function handleUpdateGraphs(searchResult) {
-    const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0];
-    const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year);
+    const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
+    const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
 
     const newDataSets = [
       {
@@ -235,11 +234,19 @@ function MainContainer() {
         data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
       }
     ];
-    
+
     const dataObj = {
       labels: dataLabel,
       datasets: newDataSets
     };
+
+    const chartLabels = {
+      title: searchResult,
+      description: `${searchResult}'s CO2 Emissions from Coal`,
+      units: `Placeholder Units`
+    };
+
+    // Add a way to dynamically pull units from the information later
 
     // const dataObj = {
     //   labels: dataLabel,
@@ -263,8 +270,7 @@ function MainContainer() {
     // };
 
     setChartData(dataObj);
-    setTitle(searchResult);
-    setDescription(`${searchResult}'s CO2 Emissions from Coal`);
+    setChartLabels(chartLabels);
   };
 
   function handleStatesFilter(value) {
@@ -280,7 +286,7 @@ function MainContainer() {
     <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
       <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
       <FilterAccordion />
-      <GraphParentContainer chartData={chartData} title={title} description={description} />
+      <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
     </main>
   );
 };

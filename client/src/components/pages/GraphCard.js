@@ -7,18 +7,21 @@ import LineChart from "./graphs/LineChart";
 
 Chart.register(CategoryScale);
 
-function GraphCard({ chartData, type, title, description }) {
+function GraphCard({ chartData, type, chartLabels }) {
+
+    // Returns either a line graph, piechart or barchart using a nested ternary
+
     return (
-        <div className='graphcard p-3 m-3 w-90'>
+        <div className='graphcard p-4 m-3 w-90'>
             {
                 type === "line"
-                    ? <LineChart chartData={chartData} title={title} description={description} />
+                    ? <LineChart chartData={chartData} chartLabels={chartLabels} />
                     : type === "pie"
-                        ? <PieChart chartData={chartData} title={title} description={description} />
-                        : <BarChart chartData={chartData} title={title} description={description} />
+                        ? <PieChart chartData={chartData} chartLabels={chartLabels} />
+                        : <BarChart chartData={chartData} chartLabels={chartLabels} />
             }
         </div>
-    )
+    );
 };
 
 export default GraphCard;
