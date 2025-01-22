@@ -15,6 +15,7 @@ Tasks:
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  console.log("test")
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
