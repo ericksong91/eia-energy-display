@@ -61,5 +61,3 @@ function FilterAccordion() {
 };
 
 export default FilterAccordion;
-
-// When you use [] in tailwind, you can add custom values

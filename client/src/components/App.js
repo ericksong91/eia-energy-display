@@ -10,6 +10,7 @@ Tasks:
   -Add ability to update graph based on what checkmarks are marked on application
   -Add loading icon on app load using suspense or make a fallback component
   -error handling fallback component
+  -Delete scrollbar with either custom css no-scrollbar or permanently show scrollbar with overflow-y-scroll
 
 */
 
