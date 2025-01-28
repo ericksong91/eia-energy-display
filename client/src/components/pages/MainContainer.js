@@ -282,6 +282,8 @@ function MainContainer() {
     setStateResults(result);
   };
 
+  console.log("asdf")
+
   return (
     <main className="main p-4 m-4 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
       <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
