@@ -225,27 +225,20 @@ function MainContainer() {
   // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
 
   function handleUpdateGraphs(searchResult) {
+    //Need to load logic in here that updates graphs when user clicks on stuff in the accordion
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
+    const emissionType = ["co2", "so2", "nox"]
     const fueltype = "Fuel 1"
 
-    const newDataSets = [
-      {
-        label: `${searchResult}'s ${fueltype} CO2 Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.co2),
-        yAxisID: 'y'
-      },
-      {
-        label: `${searchResult}'s ${fueltype} SO2 Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.so2),
-        yAxisID: 'y'
-      },
-      {
-        label: `${searchResult}'s ${fueltype} NOx Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.nox),
+    const newDataSets = emissionType.map((emissionType) => {
+      const emissionDataObj = {
+        label: `${searchResult}'s ${fueltype}'s ${emissionType.toUpperCase()} Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d[emissionType]),
         yAxisID: 'y'
       }
-    ]; //Load each dataset as objects in an array
+      return emissionDataObj
+    }); // Load each dataset into objects in an array
 
     const dataObj = {
       labels: dataLabel,
@@ -258,47 +251,6 @@ function MainContainer() {
       units: `Placeholder Units`
     }; // Object with title, description, and units to be destructured down in the LineChart component
 
-    // const newDataSets = [
-    //   {
-    //     label: `${searchResult}'s Emissions from 1990 to 2023`,
-    //     data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
-    //   }
-    // ];
-
-    // const dataObj = {
-    //   labels: dataLabel,
-    //   datasets: newDataSets
-    // };
-
-    // const chartLabels = {
-    //   title: searchResult,
-    //   description: `${searchResult}'s CO2 Emissions from Coal`,
-    //   units: `Placeholder Units`
-    // };
-
-    // Add a way to dynamically pull units from the information later
-
-    // const dataObj = {
-    //   labels: dataLabel,
-    //   datasets: [
-    //     {
-    //       label: 'CO2',
-    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.co2),
-    //       yAxisID: 'y',
-    //     },
-    //     {
-    //       label: 'NOx',
-    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.nox),
-    //       yAxisID: 'y',
-    //     },
-    //     {
-    //       label: 'SOx',
-    //       data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.so2),
-    //       yAxisID: 'y',
-    //     }
-    //   ]
-    // };
-
     setChartData(dataObj);
     setChartLabels(chartLabels);
   };
@@ -306,7 +258,6 @@ function MainContainer() {
   function handleStatesFilter(value) {
     const result = states.filter((state) => {
       return state.name.toLowerCase().includes(value.toLowerCase()) || state.abbreviation.toLowerCase().includes(value.toLowerCase())
-      // Change to return first letter only later
     });
 
     setStateResults(result);

@@ -3,19 +3,6 @@ import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 
-/*
-
-Tasks: 
-  -Add ability to look at multiple datapoints for all fuels
-  -Add ability to update graph based on what checkmarks are marked on application
-  -Add loading icon on app load using suspense or make a fallback component
-  -Add routing to Fuels component to programatically grab fuel names
-  -error handling fallback component
-  -Delete scrollbar with either custom css no-scrollbar or permanently show scrollbar with overflow-y-scroll
-
-  Emissions should show three line graphs, one for each fuel?
-*/
-
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
