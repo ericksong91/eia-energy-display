@@ -228,27 +228,49 @@ function MainContainer() {
     //Need to load logic in here that updates graphs when user clicks on stuff in the accordion
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
-    const emissionType = ["co2", "so2", "nox"]
-    const fueltype = "Fuel 1"
+    const emissionTypes = ["co2", "so2", "nox"];
+    const fueltype = "Fuel 1";
+    const fuelTypes = [1, 2, 3, 4];
 
-    const newDataSets = emissionType.map((emissionType) => {
+    /*
+      -forEach fuelTypes
+        -run  forEach emission type
+        -Fill out that dataObj
+        -send to Datasets
+
+      loop while i > length of fuel types:
+        fueltypes map => return array 
+        load array into dataObj under dataObj.datasets
+      
+      fuelTypes.forEach((fuel) => {
+        emissionTypes.forEach(emiss) => {
+          make dataObj and push it to a global variable [], made for each fuel type
+        }
+      })
+
+      change chartData to be an array that has multiple dataObjs in it then have GraphPArentcontainer loop through the array 
+      to make as many charts as needed. Maybe pass an additional prop that lets you choose what kind of graph to get.
+    */
+
+    const newDataSets = emissionTypes.map((emissionName) => {
       const emissionDataObj = {
-        label: `${searchResult}'s ${fueltype}'s ${emissionType.toUpperCase()} Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d[emissionType]),
-        yAxisID: 'y'
-      }
-      return emissionDataObj
+        label: `${searchResult}'s ${fueltype}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d[emissionName]),
+        yAxisID: 'y',
+      };
+
+      return emissionDataObj;
     }); // Load each dataset into objects in an array
 
     const dataObj = {
       labels: dataLabel,
-      datasets: newDataSets
+      datasets: newDataSets,
     }; // Load datasets into chart as datasets and load X-axis label with Labels
 
     const chartLabels = {
       title: searchResult,
       description: `${searchResult}'s CO2 Emissions from Coal`,
-      units: `Placeholder Units`
+      units: `Placeholder Units`,
     }; // Object with title, description, and units to be destructured down in the LineChart component
 
     setChartData(dataObj);
