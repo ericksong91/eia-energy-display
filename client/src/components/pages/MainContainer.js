@@ -227,24 +227,54 @@ function MainContainer() {
   function handleUpdateGraphs(searchResult) {
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
+    const fueltype = "Fuel 1"
 
     const newDataSets = [
       {
-        label: `${searchResult}'s Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+        label: `${searchResult}'s ${fueltype} CO2 Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.co2),
+        yAxisID: 'y'
+      },
+      {
+        label: `${searchResult}'s ${fueltype} SO2 Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.so2),
+        yAxisID: 'y'
+      },
+      {
+        label: `${searchResult}'s ${fueltype} NOx Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d.nox),
+        yAxisID: 'y'
       }
-    ];
+    ]; //Load each dataset as objects in an array
 
     const dataObj = {
       labels: dataLabel,
       datasets: newDataSets
-    };
+    }; // Load datasets into chart as datasets and load X-axis label with Labels
 
     const chartLabels = {
       title: searchResult,
       description: `${searchResult}'s CO2 Emissions from Coal`,
       units: `Placeholder Units`
-    };
+    }; // Object with title, description, and units to be destructured down in the LineChart component
+
+    // const newDataSets = [
+    //   {
+    //     label: `${searchResult}'s Emissions from 1990 to 2023`,
+    //     data: stateData.filter((data) => data.fuel_id === 3).map((d) => d.co2)
+    //   }
+    // ];
+
+    // const dataObj = {
+    //   labels: dataLabel,
+    //   datasets: newDataSets
+    // };
+
+    // const chartLabels = {
+    //   title: searchResult,
+    //   description: `${searchResult}'s CO2 Emissions from Coal`,
+    //   units: `Placeholder Units`
+    // };
 
     // Add a way to dynamically pull units from the information later
 
