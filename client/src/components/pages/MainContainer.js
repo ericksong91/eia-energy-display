@@ -222,50 +222,48 @@ function MainContainer() {
   const [chartLabels, setChartLabels] = useState({});
   const [stateResults, setStateResults] = useState(states);
   const emissions = resource.read();
-  // const [fuelSelector, setFuelSelector] = useState([]); // Have the ability to filter by fuels
+  const emissionTypes = ["co2", "so2", "nox"];
+  const fuelTypes = [1, 2, 3, 4];
+
+
+  /*
+
+  HELPER FUNCTIONS FOR UPDATING CHART DATA
+
+  */
+
+  function makeNewDataSet(fuelID, searchResult, stateData) {
+    const fuelData = emissionTypes.map((emissionName) => {
+      const emissionDataObj = {
+        label: `${searchResult}'s ${fuelID}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
+        data: stateData.filter((data) => data.fuel_id === fuelID).map((d) => d[emissionName]),
+        yAxisID: 'y',
+      };
+      return emissionDataObj;
+    }); // Helper function that spits out all three emission types for one fuel source
+
+    return fuelData;
+  };
 
   function handleUpdateGraphs(searchResult) {
     //Need to load logic in here that updates graphs when user clicks on stuff in the accordion
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
-    const emissionTypes = ["co2", "so2", "nox"];
-    const fueltype = "Fuel 1";
-    const fuelTypes = [1, 2, 3, 4];
 
-    /*
-      -forEach fuelTypes
-        -run  forEach emission type
-        -Fill out that dataObj
-        -send to Datasets
+    let diffFuelDataArr = []; // ie, [{coal obj}, {petrol obj}, etc] 
 
-      loop while i > length of fuel types:
-        fueltypes map => return array 
-        load array into dataObj under dataObj.datasets
-      
-      fuelTypes.forEach((fuel) => {
-        emissionTypes.forEach(emiss) => {
-          make dataObj and push it to a global variable [], made for each fuel type
-        }
-      })
+    for (let i = 0; i < fuelTypes.length; i++) {
+      const newDataSet = makeNewDataSet(i + 1, searchResult, stateData); // should return all three emissions data
+      const dataObj = {
+        labels: dataLabel,
+        datasets: newDataSet,
+      }; // Load datasets into chart as datasets and load X-axis label with Labels
+      //After loading newDataSets, push it into diffFuelDataArr
 
-      change chartData to be an array that has multiple dataObjs in it then have GraphPArentcontainer loop through the array 
-      to make as many charts as needed. Maybe pass an additional prop that lets you choose what kind of graph to get.
-    */
+      diffFuelDataArr.push(dataObj);
+    };
 
-    const newDataSets = emissionTypes.map((emissionName) => {
-      const emissionDataObj = {
-        label: `${searchResult}'s ${fueltype}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === 1).map((d) => d[emissionName]),
-        yAxisID: 'y',
-      };
-
-      return emissionDataObj;
-    }); // Load each dataset into objects in an array
-
-    const dataObj = {
-      labels: dataLabel,
-      datasets: newDataSets,
-    }; // Load datasets into chart as datasets and load X-axis label with Labels
+    console.log(diffFuelDataArr);
 
     const chartLabels = {
       title: searchResult,
@@ -273,7 +271,7 @@ function MainContainer() {
       units: `Placeholder Units`,
     }; // Object with title, description, and units to be destructured down in the LineChart component
 
-    setChartData(dataObj);
+    // setChartData(dataObj);
     setChartLabels(chartLabels);
   };
 
