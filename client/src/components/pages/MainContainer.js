@@ -218,8 +218,8 @@ const states = [
 const resource = fetchData('/states');
 
 function MainContainer() {
-  const [chartData, setChartData] = useState({});
-  const [chartLabels, setChartLabels] = useState({});
+  const [chartData, setChartData] = useState([]);
+  const [chartLabels, setChartLabels] = useState([]);
   const [stateResults, setStateResults] = useState(states);
   const emissions = resource.read();
   const emissionTypes = ["co2", "so2", "nox"];
@@ -233,6 +233,7 @@ function MainContainer() {
   */
 
   function makeFuelEmissionsDataSet(fuelID, searchResult, stateData) {
+    const xAxisLabels = stateData.filter((data) => data.fuel_id === fuelID).map((d) => d.year); // X axis corresponding data labels
     const fuelData = emissionTypes.map((emissionName) => {
       const emissionDataObj = {
         label: `${searchResult}'s ${fuelID}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
@@ -240,7 +241,7 @@ function MainContainer() {
         yAxisID: 'y',
       };
       return emissionDataObj;
-    });
+    }); // fuel data that corresponds to Y axis
 
     const fuelChartLabels = {
       title: searchResult,
@@ -248,26 +249,35 @@ function MainContainer() {
       units: `Placeholder Units`,
     };
 
-    return [fuelData, fuelChartLabels];
+    return {
+      fuelData: fuelData,
+      fuelChartLabels: fuelChartLabels,
+      xAxisLabels: xAxisLabels,
+    };
   };
+
+  /*
+
+  FUNCTIONS THAT UPDATE CHART STATE
+
+  */
 
   function handleUpdateGraphs(searchResult) {
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
-    const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
 
     let fuelDataList = []; // ie, [{coal obj}, {petrol obj}, etc]
     let fuelLabelList = []; // ie, [{title, description, units for one fuel}, {title, description, units for another fuel}, etc]
 
     for (let i = 0; i < fuelTypes.length; i++) {
-      const newDataSet = makeFuelEmissionsDataSet(i + 1, searchResult, stateData); // returns an array with [fuelData, fuelChartLabels]
+      const newDataSet = makeFuelEmissionsDataSet(i + 1, searchResult, stateData); // returns an obj with fuelData, fuelChartLabels, xAxisLabels
       const dataObj = {
-        labels: dataLabel,
-        datasets: newDataSet[0],
+        labels: newDataSet.xAxisLabels,
+        datasets: newDataSet.fuelData,
       }; // Load datasets into chart as datasets and load X-axis label with Labels
       //After loading newDataSets, push it into diffFuelDataArr
 
       fuelDataList.push(dataObj);
-      fuelLabelList.push(newDataSet[1]);
+      fuelLabelList.push(newDataSet.fuelChartLabels);
     };
 
     setChartData(fuelDataList);
