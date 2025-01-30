@@ -223,8 +223,7 @@ function MainContainer() {
   const [stateResults, setStateResults] = useState(states);
   const emissions = resource.read();
   const emissionTypes = ["co2", "so2", "nox"];
-  const fuelTypes = [1, 2, 3, 4];
-
+  const fuelTypes = ["Coal", "Natural Gas", "Petroleum", "Other"];
 
   /*
 
@@ -236,7 +235,7 @@ function MainContainer() {
     const xAxisLabels = stateData.filter((data) => data.fuel_id === fuelID).map((d) => d.year); // X axis corresponding data labels
     const fuelData = emissionTypes.map((emissionName) => {
       const emissionDataObj = {
-        label: `${searchResult}'s ${fuelID}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
+        label: `${fuelTypes[fuelID - 1]} ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
         data: stateData.filter((data) => data.fuel_id === fuelID).map((d) => d[emissionName]),
         yAxisID: 'y',
       };
@@ -245,7 +244,7 @@ function MainContainer() {
 
     const fuelChartLabels = {
       title: searchResult,
-      description: `${searchResult}: CO2, SO2 and NOx emissions from ${fuelID}`,
+      description: `${searchResult}: CO2, SO2 and NOx emissions from ${fuelTypes[fuelID - 1]}`,
       units: `Placeholder Units`,
     };
 
@@ -273,13 +272,14 @@ function MainContainer() {
       const dataObj = {
         labels: newDataSet.xAxisLabels,
         datasets: newDataSet.fuelData,
-      }; // Load datasets into chart as datasets and load X-axis label with Labels
+      }; // Load datasets into chart as datasets and load X-axis label with Labels using a loop
       //After loading newDataSets, push it into diffFuelDataArr
 
+      
       fuelDataList.push(dataObj);
       fuelLabelList.push(newDataSet.fuelChartLabels);
     };
-
+    
     setChartData(fuelDataList);
     setChartLabels(fuelLabelList);
   };

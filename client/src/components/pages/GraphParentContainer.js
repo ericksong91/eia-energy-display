@@ -7,7 +7,7 @@ function GraphParentContainer({ chartData, chartLabels }) {
 
     return (
         <section className='graphs container mx-auto pb-5'>
-            {graphList}
+            {graphList.length === 0 ? <></> : graphList}
         </section>
     )
 };

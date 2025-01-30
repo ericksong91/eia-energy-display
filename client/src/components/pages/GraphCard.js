@@ -14,7 +14,7 @@ function GraphCard({ fuelData, fuelLabels }) {
     const type = "line";
 
     return (
-        <div className='graphcard p-4 m-3 w-90'>
+        <div className='graphcard p-4 m-3 w-90 fade-in-left'>
             {
                 type === "line"
                     ? <LineChart fuelData={fuelData} fuelLabels={fuelLabels} />
