@@ -232,7 +232,7 @@ function MainContainer() {
 
   */
 
-  function makeNewDataSet(fuelID, searchResult, stateData) {
+  function makeFuelEmissionsDataSet(fuelID, searchResult, stateData) {
     const fuelData = emissionTypes.map((emissionName) => {
       const emissionDataObj = {
         label: `${searchResult}'s ${fuelID}'s ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
@@ -240,39 +240,38 @@ function MainContainer() {
         yAxisID: 'y',
       };
       return emissionDataObj;
-    }); // Helper function that spits out all three emission types for one fuel source
+    });
 
-    return fuelData;
+    const fuelChartLabels = {
+      title: searchResult,
+      description: `${searchResult}: CO2, SO2 and NOx emissions from ${fuelID}`,
+      units: `Placeholder Units`,
+    };
+
+    return [fuelData, fuelChartLabels];
   };
 
   function handleUpdateGraphs(searchResult) {
-    //Need to load logic in here that updates graphs when user clicks on stuff in the accordion
     const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
     const dataLabel = stateData.filter((data) => data.fuel_id === 1).map((d) => d.year); // Same as above but using it to find data labels
 
-    let diffFuelDataArr = []; // ie, [{coal obj}, {petrol obj}, etc] 
+    let fuelDataList = []; // ie, [{coal obj}, {petrol obj}, etc]
+    let fuelLabelList = []; // ie, [{title, description, units for one fuel}, {title, description, units for another fuel}, etc]
 
     for (let i = 0; i < fuelTypes.length; i++) {
-      const newDataSet = makeNewDataSet(i + 1, searchResult, stateData); // should return all three emissions data
+      const newDataSet = makeFuelEmissionsDataSet(i + 1, searchResult, stateData); // returns an array with [fuelData, fuelChartLabels]
       const dataObj = {
         labels: dataLabel,
-        datasets: newDataSet,
+        datasets: newDataSet[0],
       }; // Load datasets into chart as datasets and load X-axis label with Labels
       //After loading newDataSets, push it into diffFuelDataArr
 
-      diffFuelDataArr.push(dataObj);
+      fuelDataList.push(dataObj);
+      fuelLabelList.push(newDataSet[1]);
     };
 
-    console.log(diffFuelDataArr);
-
-    const chartLabels = {
-      title: searchResult,
-      description: `${searchResult}'s CO2 Emissions from Coal`,
-      units: `Placeholder Units`,
-    }; // Object with title, description, and units to be destructured down in the LineChart component
-
-    // setChartData(dataObj);
-    setChartLabels(chartLabels);
+    setChartData(fuelDataList);
+    setChartLabels(fuelLabelList);
   };
 
   function handleStatesFilter(value) {
