@@ -16,8 +16,8 @@ app = Flask(
     template_folder="../client/build"
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') # uncomment to access external database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
@@ -33,10 +33,6 @@ api = Api(app)
 ### STATES ###
 class ShowStates(Resource):
     def get(self):
-        # When request is made to the resource, it should start pulling data but asnychronously
-        # Deliver old data to the user
-        # Is there any way to run a job async ONLY if the date on the last updated is different?
-
         states = [state.to_dict() for state in State.query.all()]
         return make_response(jsonify(states), 200)
     
