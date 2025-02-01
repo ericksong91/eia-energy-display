@@ -8,15 +8,14 @@ const upArrow = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0
   <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
 </svg>
 
-function FilterAccordion({ isChecked, onIsChecked, fuelTypes, onAccordionFuelFilter }) {
+function FilterAccordion({ isChecked, fuelTypes, onAccordionFuelFilter }) {
   const [accordionOpen, setAccordionOpen] = useState(false);
 
   function checkboxChangeHandler(index) {
     const newChecks = [...isChecked];
     newChecks.splice(index, 1, !isChecked[index]);
 
-    onIsChecked(newChecks);
-    onAccordionFuelFilter(isChecked, index);
+    onAccordionFuelFilter(newChecks, index);
   };
 
   const fuelCheckboxes = fuelTypes.map((fuel, index) => {

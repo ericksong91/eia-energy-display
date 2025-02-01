@@ -227,9 +227,7 @@ function MainContainer() {
   const [isChecked, setIsChecked] = useState(fuelTypes.map(() => true));
 
   /*
-
   HELPER FUNCTIONS FOR UPDATING CHART DATA
-
   */
 
   function makeFuelEmissionsDataSet(fuelID, searchResult, stateData) {
@@ -257,9 +255,7 @@ function MainContainer() {
   };
 
   /*
-
   FUNCTIONS THAT UPDATE CHART STATE
-
   */
 
   function handleUpdateGraphs(searchResult) {
@@ -270,7 +266,7 @@ function MainContainer() {
 
     for (let i = 0; i < fuelTypes.length; i++) {
       const newDataSet = makeFuelEmissionsDataSet(i + 1, searchResult, stateData); // returns an obj with fuelData, fuelChartLabels, xAxisLabels
-      const dataObj = {
+      const newFuelObj = {
         labels: newDataSet.xAxisLabels,
         datasets: newDataSet.fuelData,
         isChecked: isChecked[i],
@@ -278,7 +274,7 @@ function MainContainer() {
       //After loading newDataSets, push it into diffFuelDataArr
 
 
-      fuelDataList.push(dataObj);
+      fuelDataList.push(newFuelObj);
       fuelLabelList.push(newDataSet.fuelChartLabels);
     };
 
@@ -294,15 +290,22 @@ function MainContainer() {
     setStateResults(result);
   };
 
-  function handleAccordionFuelFilter(fuelCheckList, index) {
+  function handleAccordionFuelFilter(newChecks) {
     if (chartData.length === 0) {
       return
     } else {
-      const updatedChartList = chartData.map((fuelData) => {
-        return console.log(fuelData);
+      const updatedChartList = chartData.map((fuelData, index) => {
+        const newFuelObj = {
+          labels: fuelData.labels,
+          datasets: fuelData.datasets,
+          isChecked: newChecks[index],
+        };
+
+        return newFuelObj;
       });
 
-
+      setIsChecked(newChecks);
+      setChartData(updatedChartList);
     }; // Prevents update of chart data if no data is displayed
   };
 
