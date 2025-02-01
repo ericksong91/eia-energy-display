@@ -1,4 +1,3 @@
-import { lazy } from 'react'
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import PieChart from "./graphs/PieChart";
@@ -8,10 +7,8 @@ import LineChart from "./graphs/LineChart";
 Chart.register(CategoryScale);
 
 function GraphCard({ fuelData, fuelLabels }) {
-
     // Returns either a line graph, piechart or barchart using a nested ternary
-
-    const type = "line";
+    const type = "line"; // Keep to line temporarily
 
     return (
         <div className='graphcard p-4 m-3 w-90 fade-in-left'>

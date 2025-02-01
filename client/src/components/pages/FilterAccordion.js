@@ -8,15 +8,15 @@ const upArrow = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0
   <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
 </svg>
 
-function FilterAccordion({ fuelTypes }) {
+function FilterAccordion({ isChecked, onIsChecked, fuelTypes, onAccordionFuelFilter }) {
   const [accordionOpen, setAccordionOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(fuelTypes.map(() => false));
 
-  function checkboxChangeHandler(fuel, index) {
+  function checkboxChangeHandler(index) {
     const newChecks = [...isChecked];
     newChecks.splice(index, 1, !isChecked[index]);
 
-    setIsChecked(newChecks);
+    onIsChecked(newChecks);
+    onAccordionFuelFilter(isChecked, index);
   };
 
   const fuelCheckboxes = fuelTypes.map((fuel, index) => {
@@ -25,15 +25,15 @@ function FilterAccordion({ fuelTypes }) {
         <input
           type="checkbox"
           value={fuel}
-          onChange={() => checkboxChangeHandler(fuel, index)}
+          onChange={() => checkboxChangeHandler(index)}
           className={`
-                    ${isChecked[index] ? 'checked' : ''}
                     ${fuel}-checkbox 
                     w-4 h-4 text-blue-600 
                   bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                   dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 
                   dark:bg-gray-700 dark:border-gray-600
                   `}
+          checked={isChecked[index]}
         />
         <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{fuel}</label>
       </div>

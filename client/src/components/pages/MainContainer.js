@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import fetchData from '../helpers/fetchData';
 import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
@@ -224,6 +224,7 @@ function MainContainer() {
   const emissions = resource.read();
   const emissionTypes = ["co2", "so2", "nox"];
   const fuelTypes = ["Coal", "Natural Gas", "Petroleum", "Other/Misc. Fuel"];
+  const [isChecked, setIsChecked] = useState(fuelTypes.map(() => true));
 
   /*
 
@@ -272,14 +273,15 @@ function MainContainer() {
       const dataObj = {
         labels: newDataSet.xAxisLabels,
         datasets: newDataSet.fuelData,
+        isChecked: isChecked[i],
       }; // Load datasets into chart as datasets and load X-axis label with Labels using a loop
       //After loading newDataSets, push it into diffFuelDataArr
 
-      
+
       fuelDataList.push(dataObj);
       fuelLabelList.push(newDataSet.fuelChartLabels);
     };
-    
+
     setChartData(fuelDataList);
     setChartLabels(fuelLabelList);
   };
@@ -292,10 +294,22 @@ function MainContainer() {
     setStateResults(result);
   };
 
+  function handleAccordionFuelFilter(fuelCheckList, index) {
+    if (chartData.length === 0) {
+      return
+    } else {
+      const updatedChartList = chartData.map((fuelData) => {
+        return console.log(fuelData);
+      });
+
+
+    }; // Prevents update of chart data if no data is displayed
+  };
+
   return (
     <main className="main p-4 m-4 2xl:mx-80 xl:mx-60 md:mx-32 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
       <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-      <FilterAccordion fuelTypes={fuelTypes} />
+      <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
       <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
     </main>
   );
