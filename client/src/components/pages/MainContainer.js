@@ -293,7 +293,7 @@ function MainContainer() {
   };
 
   return (
-    <main className="main p-4 m-4 2xl:mx-80 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
+    <main className="main p-4 m-4 2xl:mx-80 xl:mx-60 md:mx-32 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
       <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
       <FilterAccordion />
       <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
