@@ -2,14 +2,15 @@ import { useState, Suspense } from 'react';
 import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
+import FallBack from './helpers/FallBack';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app flex flex-col min-h-screen bg-sea-quat dark:bg-ocean-main dark:bg-none">
-        <Suspense fallback={<div>Loading Data...</div>}>
+      <div className="app min-h-screen bg-sea-quat dark:bg-ocean-main dark:bg-none">
+        <Suspense fallback={<FallBack />}>
           <Header onDarkMode={setDarkMode} darkMode={darkMode} />
           <MainContainer />
           <Footer />

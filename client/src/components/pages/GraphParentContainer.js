@@ -17,7 +17,7 @@ function GraphParentContainer({ chartData, chartLabels }) {
     }, [chartData]); // Update graph container state whenever chartdata changes
 
     return (
-        <section className='graphs container mx-auto pb-5'>
+        <section className='graphs container pb-5'>
             {graphList.length === 0 ? <></> : graphList}
         </section>
     )
