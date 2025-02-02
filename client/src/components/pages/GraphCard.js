@@ -11,7 +11,7 @@ function GraphCard({ fuelData, fuelLabels }) {
     const type = "line"; // Keep to line temporarily
 
     return (
-        <div className='graphcard p-4 m-3 w-90 fade-in-left'>
+        <div className='graphcard p-4 m-4 rounded-lg shadow bg-sea-seco hover:bg-opacity-90 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 fade-in-left'>
             {
                 type === "line"
                     ? <LineChart fuelData={fuelData} fuelLabels={fuelLabels} />

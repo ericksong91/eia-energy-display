@@ -5,7 +5,7 @@ import LightDarkToggle from './LightDarkToggle';
 
 function Header({ onDarkMode, darkMode }) {
     return (
-        <header className='header bg-blue-900 bg-opacity-30'>
+        <header className='header bg-sea-main'>
             <div className='container mx-auto'>
                 <div className='flex items-center justify-between'>
                     <img src={logo} alt="EIA Energy Data Logo has a lightbulb with the website name" className='logo w-32 object-cover rounded-lg border-2' />

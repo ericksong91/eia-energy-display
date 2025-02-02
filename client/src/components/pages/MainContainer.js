@@ -311,7 +311,7 @@ function MainContainer() {
 
   return (
     <main className="main pt-4">
-      <div className='container mx-auto bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400'>
+      <div className='container mx-auto bg-sea-main rounded-lg drop-shadow-md dark:bg-slate-400'>
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isChecked={isChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
