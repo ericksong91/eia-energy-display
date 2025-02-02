@@ -41,7 +41,7 @@ function FilterAccordion({ isChecked, fuelTypes, onAccordionFuelFilter }) {
 
   return (
     <div className="accordion container mx-auto">
-      <div className="m-4 p-4 bg-blue-200 rounded-lg">
+      <div className="m-4 p-4 bg-light-main sm:bg-light-seco rounded-lg">
         <div className='py-2'>
           <button className='flex justify-between w-full' onClick={() => setAccordionOpen(!accordionOpen)}>
             <span className="text-md">Filter Results by Fuel Type:</span>

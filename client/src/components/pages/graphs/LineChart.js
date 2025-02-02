@@ -3,18 +3,27 @@ import { Line } from 'react-chartjs-2';
 
 function LineChart({ fuelData, fuelLabels }) {
     const { title, description, units } = fuelLabels;
+
+    const colors = 'white';
+
     const scales = {
         y: {
             type: 'linear',
             display: true,
             position: 'left',
+            ticks: {
+                color: colors,
+            },
         },
         x: {
             title: {
                 display: true,
                 text: 'Period'
-            }
-        }
+            },
+            ticks: {
+                color: colors
+            },
+        },
     }; // Can add another scale if needed using y1, y2, etc
 
     const options = {
@@ -27,8 +36,9 @@ function LineChart({ fuelData, fuelLabels }) {
         plugins: {
             title: {
                 display: true,
-                text: description
-            }
+                text: description,
+                color: colors
+            },
         },
         scales: scales
     };
@@ -39,7 +49,7 @@ function LineChart({ fuelData, fuelLabels }) {
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl dark:text-white'>{title}</h1>
+                    <h1 className='chart-title text-center font-bold text-2xl text-white dark:text-white'>{title}</h1>
                     <Line data={fuelData} options={options} />
                 </div>
             }

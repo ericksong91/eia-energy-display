@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app min-h-screen bg-sea-quat dark:bg-ocean-main dark:bg-none">
+      <div className="app min-h-screen bg-light-quat dark:bg-ocean-main dark:bg-none">
         <Suspense fallback={<FallBack />}>
           <Header onDarkMode={setDarkMode} darkMode={darkMode} />
           <MainContainer />

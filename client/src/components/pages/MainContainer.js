@@ -219,7 +219,7 @@ const resource = fetchData('/states');
 
 function MainContainer() {
   const [chartData, setChartData] = useState([]);
-  const [chartLabels, setChartLabels] = useState([]);
+  const [chartLabels, setChartLabels] = useState([]); // Refactor to put this data inside chartData instead, if it makes sense
   const [stateResults, setStateResults] = useState(states);
   const emissions = resource.read();
   const emissionTypes = ["co2", "so2", "nox"];
@@ -310,8 +310,8 @@ function MainContainer() {
   };
 
   return (
-    <main className="main pt-4">
-      <div className='container mx-auto bg-sea-main rounded-lg drop-shadow-md dark:bg-slate-400'>
+    <main className="main sm:pt-4">
+      <div className='container mx-auto bg-light-quat sm:bg-light-main sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isChecked={isChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />

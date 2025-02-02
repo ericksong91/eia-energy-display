@@ -7,14 +7,14 @@ function GraphParentContainer({ chartData, chartLabels }) {
     useEffect(() => {
         const graphList = chartData.map((fuelData, index) => {
             if (fuelData.isChecked === false) {
-                return
+                return null
             } else {
                 return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} />
             };
         });
 
         setGraphList(graphList);
-    }, [chartData]); // Update graph container state whenever chartdata changes
+    }, [chartData, chartLabels]); // Update graph container state whenever chartdata changes
 
     return (
         <section className='graphs container pb-5'>
