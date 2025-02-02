@@ -304,16 +304,15 @@ function MainContainer() {
         return newFuelObj;
       });
 
-      setIsChecked(newChecks);
       setChartData(updatedChartList);
     }; // Prevents update of chart data if no data is displayed
   };
 
   return (
-    <main className="main sm:pt-4">
+    <main className="main flex-grow sm:pt-4"> 
       <div className='container mx-auto bg-light-quat sm:bg-light-main sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-        <FilterAccordion isChecked={isChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
+        <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
       </div>
     </main>
