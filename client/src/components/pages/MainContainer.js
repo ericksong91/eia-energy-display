@@ -310,10 +310,12 @@ function MainContainer() {
   };
 
   return (
-    <main className="main p-4 m-4 2xl:mx-80 xl:mx-60 md:mx-32 bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400">
-      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-      <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
-      <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
+    <main className="main pt-4">
+      <div className='container mx-auto bg-white bg-opacity-80 rounded-lg drop-shadow-md dark:bg-slate-400'>
+        <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
+        <FilterAccordion isChecked={isChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
+        <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
+      </div>
     </main>
   );
 };

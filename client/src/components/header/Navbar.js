@@ -19,7 +19,7 @@ function Navbar() {
   return (
     <nav className='navbar grow'>
       <ul className='flex'>
-          {buttonsList}
+          {/* {buttonsList} */}
       </ul>
     </nav>
   )

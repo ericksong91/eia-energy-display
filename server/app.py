@@ -16,8 +16,8 @@ app = Flask(
     template_folder="../client/build"
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') # uncomment to access external database
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') # uncomment to access external database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
@@ -38,39 +38,39 @@ class ShowStates(Resource):
     
 api.add_resource(ShowStates, '/states')
 
-class StateByID(Resource):
-    def get(self, id):
-        state = State.query.filter_by(id=id).first().to_dict()
-        return make_response(jsonify(state), 200)
+# class StateByID(Resource):
+#     def get(self, id):
+#         state = State.query.filter_by(id=id).first().to_dict()
+#         return make_response(jsonify(state), 200)
 
-api.add_resource(StateByID, '/states/<int:id>')
+# api.add_resource(StateByID, '/states/<int:id>')
 
-# ### FUELS ###
-class ShowFuels(Resource):
-    def get(self):
-        fuels = [fuel.to_dict() for fuel in Fuel.query.all()]
-        return make_response(jsonify(fuels), 200)
+# # ### FUELS ###
+# class ShowFuels(Resource):
+#     def get(self):
+#         fuels = [fuel.to_dict() for fuel in Fuel.query.all()]
+#         return make_response(jsonify(fuels), 200)
     
-api.add_resource(ShowFuels, '/fuels')
+# api.add_resource(ShowFuels, '/fuels')
 
-class FuelByID(Resource):
-    def get(self, id):
-        fuel = Fuel.query.filter_by(id=id).first().to_dict()
-        return make_response(jsonify(fuel), 200)
+# class FuelByID(Resource):
+#     def get(self, id):
+#         fuel = Fuel.query.filter_by(id=id).first().to_dict()
+#         return make_response(jsonify(fuel), 200)
 
-api.add_resource(FuelByID, '/fuels/<int:id>')
+# api.add_resource(FuelByID, '/fuels/<int:id>')
 
-# ### PERIODS ###
-class ShowPeriods(Resource):
-    def get(self):
-        periods = [period.to_dict() for period in Period.query.all()]
-        return make_response(jsonify(periods), 200)
+# # ### PERIODS ###
+# class ShowPeriods(Resource):
+#     def get(self):
+#         periods = [period.to_dict() for period in Period.query.all()]
+#         return make_response(jsonify(periods), 200)
     
-api.add_resource(ShowPeriods, '/periods')
+# api.add_resource(ShowPeriods, '/periods')
 
-class PeriodByID(Resource):
-    def get(self, id):
-        period = Period.query.filter_by(id=id).first().to_dict()
-        return make_response(jsonify(period), 200)
+# class PeriodByID(Resource):
+#     def get(self, id):
+#         period = Period.query.filter_by(id=id).first().to_dict()
+#         return make_response(jsonify(period), 200)
 
-api.add_resource(PeriodByID, '/periods/<int:id>')
+# api.add_resource(PeriodByID, '/periods/<int:id>')
