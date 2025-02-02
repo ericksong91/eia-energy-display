@@ -7,6 +7,8 @@ import FallBack from './helpers/FallBack';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
+  const graphTextColor = darkMode ? "black" : "white";
+
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
       <div className="app min-h-screen bg-light-quat dark:bg-ocean-main flex flex-col">

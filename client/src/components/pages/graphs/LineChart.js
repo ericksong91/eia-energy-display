@@ -49,7 +49,7 @@ function LineChart({ fuelData, fuelLabels }) {
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl text-white dark:text-white'>{title}</h1>
+                    <h1 className='chart-title text-center font-bold text-2xl text-black sm:text-white dark:text-white'>{title}</h1>
                     <Line data={fuelData} options={options} />
                 </div>
             }
