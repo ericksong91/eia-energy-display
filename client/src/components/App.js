@@ -8,10 +8,9 @@ import { DarkModeContext } from './helpers/DarkModeContext';
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
-
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app min-h-screen bg-light-quat dark:bg-ocean-main flex flex-col">
+      <div className="app min-h-screen bg-light-quat dark:bg-dark-main flex flex-col">
         <Suspense fallback={<FallBack />}>
           <Header />
           <MainContainer />

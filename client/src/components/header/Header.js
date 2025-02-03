@@ -3,14 +3,14 @@ import logo from '../../images/logo_svg.svg'
 // import Navbar from './Navbar'
 import LightDarkToggle from './LightDarkToggle';
 
-function Header({ onDarkMode, darkMode }) {
+function Header() {
     return (
-        <header className='header bg-light-main'>
+        <header className='header bg-light-main dark:bg-dark-main'>
             <div className='container mx-auto'>
                 <div className='flex items-center justify-between'>
                     <img src={logo} alt="EIA Energy Data Logo has a lightbulb with the website name" className='logo w-32 object-cover rounded-lg border-2' />
                     {/* <Navbar /> */}
-                    <LightDarkToggle onDarkMode={onDarkMode} darkMode={darkMode} />
+                    <LightDarkToggle />
                 </div>
             </div>
 

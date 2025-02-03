@@ -1,10 +1,10 @@
-import React from 'react';
+import { useContext } from 'react';
+import { DarkModeContext } from '../../helpers/DarkModeContext';
 import { Line } from 'react-chartjs-2';
 
 function LineChart({ fuelData, fuelLabels }) {
     const { title, description, units } = fuelLabels;
-
-    const colors = 'white';
+    const { graphTextColor } = useContext(DarkModeContext);
 
     const scales = {
         y: {
@@ -12,7 +12,7 @@ function LineChart({ fuelData, fuelLabels }) {
             display: true,
             position: 'left',
             ticks: {
-                color: colors,
+                color: graphTextColor,
             },
         },
         x: {
@@ -21,7 +21,7 @@ function LineChart({ fuelData, fuelLabels }) {
                 text: 'Period'
             },
             ticks: {
-                color: colors
+                color: graphTextColor
             },
         },
     }; // Can add another scale if needed using y1, y2, etc
@@ -37,7 +37,7 @@ function LineChart({ fuelData, fuelLabels }) {
             title: {
                 display: true,
                 text: description,
-                color: colors
+                color: graphTextColor
             },
         },
         scales: scales
@@ -49,7 +49,7 @@ function LineChart({ fuelData, fuelLabels }) {
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl text-black sm:text-white dark:text-white'>{title}</h1>
+                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{title}</h1>
                     <Line data={fuelData} options={options} />
                 </div>
             }
