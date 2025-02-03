@@ -1,19 +1,19 @@
-import { useState, Suspense } from 'react';
+import { Suspense, useContext } from 'react';
 import MainContainer from './pages/MainContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import FallBack from './helpers/FallBack';
+import { DarkModeContext } from './helpers/DarkModeContext';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode } = useContext(DarkModeContext);
 
-  const graphTextColor = darkMode ? "black" : "white";
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
       <div className="app min-h-screen bg-light-quat dark:bg-ocean-main flex flex-col">
         <Suspense fallback={<FallBack />}>
-          <Header onDarkMode={setDarkMode} darkMode={darkMode} />
+          <Header />
           <MainContainer />
           <Footer />
         </Suspense>
