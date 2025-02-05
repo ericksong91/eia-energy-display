@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DarkModeContext } from '../../helpers/DarkModeContext';
+import { DarkModeContext } from '../../00_context/DarkModeContext';
 import { Line } from 'react-chartjs-2';
 
 function LineChart({ fuelData, fuelLabels }) {
@@ -30,26 +30,26 @@ function LineChart({ fuelData, fuelLabels }) {
         responsive: true,
         interaction: {
             mode: 'index',
-            intersect: false,
+            intersect: true,
         },
-        stacked: false,
+        stacked: true,
         plugins: {
-            title: {
-                display: true,
-                text: description,
-                color: graphTextColor
-            },
+            // title: {
+            //     display: false,
+            //     text: description,
+            //     color: graphTextColor
+            // },
         },
         scales: scales
     };
 
     return (
-        <div className="block p-6" >
+        <div className="p-6" >
             {Object.keys(fuelData).length === 0 ?
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{title}</h1>
+                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{`${description}`}</h1>
                     <Line data={fuelData} options={options} />
                 </div>
             }

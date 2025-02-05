@@ -1,9 +1,9 @@
 import { Suspense, useContext } from 'react';
-import MainContainer from './pages/MainContainer';
-import Header from './header/Header';
+import MainContainer from './03_pages/MainContainer';
+import Header from './02_header/Header';
 import Footer from './footer/Footer';
-import FallBack from './helpers/FallBack';
-import { DarkModeContext } from './helpers/DarkModeContext';
+import FallBack from './01_helpers/FallBack';
+import { DarkModeContext } from './00_context/DarkModeContext';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);

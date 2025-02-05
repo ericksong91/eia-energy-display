@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DarkModeContext } from "../helpers/DarkModeContext";
+import { DarkModeContext } from "../00_context/DarkModeContext";
 
 
 function LightDarkToggle() {

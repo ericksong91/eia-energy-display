@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import fetchData from '../helpers/fetchData';
+import fetchData from '../01_helpers/fetchData';
 import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
@@ -227,7 +227,7 @@ function MainContainer() {
   const [isChecked, setIsChecked] = useState(fuelTypes.map(() => true));
 
   /*
-  HELPER FUNCTIONS FOR UPDATING CHART DATA
+  HELPER FUNCTIONS FOR PACKAGING CHART DATA
   */
 
   function makeFuelEmissionsDataSet(fuelID, searchResult, stateData) {
@@ -243,7 +243,7 @@ function MainContainer() {
 
     const fuelChartLabels = {
       title: searchResult,
-      description: `${searchResult}: CO2, SO2 and NOx emissions from ${fuelTypes[fuelID - 1]}`,
+      description: `CO2, SO2 and NOx emissions from ${fuelTypes[fuelID - 1]}`,
       units: `Placeholder Units`,
     };
 
@@ -309,8 +309,18 @@ function MainContainer() {
   };
 
   return (
-    <main className="main flex-grow sm:pt-4"> 
+    <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto bg-light-quat sm:bg-light-main sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
+        <div className='site-header-description'>
+          <h1>U.S. Energy Information Association: Emissions</h1>
+          <p>The purpose of this site is to display data from the EIA's API in an easy to look at format.</p>
+          <ol className='list-decimal list-inside'>
+            <li>First, click on the search bar below to display a list of U.S. States or begin typing to search for a state</li>
+            <li>You can click on a U.S. State or you can use your arrow keys and hit enter to select one</li>
+            <li>After selecting a state, graphs should automatically appear below the filter</li>
+          </ol>
+        </div>
+
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
