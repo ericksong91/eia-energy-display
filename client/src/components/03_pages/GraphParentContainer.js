@@ -1,4 +1,4 @@
-import GraphCard from "./GraphCard";
+import GraphCard from "./graphs/GraphCard";
 import { useState, useEffect } from "react";
 
 function GraphParentContainer({ chartData, chartLabels }) {
@@ -18,6 +18,7 @@ function GraphParentContainer({ chartData, chartLabels }) {
 
     return (
         <section className='graphs container pb-5'>
+            <h2>{}</h2>
             {graphList.length === 0 ? <></> : graphList}
         </section>
     )

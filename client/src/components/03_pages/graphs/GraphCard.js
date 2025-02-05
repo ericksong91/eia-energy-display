@@ -1,8 +1,8 @@
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
-import PieChart from "./graphs/PieChart";
-import BarChart from "./graphs/BarChart";
-import LineChart from "./graphs/LineChart";
+import PieChart from "./PieChart";
+import BarChart from "./BarChart";
+import LineChart from "./LineChart";
 
 Chart.register(CategoryScale);
 
