@@ -311,7 +311,7 @@ function MainContainer() {
 
   return (
     <main className="main flex-grow sm:pt-4">
-      <div className='container mx-auto bg-light-quat sm:bg-light-main sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
+      <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
         <SectionHeading />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />

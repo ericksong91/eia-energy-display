@@ -15,7 +15,7 @@ function LightDarkToggle() {
 
     return (
         <div className='lightdark-mode'>
-            <label className={`inline-flex items-center cursor-pointer ${darkMode ? "moonIcon" : "animate__bounce"}`}>
+            <label className={`inline-flex items-center align-middle cursor-pointer ${darkMode ? "moonIcon" : "animate__bounce"}`}>
                 <span className="ms-3 mr-3">
                     {darkMode ? moonIcon : sunIcon}
                 </span>
