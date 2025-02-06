@@ -14,9 +14,8 @@ function LightDarkToggle() {
     </svg>;
 
     return (
-        <div className='lightdark-mode'>
-            <label className={`inline-flex items-center align-middle cursor-pointer ${darkMode ? "moonIcon" : "animate__bounce"}`}>
-                <span className="ms-3 mr-3">
+            <label className={`flex items-center align-middle cursor-pointer ${darkMode ? "moonIcon" : "animate__bounce"}`}>
+                <span className="sm:mr-3">
                     {darkMode ? moonIcon : sunIcon}
                 </span>
 
@@ -31,7 +30,6 @@ function LightDarkToggle() {
                     ">
                 </div>
             </label>
-        </div>
     );
 };
 

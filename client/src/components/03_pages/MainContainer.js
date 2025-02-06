@@ -312,9 +312,14 @@ function MainContainer() {
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
-        <SectionHeading />
+
+        <div className='flex mt-5 mb-3 justify-center sm:hidden'>
+          <h1 className="heading-under-header text-4xl font-extrabold leading-none tracking-tight text-light-text dark:text-white">EIA Energy Display</h1>
+        </div>
+
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
+        <SectionHeading />
         <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
       </div>
     </main>
