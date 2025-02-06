@@ -1,7 +1,6 @@
 function SectionHeading() {
     return (
         <div className='site-main-heading flex flex-col items-center mt-4 p-4'>
-            <h1 className="heading mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">EIA Energy Display</h1>
             <div className="instructions-and-details-card bg-light-secondary rounded-lg drop-shadow-md sm:drop-shadow-none sm:bg-none">
                 <p>The purpose of this site is to display data from the EIA's API in an easy to look at format.</p>
                 <ol className='instructions list-decimal list-inside'>
