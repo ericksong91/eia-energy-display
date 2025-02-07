@@ -6,11 +6,12 @@ function GraphParentContainer({ chartData, chartLabels }) {
 
     useEffect(() => {
         const graphList = chartData.map((fuelData, index) => {
-            if (fuelData.isChecked === false) {
-                return null
-            } else {
-                return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} />
-            };
+            // if (fuelData.isChecked === false) {
+            //     return null
+            // } else {
+            //     return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
+            // };
+            return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
         });
 
         setGraphList(graphList);
@@ -18,7 +19,6 @@ function GraphParentContainer({ chartData, chartLabels }) {
 
     return (
         <section className='graphs container pb-5'>
-            <h2>{}</h2>
             {graphList.length === 0 ? <></> : graphList}
         </section>
     )
