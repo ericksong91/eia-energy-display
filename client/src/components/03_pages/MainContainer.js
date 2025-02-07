@@ -311,7 +311,7 @@ function MainContainer() {
 
   return (
     <main className="main flex-grow sm:pt-4">
-      <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md dark:bg-slate-400'>
+      <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
 
         <div className='flex mt-5 mb-3 justify-center sm:hidden'>
           <h1 className="heading-under-header text-4xl font-extrabold leading-none tracking-tight text-light-text dark:text-white">EIA Energy Display</h1>
