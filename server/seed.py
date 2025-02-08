@@ -5,10 +5,11 @@ import os
 
 from app import app
 from models import db, State, Fuel, Period
+from sqlalchemy import and_
 
 states = [
     {
-        "name": "United States (Total)",
+        "name": "United States",
         "abbreviation": "USA"
     },
     {
@@ -255,26 +256,33 @@ with app.app_context():
         fuel = Fuel(name=fu)
         db.session.add(fuel)
 
-    print('Committing State and Fuel transactions...')
-    db.session.commit()
+    db.session.flush()
 
     print('Creating Period objects....')
     offset_value = 0
     value_tracker = 0
-    emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=desc&offset=800&length=5000"
-    net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000"
-    avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000"
+    emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=desc"
+    net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=desc"
+    avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=desc"
     url_list = [emissions_url, net_gen_url, avg_price_url]
     data_list = [api_request(eia_url_offset(0, url)) for url in url_list] # using list comp to generate each url's data into one list. Solved Expression (in this case the function) for url in url_list 
 
-    # for data in data_list:
-    #     # going into array
-    #     for i in data['response']['data']:
-    #         # if period object is empty, make a new one
-    #         # if period object is NOT empty, update with new values
-    #         period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['Combined']).first().id, 
-    #                         nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
-    #         db.session.add(period)
+    for data in data_list:
+        for i in data['response']['data']:
+            state_id_query = State.query.filter_by(name=i['stateDescription']).first().id # load state ID using state's name as a search query
+            period = Period.query.filter(and_(Period.year==int(i['period']), Period.state_id==state_id_query)).first() # find period with relate year and state id
+
+            if not period:
+                # if the period record is None, make a new one
+                period = Period(year=int(i['period']), state_id=state_id_query, fuel_id=5, 
+                                nox=int(i['nitrogen-oxide']), so2=int(i['sulfer-dioxide']), co2=int(i['carbon-dioxide']))
+                db.session.add(period)
+            else:
+                # if period exists, update record
+                period.avg_price = i.get('average-retail-price', period.avg_price)
+                period.net_generation = i.get('net-generation', period.net_generation) 
+                db.session.add(period)
+        db.session.flush()
 
     print('Committing transaction...')
     db.session.commit()
