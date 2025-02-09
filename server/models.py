@@ -37,8 +37,8 @@ class Period(BaseTable):
     serialize_rules = ('-state.periods', '-fuel.periods')
 
     year = db.Column(db.Integer)
-    net_generation = db.Column(db.Integer) # MHW
-    avg_price = db.Column(db.Float) # USD
+    net_generation = db.Column(db.Integer) # MWh
+    avg_price = db.Column(db.Float) # cents per khw
     nox = db.Column(db.Integer) # short-tons
     so2 = db.Column(db.Integer) # short-tons
     co2 = db.Column(db.Integer) # co2-thousand-metric-tons
