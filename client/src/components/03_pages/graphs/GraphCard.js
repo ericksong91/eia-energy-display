@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
-import PieChart from "./PieChart";
-import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import 'animate.css';
 
 Chart.register(CategoryScale);
 
-function GraphCard({ fuelData, fuelLabels, isChecked }) {
+function GraphCard({ data, isChecked }) {
     const type = "line"; // Keep to line temporarily
 
     // useRef to animate out
@@ -27,13 +24,7 @@ function GraphCard({ fuelData, fuelLabels, isChecked }) {
             sm:bg-white hover:bg-opacity-90 
             dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
             `}>
-            {type === "line"
-                ? <LineChart fuelData={fuelData} fuelLabels={fuelLabels} />
-                :
-                type === "pie"
-                    ? <PieChart fuelData={fuelData} fuelLabels={fuelLabels} />
-                    : <BarChart fuelData={fuelData} fuelLabels={fuelLabels} />
-            }
+            <LineChart data={data} />
         </div>
     );
 };

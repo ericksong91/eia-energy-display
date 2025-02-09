@@ -261,9 +261,9 @@ with app.app_context():
     print('Creating Period objects....')
     offset_value = 0
     value_tracker = 0
-    emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=desc"
-    net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=desc"
-    avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=desc"
+    emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=asc"
+    net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=asc"
+    avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=asc"
     url_list = [emissions_url, net_gen_url, avg_price_url]
     data_list = [api_request(eia_url_offset(0, url)) for url in url_list] # using list comp to generate each url's data into one list. Solved Expression (in this case the function) for url in url_list 
 

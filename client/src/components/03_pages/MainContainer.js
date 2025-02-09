@@ -232,6 +232,8 @@ function MainContainer() {
     avg_price: "¢/KWh",
   };
 
+  console.log(chartData)
+
   /*
 
   HELPER FUNCTIONS FOR PACKAGING CHART DATA
@@ -247,6 +249,7 @@ function MainContainer() {
         data: stateData.map((d) => d[dataType]),
         yAxisID: dataType === "co2" ? "y1" : "y",
         units: unitTypes[dataType],
+        isEmission: dataType !== "net_generation" && dataType !== "avg_price",
       } // Only co2 is changed to a different axis due to scale
 
       return dataObj;
