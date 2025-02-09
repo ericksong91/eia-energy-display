@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 function GraphParentContainer({ chartData, chartLabels }) {
     const [graphList, setGraphList] = useState([]);
+    console.log(chartData)
 
     useEffect(() => {
         const graphList = chartData.map((fuelData, index) => {
