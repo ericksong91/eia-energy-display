@@ -225,14 +225,12 @@ function MainContainer() {
   const [stateResults, setStateResults] = useState(states);
   const [isChecked, setIsChecked] = useState(Array(chartDataTypes.length).fill(true));
   const unitTypes = {
-    co2: "thousand metric tons (kt)",
-    so2: "short-tons (st)",
-    nox: "short-tons (st)",
+    co2: "thousand metric tons (kmt)",
+    so2: "metric ton (mt)",
+    nox: "metric ton (mt)",
     net_generation: "MWh",
     avg_price: "¢/KWh",
   };
-
-  console.log(chartData)
 
   /*
 
@@ -245,9 +243,9 @@ function MainContainer() {
   function makeDataSets(stateData) {
     const dataSets = chartDataTypes.map((dataType) => {
       const dataObj = {
-        label: dataType,
+        label: `${dataType.toUpperCase()} - ${unitTypes[dataType]}`,
         data: stateData.map((d) => d[dataType]),
-        yAxisID: dataType === "co2" ? "y1" : "y",
+        yAxisID: "y",
         units: unitTypes[dataType],
         isEmission: dataType !== "net_generation" && dataType !== "avg_price",
       } // Only co2 is changed to a different axis due to scale

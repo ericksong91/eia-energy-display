@@ -12,18 +12,14 @@ function LineChart({ data }) {
             type: 'linear',
             display: true,
             position: 'left',
+            title: {
+                display: true,
+
+            },
             ticks: {
                 color: graphTextColor,
             },
-        }, // thousand metric tons
-        y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            ticks: {
-                color: graphTextColor,
-            },
-        }, // Short tons
+        }, 
         x: {
             title: {
                 display: true,

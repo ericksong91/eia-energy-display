@@ -259,6 +259,8 @@ with app.app_context():
     db.session.flush()
 
     print('Creating Period objects....')
+    print('Fetching data...')
+    conversion_st_mt = 0.9071847 
     offset_value = 0
     value_tracker = 0
     emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=asc"
@@ -267,6 +269,7 @@ with app.app_context():
     url_list = [emissions_url, net_gen_url, avg_price_url]
     data_list = [api_request(eia_url_offset(0, url)) for url in url_list] # using list comp to generate each url's data into one list. Solved Expression (in this case the function) for url in url_list 
 
+    print('Setting data...')
     for data in data_list:
         for i in data['response']['data']:
             state_id_query = State.query.filter_by(name=i['stateDescription']).first().id # load state ID using state's name as a search query
@@ -275,7 +278,7 @@ with app.app_context():
             if not period:
                 # if the period record is None, make a new one
                 period = Period(year=int(i['period']), state_id=state_id_query, fuel_id=5, 
-                                nox=int(i['nitrogen-oxide']), so2=int(i['sulfer-dioxide']), co2=int(i['carbon-dioxide']))
+                                nox=int(i['nitrogen-oxide']) * conversion_st_mt, so2=int(i['sulfer-dioxide']) * conversion_st_mt, co2=int(i['carbon-dioxide']))
                 db.session.add(period)
             else:
                 # if period exists, update record
