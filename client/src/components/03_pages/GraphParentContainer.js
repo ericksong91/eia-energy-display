@@ -1,21 +1,10 @@
 import GraphCard from "./graphs/GraphCard";
-import { useState, useEffect } from "react";
 
-function GraphParentContainer({ chartData, chartLabels }) {
-    const [graphList, setGraphList] = useState([]);
+function GraphParentContainer({ chartData }) {
 
-    useEffect(() => {
-        const graphList = chartData.map((fuelData, index) => {
-            // if (fuelData.isChecked === false) {
-            //     return null
-            // } else {
-            //     return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
-            // };
-            return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
-        });
-
-        setGraphList(graphList);
-    }, [chartData, chartLabels]); // Update graph container state whenever chartdata changes
+    console.log(chartData)
+    const graphList = []
+    // const graphList = <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
 
     return (
         <section className='graphs container pb-5'>

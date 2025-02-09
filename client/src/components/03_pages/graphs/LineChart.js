@@ -14,7 +14,15 @@ function LineChart({ fuelData, fuelLabels }) {
             ticks: {
                 color: graphTextColor,
             },
-        },
+        }, // thousand metric tons
+        y1: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            ticks: {
+                color: graphTextColor,
+            },
+        }, // Short tons
         x: {
             title: {
                 display: true,

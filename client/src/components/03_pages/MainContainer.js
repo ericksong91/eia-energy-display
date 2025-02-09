@@ -220,12 +220,17 @@ const resource = fetchData('/states');
 
 function MainContainer() {
   const energyData = resource.read();
-  console.log(energyData)
+  const chartDataTypes = ["co2", "so2", "nox", "net_generation", "avg_price"];
   const [chartData, setChartData] = useState([]);
-  const [chartLabels, setChartLabels] = useState([]); // Refactor to put this data inside chartData instead, if it makes sense
   const [stateResults, setStateResults] = useState(states);
-  const [isChecked, setIsChecked] = useState(Array(5).fill(true));
-  const chartTypes = ["Emissions (CO2, SO2, NOx), Electricity Generated (MWh), Average Price (¢/kWh)"];
+  const [isChecked, setIsChecked] = useState(Array(chartDataTypes.length).fill(true));
+  const unitTypes = {
+    co2: "thousand metric tons (kt)",
+    so2: "short-tons (st)",
+    nox: "short-tons (st)",
+    net_generation: "MWh",
+    avg_price: "¢/KWh",
+  };
 
   /*
 
@@ -235,31 +240,20 @@ function MainContainer() {
 
   // FOR GRAPHS
 
-  // function makeDataSet(searchResult, stateData) {
-  //   const xAxisLabels = stateData.filter((data) => data.fuel_id === fuelID).map((d) => d.year); // X axis corresponding data labels
-  //   const fuelData = emissionTypes.map((emissionName) => {
-  //     const emissionDataObj = {
-  //       label: `${chartTypes[fuelID - 1]} ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
-  //       data: stateData.filter((data) => data.fuel_id === fuelID).map((d) => d[emissionName]),
-  //       yAxisID: 'y',
-  //     };
-  //     return emissionDataObj;
-  //   }); // fuel data that corresponds to Y axis
+  function makeDataSets(stateData) {
+    const dataSets = chartDataTypes.map((dataType) => {
+      const dataObj = {
+        label: dataType,
+        data: stateData.map((d) => d[dataType]),
+        yAxisID: dataType === "co2" ? "y1" : "y",
+        units: unitTypes[dataType],
+      } // Only co2 is changed to a different axis due to scale
 
-  //   const fuelChartLabels = {
-  //     title: searchResult,
-  //     description: `CO2, SO2 and NOx emissions from ${chartTypes[fuelID - 1]}`,
-  //     units: `Placeholder Units`,
-  //   };
+      return dataObj;
+    }); // Gives an array with all data
 
-  //   return {
-  //     fuelData: fuelData,
-  //     fuelChartLabels: fuelChartLabels,
-  //     xAxisLabels: xAxisLabels,
-  //   };
-  // };
-
-  //
+    return dataSets;
+  };
 
   /*
 
@@ -269,9 +263,18 @@ function MainContainer() {
 
   function handleUpdateGraphs(searchResult) {
     const stateData = energyData.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter data by US State
+    const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels
+    const minYear = xAxisLabels[xAxisLabels.length - 1];
+    const maxYear = xAxisLabels[0];
+    const dataSets = makeDataSets(stateData); // Return array with all data organized for chartJS
 
+    const chartDataObj = {
+      labels: xAxisLabels,
+      datasets: dataSets
+    };
 
-  }
+    setChartData(chartDataObj);
+  };
 
   // SEARCH BAR AND FILTER ACCORDION
 
@@ -314,7 +317,7 @@ function MainContainer() {
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         {/* <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} /> */}
         <SectionHeading />
-        <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
+        <GraphParentContainer chartData={chartData} />
       </div>
     </main>
   );
