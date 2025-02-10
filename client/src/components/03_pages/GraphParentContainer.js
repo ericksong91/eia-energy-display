@@ -1,26 +1,50 @@
 import GraphCard from "./graphs/GraphCard";
-import { useState, useEffect } from "react";
 
-function GraphParentContainer({ chartData, chartLabels }) {
-    const [graphList, setGraphList] = useState([]);
-    console.log(chartData)
+function GraphParentContainer({ chartData, isCheckedArr }) {
+    if (Object.keys(chartData).length === 0) return <></>
+    const { stateName, dataSetsObj, labels } = chartData;
+    const minYear = labels[0];
+    const maxYear = labels[labels.length - 1];
 
-    useEffect(() => {
-        const graphList = chartData.map((fuelData, index) => {
-            // if (fuelData.isChecked === false) {
-            //     return null
-            // } else {
-            //     return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
-            // };
-            return <GraphCard key={index} fuelData={fuelData} fuelLabels={chartLabels[index]} isChecked={fuelData.isChecked} />
-        });
+    const combinedDataList = Object.keys(dataSetsObj)?.map(key => {
+        switch (key) {
+            case "emissionsDataSet":
+                return {
+                    datasets: dataSetsObj[key],
+                    labels: labels,
+                    title: "Emissions (CO2, SO2, NOx)",
+                    description: `Emissions data from ${minYear} to ${maxYear} for ${stateName}`,
+                    isChecked: isCheckedArr[0],
+                };
+            case "netGenDataSet":
+                return {
+                    datasets: dataSetsObj[key],
+                    labels: labels,
+                    title: "Net Generation",
+                    description: `Total Net Generation from ${minYear} to ${maxYear} for ${stateName}`,
+                    isChecked: isCheckedArr[1],
+                };
+            case "avgPriceDataSet":
+                return {
+                    datasets: dataSetsObj[key],
+                    labels: labels,
+                    title: "Average Retail Price",
+                    description: `Average retail price from ${minYear} to ${maxYear} for ${stateName}`,
+                    isChecked: isCheckedArr[2],
+                };
+        };
+    });
 
-        setGraphList(graphList);
-    }, [chartData, chartLabels]); // Update graph container state whenever chartdata changes
+    // Make Graphlist
+
+    const graphList = combinedDataList.map((dataObj, index) => {
+        return <GraphCard key={index} data={dataObj} />
+    })
 
     return (
         <section className='graphs container pb-5'>
             {graphList.length === 0 ? <></> : graphList}
+            {/* <GraphCard data={emissionsObj} isChecked={true} /> */}
         </section>
     )
 };

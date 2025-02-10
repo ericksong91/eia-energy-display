@@ -219,69 +219,85 @@ const states = [
 const resource = fetchData('/states');
 
 function MainContainer() {
+  const energyData = resource.read();
+  const chartDataTitles = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
   const [chartData, setChartData] = useState([]);
-  const [chartLabels, setChartLabels] = useState([]); // Refactor to put this data inside chartData instead, if it makes sense
   const [stateResults, setStateResults] = useState(states);
-  const emissions = resource.read();
-  const emissionTypes = ["co2", "so2", "nox"];
-  const fuelTypes = ["Coal", "Natural Gas", "Petroleum", "Other/Misc. Fuel"];
-  const [isChecked, setIsChecked] = useState(fuelTypes.map(() => true));
+  const [isCheckedArr, setIsCheckedArr] = useState(Array(3).fill(true));
+  const unitTypes = {
+    co2: "kmt",
+    so2: "mt",
+    nox: "mt",
+    net_generation: "MWh",
+    avg_price: "¢/KWh",
+  };
 
   /*
+
   HELPER FUNCTIONS FOR PACKAGING CHART DATA
+
   */
 
-  function makeFuelEmissionsDataSet(fuelID, searchResult, stateData) {
-    const xAxisLabels = stateData.filter((data) => data.fuel_id === fuelID).map((d) => d.year); // X axis corresponding data labels
-    const fuelData = emissionTypes.map((emissionName) => {
-      const emissionDataObj = {
-        label: `${fuelTypes[fuelID - 1]} ${emissionName.toUpperCase()} Emissions from 1990 to 2023`,
-        data: stateData.filter((data) => data.fuel_id === fuelID).map((d) => d[emissionName]),
-        yAxisID: 'y',
-      };
-      return emissionDataObj;
-    }); // fuel data that corresponds to Y axis
+  // FOR GRAPHS
 
-    const fuelChartLabels = {
-      title: searchResult,
-      description: `CO2, SO2 and NOx emissions from ${fuelTypes[fuelID - 1]}`,
-      units: `Placeholder Units`,
+  function makeDataSets(stateData) {
+    // Job for this function is to only convert stateData into individual data objects
+    const dataPointSet = Object.keys(unitTypes).map((dataType, index) => {
+      const dataObj = {
+        label: `${chartDataTitles[index]} (${unitTypes[dataType]})`,
+        data: stateData.map((d) => d[dataType]),
+        yAxisID: "y",
+        units: unitTypes[dataType],
+        dataCategory: dataType !== "net_generation" && dataType !== "avg_price" ? "emissions" : dataType,
+      } // Only co2 is changed to a different axis due to scale
+
+      return dataObj;
+    }); // Gives an array with all data
+
+    return makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
+  };
+
+  function makeDataObjects(dataPointSet) {
+    // Groups converted data into specific chart datasets (ie, emissions, net generation, etc)
+    // Returns Object with datasets
+    const emissionsData = [];
+    const netGenData = [];
+    const avgPriceData = [];
+
+    for (let i = 0; i < dataPointSet.length; i++) {
+      if (dataPointSet[i].dataCategory === "emissions") emissionsData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory === "net_generation") netGenData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory === "avg_price") avgPriceData.push(dataPointSet[i]);
     };
 
     return {
-      fuelData: fuelData,
-      fuelChartLabels: fuelChartLabels,
-      xAxisLabels: xAxisLabels,
+      emissionsDataSet: emissionsData,
+      netGenDataSet: netGenData,
+      avgPriceDataSet: avgPriceData,
     };
   };
 
   /*
+
   FUNCTIONS THAT UPDATE CHART STATE
+
   */
 
   function handleUpdateGraphs(searchResult) {
-    const stateData = emissions.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter emissions data from backend
+    const stateData = energyData.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter data by US State
+    const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels
+    const dataSetsObj = makeDataSets(stateData); // Return array with all data organized for chartJS
 
-    let fuelDataList = []; // ie, [{coal obj}, {petrol obj}, etc]
-    let fuelLabelList = []; // ie, [{title, description, units for one fuel}, {title, description, units for another fuel}, etc]
-
-    for (let i = 0; i < fuelTypes.length; i++) {
-      const newDataSet = makeFuelEmissionsDataSet(i + 1, searchResult, stateData); // returns an obj with fuelData, fuelChartLabels, xAxisLabels
-      const newFuelObj = {
-        labels: newDataSet.xAxisLabels,
-        datasets: newDataSet.fuelData,
-        isChecked: isChecked[i],
-      }; // Load datasets into chart as datasets and load X-axis label with Labels using a loop
-      //After loading newDataSets, push it into diffFuelDataArr
-
-
-      fuelDataList.push(newFuelObj);
-      fuelLabelList.push(newDataSet.fuelChartLabels);
+    const chartDataObj = {
+      stateName: searchResult,
+      labels: xAxisLabels,
+      dataSetsObj: dataSetsObj,
     };
 
-    setChartData(fuelDataList);
-    setChartLabels(fuelLabelList);
+    setChartData(chartDataObj);
   };
+
+  // SEARCH BAR AND FILTER ACCORDION
 
   function handleStatesFilter(value) {
     const result = states.filter((state) => {
@@ -309,6 +325,8 @@ function MainContainer() {
     }; // Prevents update of chart data if no data is displayed
   };
 
+  //
+
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
@@ -318,9 +336,9 @@ function MainContainer() {
         </div>
 
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-        <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} fuelTypes={fuelTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
+        {/* <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} /> */}
         <SectionHeading />
-        <GraphParentContainer chartData={chartData} chartLabels={chartLabels} />
+        <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
       </div>
     </main>
   );

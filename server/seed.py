@@ -5,6 +5,7 @@ import os
 
 from app import app
 from models import db, State, Fuel, Period
+from sqlalchemy import and_
 
 states = [
     {
@@ -217,7 +218,7 @@ states = [
     }
 ]
 
-fuels = ["Coal", "Natural Gas", "Petroleum", "Other"]
+fuels = ["Coal", "Natural Gas", "Petroleum", "Other", "Combined"]
 
 period = [x for x in range(1999, 2024)]
 
@@ -238,12 +239,6 @@ def api_request(url):
         r.raise_for_status()
         return {}
 
-def pull_period_data(data):
-    for i in data['response']['data']:
-        period = Period(year=int(i['period']), state_id=State.query.filter_by(name=i['stateDescription']).first().id, fuel_id=Fuel.query.filter_by(name=i['fuelDescription']).first().id, 
-                        nox=int(i['nox-short-tons']), so2=int(i['so2-short-tons']), co2=int(i['co2-thousand-metric-tons']))
-        db.session.add(period)
-
 ## SEEDING DATA ##
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
@@ -261,23 +256,36 @@ with app.app_context():
         fuel = Fuel(name=fu)
         db.session.add(fuel)
 
+    db.session.flush()
+
     print('Creating Period objects....')
+    print('Fetching data...')
+    conversion_st_mt = 0.9071847 
     offset_value = 0
     value_tracker = 0
-    emissions_url = 'https://api.eia.gov/v2/electricity/state-electricity-profiles/emissions-by-state-by-fuel/data/?frequency=annual&data[0]=co2-thousand-metric-tons&data[1]=nox-short-tons&data[2]=so2-short-tons&facets[fuelid][]=COL&facets[fuelid][]=NG&facets[fuelid][]=OTH&facets[fuelid][]=PET&facets[stateid][]=AK&facets[stateid][]=AL&facets[stateid][]=AR&facets[stateid][]=AZ&facets[stateid][]=CA&facets[stateid][]=CO&facets[stateid][]=CT&facets[stateid][]=DC&facets[stateid][]=DE&facets[stateid][]=FL&facets[stateid][]=GA&facets[stateid][]=HI&facets[stateid][]=IA&facets[stateid][]=ID&facets[stateid][]=IL&facets[stateid][]=IN&facets[stateid][]=KS&facets[stateid][]=KY&facets[stateid][]=LA&facets[stateid][]=MA&facets[stateid][]=MD&facets[stateid][]=ME&facets[stateid][]=MI&facets[stateid][]=MN&facets[stateid][]=MO&facets[stateid][]=MS&facets[stateid][]=MT&facets[stateid][]=NC&facets[stateid][]=ND&facets[stateid][]=NE&facets[stateid][]=NH&facets[stateid][]=NJ&facets[stateid][]=NM&facets[stateid][]=NV&facets[stateid][]=NY&facets[stateid][]=OH&facets[stateid][]=OK&facets[stateid][]=OR&facets[stateid][]=PA&facets[stateid][]=RI&facets[stateid][]=SC&facets[stateid][]=SD&facets[stateid][]=TN&facets[stateid][]=TX&facets[stateid][]=UT&facets[stateid][]=VA&facets[stateid][]=VT&facets[stateid][]=WA&facets[stateid][]=WI&facets[stateid][]=WV&facets[stateid][]=WY&sort[0][column]=period&sort[0][direction]=asc'
-    
-    data = api_request(eia_url_offset(0, emissions_url))
-    pull_period_data(data)
+    emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=asc"
+    net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=asc"
+    avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=asc"
+    url_list = [emissions_url, net_gen_url, avg_price_url]
+    data_list = [api_request(eia_url_offset(0, url)) for url in url_list] # using list comp to generate each url's data into one list. Solved Expression (in this case the function) for url in url_list 
 
-    if int(data['response']['total']) > 5000:
-        value_tracker = int(int(data['response']['total'])/5000)
-        offset_value += 5000
+    print('Setting data...')
+    for data in data_list:
+        for i in data['response']['data']:
+            state_id_query = State.query.filter_by(name=i['stateDescription']).first().id # load state ID using state's name as a search query
+            period = Period.query.filter(and_(Period.year==int(i['period']), Period.state_id==state_id_query)).first() # find period with relate year and state id
 
-        while value_tracker > 0:
-            data = api_request(eia_url_offset(offset_value, emissions_url))
-            pull_period_data(data)
-            offset_value += 5000
-            value_tracker -= 1
+            if not period:
+                # if the period record is None, make a new one
+                period = Period(year=int(i['period']), state_id=state_id_query, fuel_id=5, 
+                                nox=int(i['nitrogen-oxide']) * conversion_st_mt, so2=int(i['sulfer-dioxide']) * conversion_st_mt, co2=int(i['carbon-dioxide']))
+                db.session.add(period)
+            else:
+                # if period exists, update record
+                period.avg_price = i.get('average-retail-price', period.avg_price)
+                period.net_generation = i.get('net-generation', period.net_generation) 
+                db.session.add(period)
+        db.session.flush()
 
     print('Committing transaction...')
     db.session.commit()
