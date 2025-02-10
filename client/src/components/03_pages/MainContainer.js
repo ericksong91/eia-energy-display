@@ -223,7 +223,7 @@ function MainContainer() {
   const chartDataTypes = ["co2", "so2", "nox", "net_generation", "avg_price"];
   const [chartData, setChartData] = useState([]);
   const [stateResults, setStateResults] = useState(states);
-  const [isChecked, setIsChecked] = useState(Array(chartDataTypes.length).fill(true));
+  const [isCheckedArr, setIsCheckedArr] = useState(Array(3).fill(true));
   const unitTypes = {
     co2: "thousand metric tons (kmt)",
     so2: "metric ton (mt)",
@@ -265,13 +265,12 @@ function MainContainer() {
   function handleUpdateGraphs(searchResult) {
     const stateData = energyData.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter data by US State
     const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels
-    const minYear = xAxisLabels[xAxisLabels.length - 1];
-    const maxYear = xAxisLabels[0];
     const dataSets = makeDataSets(stateData); // Return array with all data organized for chartJS
 
     const chartDataObj = {
+      stateName: searchResult,
       labels: xAxisLabels,
-      datasets: dataSets
+      datasets: dataSets,
     };
 
     setChartData(chartDataObj);
@@ -318,7 +317,7 @@ function MainContainer() {
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         {/* <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} /> */}
         <SectionHeading />
-        <GraphParentContainer chartData={chartData} />
+        <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
       </div>
     </main>
   );

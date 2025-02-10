@@ -5,8 +5,9 @@ import 'animate.css';
 
 Chart.register(CategoryScale);
 
-function GraphCard({ data, isChecked }) {
-    const type = "line"; // Keep to line temporarily
+function GraphCard({ data }) {
+    const isChecked = data.isChecked;
+    console.log(data)
 
     // useRef to animate out
 
