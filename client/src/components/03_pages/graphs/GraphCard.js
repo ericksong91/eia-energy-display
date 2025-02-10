@@ -7,7 +7,6 @@ Chart.register(CategoryScale);
 
 function GraphCard({ data }) {
     const isChecked = data.isChecked;
-    console.log(data)
 
     // useRef to animate out
 

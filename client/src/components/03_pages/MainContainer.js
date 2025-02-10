@@ -220,14 +220,14 @@ const resource = fetchData('/states');
 
 function MainContainer() {
   const energyData = resource.read();
-  const chartDataTypes = ["co2", "so2", "nox", "net_generation", "avg_price"];
+  const chartDataTitles = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
   const [chartData, setChartData] = useState([]);
   const [stateResults, setStateResults] = useState(states);
   const [isCheckedArr, setIsCheckedArr] = useState(Array(3).fill(true));
   const unitTypes = {
-    co2: "thousand metric tons (kmt)",
-    so2: "metric ton (mt)",
-    nox: "metric ton (mt)",
+    co2: "kmt",
+    so2: "mt",
+    nox: "mt",
     net_generation: "MWh",
     avg_price: "¢/KWh",
   };
@@ -241,19 +241,40 @@ function MainContainer() {
   // FOR GRAPHS
 
   function makeDataSets(stateData) {
-    const dataSets = chartDataTypes.map((dataType) => {
+    // Job for this function is to only convert stateData into individual data objects
+    const dataPointSet = Object.keys(unitTypes).map((dataType, index) => {
       const dataObj = {
-        label: `${dataType.toUpperCase()} - ${unitTypes[dataType]}`,
+        label: `${chartDataTitles[index]} (${unitTypes[dataType]})`,
         data: stateData.map((d) => d[dataType]),
         yAxisID: "y",
         units: unitTypes[dataType],
-        isEmission: dataType !== "net_generation" && dataType !== "avg_price",
+        dataCategory: dataType !== "net_generation" && dataType !== "avg_price" ? "emissions" : dataType,
       } // Only co2 is changed to a different axis due to scale
 
       return dataObj;
     }); // Gives an array with all data
 
-    return dataSets;
+    return makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
+  };
+
+  function makeDataObjects(dataPointSet) {
+    // Groups converted data into specific chart datasets (ie, emissions, net generation, etc)
+    // Returns Object with datasets
+    const emissionsData = [];
+    const netGenData = [];
+    const avgPriceData = [];
+
+    for (let i = 0; i < dataPointSet.length; i++) {
+      if (dataPointSet[i].dataCategory === "emissions") emissionsData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory === "net_generation") netGenData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory === "avg_price") avgPriceData.push(dataPointSet[i]);
+    };
+
+    return {
+      emissionsDataSet: emissionsData,
+      netGenDataSet: netGenData,
+      avgPriceDataSet: avgPriceData,
+    };
   };
 
   /*
@@ -265,12 +286,12 @@ function MainContainer() {
   function handleUpdateGraphs(searchResult) {
     const stateData = energyData.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter data by US State
     const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels
-    const dataSets = makeDataSets(stateData); // Return array with all data organized for chartJS
+    const dataSetsObj = makeDataSets(stateData); // Return array with all data organized for chartJS
 
     const chartDataObj = {
       stateName: searchResult,
       labels: xAxisLabels,
-      datasets: dataSets,
+      dataSetsObj: dataSetsObj,
     };
 
     setChartData(chartDataObj);
@@ -286,23 +307,23 @@ function MainContainer() {
     setStateResults(result);
   };
 
-  // function handleAccordionFuelFilter(newChecks) {
-  //   if (chartData.length === 0) {
-  //     return
-  //   } else {
-  //     const updatedChartList = chartData.map((fuelData, index) => {
-  //       const newFuelObj = {
-  //         labels: fuelData.labels,
-  //         datasets: fuelData.datasets,
-  //         isChecked: newChecks[index],
-  //       };
+  function handleAccordionFuelFilter(newChecks) {
+    if (chartData.length === 0) {
+      return
+    } else {
+      const updatedChartList = chartData.map((fuelData, index) => {
+        const newFuelObj = {
+          labels: fuelData.labels,
+          datasets: fuelData.datasets,
+          isChecked: newChecks[index],
+        };
 
-  //       return newFuelObj;
-  //     });
+        return newFuelObj;
+      });
 
-  //     setChartData(updatedChartList);
-  //   }; // Prevents update of chart data if no data is displayed
-  // };
+      setChartData(updatedChartList);
+    }; // Prevents update of chart data if no data is displayed
+  };
 
   //
 

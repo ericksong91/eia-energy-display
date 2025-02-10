@@ -6,6 +6,8 @@ function LineChart({ data }) {
     const { title, description } = data;
     const { graphTextColor } = useContext(DarkModeContext);
 
+    console.log(data)
+
     const scales = {
         y: {
             type: 'linear',
@@ -46,7 +48,7 @@ function LineChart({ data }) {
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{description}</h1>
+                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{title} {description}</h1>
                     <Line data={data} options={options} />
                 </div>
             }
