@@ -220,10 +220,11 @@ const resource = fetchData('/states');
 
 function MainContainer() {
   const energyData = resource.read();
-  const chartDataTitles = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
-  const [chartData, setChartData] = useState([]);
+  const chartDataLabel = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
+  const chartTypes = ["Emissions", "Net Generation", "Average Price"];
+  const [chartData, setChartData] = useState({});
   const [stateResults, setStateResults] = useState(states);
-  const [isCheckedArr, setIsCheckedArr] = useState(Array(3).fill(true));
+  const [isCheckedArr, setIsCheckedArr] = useState(Array(chartTypes.length).fill(true));
   const unitTypes = {
     co2: "kmt",
     so2: "mt",
@@ -238,13 +239,11 @@ function MainContainer() {
 
   */
 
-  // FOR GRAPHS
-
-  function makeDataSets(stateData) {
+  function makeDataSets(stateData, xAxisLabels) {
     // Job for this function is to only convert stateData into individual data objects
     const dataPointSet = Object.keys(unitTypes).map((dataType, index) => {
       const dataObj = {
-        label: `${chartDataTitles[index]} (${unitTypes[dataType]})`,
+        label: `${chartDataLabel[index]} (${unitTypes[dataType]})`,
         data: stateData.map((d) => d[dataType]),
         yAxisID: "y",
         units: unitTypes[dataType],
@@ -254,7 +253,10 @@ function MainContainer() {
       return dataObj;
     }); // Gives an array with all data
 
-    return makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
+    
+    const dataSetsObj = makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
+
+    return sortDataObjects(dataSetsObj, xAxisLabels)
   };
 
   function makeDataObjects(dataPointSet) {
@@ -277,6 +279,37 @@ function MainContainer() {
     };
   };
 
+  function sortDataObjects(dataSetsObj, xAxisLabels) {
+    return Object.keys(dataSetsObj)?.map(key => {
+      switch (key) {
+        case "emissionsDataSet":
+          return {
+            datasets: dataSetsObj[key],
+            labels: xAxisLabels,
+            title: "Emissions (CO2, SO2, NOx)",
+            description: `Combined Emissions from CO2, SO2 and NOx`,
+            isChecked: isCheckedArr[0],
+          };
+        case "netGenDataSet":
+          return {
+            datasets: dataSetsObj[key],
+            labels: xAxisLabels,
+            title: "Net Generation",
+            description: `Total Net Generation`,
+            isChecked: isCheckedArr[1],
+          };
+        case "avgPriceDataSet":
+          return {
+            datasets: dataSetsObj[key],
+            labels: xAxisLabels,
+            title: "Average Retail Price",
+            description: `Average retail price`,
+            isChecked: isCheckedArr[2],
+          };
+      };
+    });
+  };
+
   /*
 
   FUNCTIONS THAT UPDATE CHART STATE
@@ -285,13 +318,13 @@ function MainContainer() {
 
   function handleUpdateGraphs(searchResult) {
     const stateData = energyData.filter((data) => data.name === searchResult).map((d) => d.periods)[0]; // Use searchResult prop to filter data by US State
-    const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels
-    const dataSetsObj = makeDataSets(stateData); // Return array with all data organized for chartJS
+    const xAxisLabels = stateData.map(data => data.year); // X axis corresponding data labels, used later in final object
+    const combinedDataList = makeDataSets(stateData, xAxisLabels); // Return array with all data organized for chartJS
 
     const chartDataObj = {
       stateName: searchResult,
       labels: xAxisLabels,
-      dataSetsObj: dataSetsObj,
+      dataSetsObj: combinedDataList,
     };
 
     setChartData(chartDataObj);
@@ -308,9 +341,11 @@ function MainContainer() {
   };
 
   function handleAccordionFuelFilter(newChecks) {
-    if (chartData.length === 0) {
+    if (Object.keys(chartData).length === 0) {
       return
     } else {
+      console.log(chartData)
+      debugger
       const updatedChartList = chartData.map((fuelData, index) => {
         const newFuelObj = {
           labels: fuelData.labels,
@@ -336,7 +371,7 @@ function MainContainer() {
         </div>
 
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-        {/* <FilterAccordion isChecked={isChecked} onIsChecked={setIsChecked} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} /> */}
+        <FilterAccordion isCheckedArr={isCheckedArr} onIsCheckedArr={setIsCheckedArr} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <SectionHeading />
         <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
       </div>

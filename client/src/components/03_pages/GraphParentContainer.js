@@ -13,7 +13,7 @@ function GraphParentContainer({ chartData, isCheckedArr }) {
                     datasets: dataSetsObj[key],
                     labels: labels,
                     title: "Emissions (CO2, SO2, NOx)",
-                    description: `Emissions data from ${minYear} to ${maxYear} for ${stateName}`,
+                    description: `Combined Emissions from CO2, SO2 and NOx`,
                     isChecked: isCheckedArr[0],
                 };
             case "netGenDataSet":
@@ -21,7 +21,7 @@ function GraphParentContainer({ chartData, isCheckedArr }) {
                     datasets: dataSetsObj[key],
                     labels: labels,
                     title: "Net Generation",
-                    description: `Total Net Generation from ${minYear} to ${maxYear} for ${stateName}`,
+                    description: `Total Net Generation`,
                     isChecked: isCheckedArr[1],
                 };
             case "avgPriceDataSet":
@@ -29,7 +29,7 @@ function GraphParentContainer({ chartData, isCheckedArr }) {
                     datasets: dataSetsObj[key],
                     labels: labels,
                     title: "Average Retail Price",
-                    description: `Average retail price from ${minYear} to ${maxYear} for ${stateName}`,
+                    description: `Average retail price`,
                     isChecked: isCheckedArr[2],
                 };
         };
@@ -43,6 +43,7 @@ function GraphParentContainer({ chartData, isCheckedArr }) {
 
     return (
         <section className='graphs container pb-5'>
+            <h2 className="state-name text-4xl font-medium text-center">{stateName}</h2>
             {graphList.length === 0 ? <></> : graphList}
             {/* <GraphCard data={emissionsObj} isChecked={true} /> */}
         </section>
