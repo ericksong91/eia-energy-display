@@ -221,7 +221,7 @@ const resource = fetchData('/states');
 function MainContainer() {
   const energyData = resource.read();
   const chartDataLabel = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
-  const chartTypes = ["Emissions", "Net Generation", "Average Price"];
+  const chartTypes = ["State Emissions", "State Net Generation", "State Average Retail Price"];
   const [chartData, setChartData] = useState({});
   const [stateResults, setStateResults] = useState(states);
   const [isCheckedArr, setIsCheckedArr] = useState(Array(chartTypes.length).fill(true));
@@ -253,7 +253,7 @@ function MainContainer() {
       return dataObj;
     }); // Gives an array with all data
 
-    
+
     const dataSetsObj = makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
 
     return sortDataObjects(dataSetsObj, xAxisLabels)
@@ -286,7 +286,6 @@ function MainContainer() {
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
-            title: "Emissions (CO2, SO2, NOx)",
             description: `Combined Emissions from CO2, SO2 and NOx`,
             isChecked: isCheckedArr[0],
           };
@@ -294,7 +293,6 @@ function MainContainer() {
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
-            title: "Net Generation",
             description: `Total Net Generation`,
             isChecked: isCheckedArr[1],
           };
@@ -302,10 +300,11 @@ function MainContainer() {
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
-            title: "Average Retail Price",
-            description: `Average retail price`,
+            description: `Average Retail Price`,
             isChecked: isCheckedArr[2],
           };
+        default:
+          return {};
       };
     });
   };
@@ -324,7 +323,7 @@ function MainContainer() {
     const chartDataObj = {
       stateName: searchResult,
       labels: xAxisLabels,
-      dataSetsObj: combinedDataList,
+      datasets: combinedDataList,
     };
 
     setChartData(chartDataObj);
@@ -344,19 +343,20 @@ function MainContainer() {
     if (Object.keys(chartData).length === 0) {
       return
     } else {
-      console.log(chartData)
-      debugger
-      const updatedChartList = chartData.map((fuelData, index) => {
-        const newFuelObj = {
-          labels: fuelData.labels,
-          datasets: fuelData.datasets,
+      const updatedDatasets = chartData.datasets.map((chartData, index) => {
+        const newChartObj = {
+          ...chartData,
           isChecked: newChecks[index],
         };
-
-        return newFuelObj;
+        return newChartObj;
       });
 
-      setChartData(updatedChartList);
+      const updatedChartData = {
+        ...chartData,
+        datasets: updatedDatasets
+      };
+
+      return setChartData(updatedChartData);
     }; // Prevents update of chart data if no data is displayed
   };
 

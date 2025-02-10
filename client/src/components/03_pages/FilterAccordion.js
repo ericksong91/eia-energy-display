@@ -6,11 +6,11 @@ function FilterAccordion({ isCheckedArr, onIsCheckedArr, chartTypes, onAccordion
   const { upArrow, downArrow } = useContext(IconContext);
 
   function checkboxChangeHandler(index) {
-    // const newChecks = [...isCheckedArr];
-    // newChecks.splice(index, 1, !isCheckedArr[index]);
+    const newChecks = [...isCheckedArr];
+    newChecks.splice(index, 1, !isCheckedArr[index]);
 
-    // onIsCheckedArr(newChecks);
-    // onAccordionFuelFilter(newChecks);
+    onIsCheckedArr(newChecks);
+    onAccordionFuelFilter(newChecks);
   };
 
   const chartCheckboxes = chartTypes.map((type, index) => {
@@ -39,7 +39,7 @@ function FilterAccordion({ isCheckedArr, onIsCheckedArr, chartTypes, onAccordion
       <div className="m-4 p-4 bg-light-main sm:bg-light-seco rounded-lg">
         <div className='py-2'>
           <button className='flex justify-between w-full' onClick={() => setAccordionOpen(!accordionOpen)}>
-            <span className="text-md">Filter Results by Fuel Type:</span>
+            <span className="text-md">Filter Results by Data:</span>
             {accordionOpen
               ? <span>{upArrow}</span>
               : <span>{downArrow}</span>

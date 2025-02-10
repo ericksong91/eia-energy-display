@@ -3,10 +3,8 @@ import { DarkModeContext } from '../../00_context/DarkModeContext';
 import { Line } from 'react-chartjs-2';
 
 function LineChart({ data }) {
-    const { title, description } = data;
+    const { description } = data;
     const { graphTextColor } = useContext(DarkModeContext);
-
-    console.log(data)
 
     const scales = {
         y: {
@@ -48,7 +46,7 @@ function LineChart({ data }) {
                 <></>
                 :
                 <div className='linechart'>
-                    <h1 className='chart-title text-center font-bold text-2xl text-black dark:text-white'>{description}</h1>
+                    <h1 className='chart-title-description text-center font-bold text-2xl text-black dark:text-white'>{description}</h1>
                     <Line data={data} options={options} />
                 </div>
             }
