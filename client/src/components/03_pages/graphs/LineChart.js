@@ -20,10 +20,6 @@ function LineChart({ data }) {
             },
         },
         x: {
-            title: {
-                display: true,
-                text: 'Period'
-            },
             ticks: {
                 color: graphTextColor
             },
@@ -44,6 +40,7 @@ function LineChart({ data }) {
         <div className='linechart p-0 sm:p-2'>
             <h2 className='chart-title-description text-center font-bold text-lg sm:pb-2 sm:text-2xl sm:block text-black dark:text-white'>{description}</h2>
             <Line data={data} options={options} />
+            <h3 className='units-period text-sm text-center'>Year</h3>
         </div>
     );
 };

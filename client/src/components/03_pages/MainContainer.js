@@ -226,10 +226,10 @@ function MainContainer() {
   const [stateResults, setStateResults] = useState(states);
   const [isCheckedArr, setIsCheckedArr] = useState(Array(chartTypes.length).fill(true));
   const unitTypes = {
-    co2: "kmt",
+    co2: "thousand mt",
     so2: "mt",
     nox: "mt",
-    net_generation: "MWh",
+    net_generation: "thousand MWh",
     avg_price: "¢/KWh",
   };
 

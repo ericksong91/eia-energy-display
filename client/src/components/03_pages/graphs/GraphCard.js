@@ -16,7 +16,7 @@ function GraphCard({ data }) {
     return (
         <div onChange={(e) => console.log("help")} className={`
         graphcard p-4 m-4 rounded-lg shadow
-        bg-light-main sm:bg-white hover:bg-opacity-90 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
+        bg-light-main dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
         ${isChecked ? `animate__fadeInLeft` : `animate__fadeOutRight`}
         `}>
             <LineChart data={data} />
