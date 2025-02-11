@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import LineChart from "./LineChart";
-import 'animate.css';
 
 Chart.register(CategoryScale);
 
@@ -16,7 +15,7 @@ function GraphCard({ data }) {
 
     return (
         <div onChange={(e) => console.log("help")} className={`
-        graphcard animate__animated p-4 m-4 rounded-lg shadow
+        graphcard p-4 m-4 rounded-lg shadow
         bg-light-main sm:bg-white hover:bg-opacity-90 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
         ${isChecked ? `animate__fadeInLeft` : `animate__fadeOutRight`}
         `}>
