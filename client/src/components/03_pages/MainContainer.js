@@ -286,7 +286,7 @@ function MainContainer() {
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
-            description: `Combined Emissions from CO2, SO2 and NOx`,
+            description: `Combined Emissions`,
             isChecked: isCheckedArr[0],
           };
         case "netGenDataSet":

@@ -1,6 +1,6 @@
 import GraphCard from "./graphs/GraphCard";
 
-function GraphParentContainer({ chartData, isCheckedArr }) {
+function GraphParentContainer({ chartData }) {
     if (Object.keys(chartData).length === 0) return <></>
     const { stateName, datasets, labels } = chartData;
     const minYear = labels[0];
@@ -12,7 +12,7 @@ function GraphParentContainer({ chartData, isCheckedArr }) {
 
     return (
         <section className='graphs container pb-5'>
-            <h2 className="state-name text-4xl font-medium text-center">{stateName} Data from {minYear} to {maxYear}</h2>
+            <h2 className="state-name text-2xl sm:text-4xl font-bold text-center">{stateName} Data from {minYear} to {maxYear}</h2>
             {graphList.length === 0 ? <></> : graphList}
         </section>
     );
