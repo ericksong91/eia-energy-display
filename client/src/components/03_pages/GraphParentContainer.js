@@ -16,14 +16,14 @@ function GraphParentContainer({ chartData }) {
     })
 
     return (
-        <section className='graphs container pb-5'>
+        <section className='graphs container bg-light-background sm:bg-light-primary rounded-lg pb-5'>
             {Object.keys(chartData).length === 0 ?
                 <Carousel></Carousel>
                 :
                 <Carousel slide={false} leftControl={leftIcon} rightControl={rightIcon} indicators={false}>
                     {graphList}
                 </Carousel>
-            }
+            };
         </section>
     );
 };

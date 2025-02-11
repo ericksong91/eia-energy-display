@@ -271,8 +271,7 @@ with app.app_context():
         state_id_query = State.query.filter_by(name=d['stateDescription']).first().id # load state ID using state's name as a search query
         period = Period(year=int(d['period']), state_id=state_id_query, fuel_id=5, 
                                 nox=int(d['nitrogen-oxide']) * conversion_st_mt, so2=int(d['sulfer-dioxide']) * conversion_st_mt, co2=int(d['carbon-dioxide']),
-                                net_generation=int(d['net-generation']) / 1000, avg_price=float(d['average-retail-price'])
-                            )
+                                net_generation=int(d['net-generation']) / 1000, avg_price=float(d['average-retail-price']))
         db.session.add(period)
   
     db.session.flush()

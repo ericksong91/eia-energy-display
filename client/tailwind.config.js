@@ -11,11 +11,11 @@ module.exports = {
     extend: {
       colors: {
         'light': {
-          'text': '#3a3230',
-          'background': '#fcfbf8',
-          'primary': '#81caa2',
-          'secondary': '#94d297',
-          'accent': '#81caa2',
+          'text': '#050315',
+          'background': '#FBFFE4',
+          'primary': '#B3D8A8',
+          'secondary': '#FBFFE4',
+          'accent': '#A3D1C6',
         },
         'dark': {
           "main": "#12486B",

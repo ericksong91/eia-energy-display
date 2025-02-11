@@ -34,17 +34,16 @@ function IconProvider({ children }) {
             d="m4.5 15.75 7.5-7.5 7.5 7.5" />
     </svg>
 
-    const leftIcon = <svg className="w-4 h-4 ease-in-out duration-200 text-slate-400 hover:text-black dark:text-slate-400 dark:group-hover:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+    const leftIcon = <svg className="h-6 w-6 mt-72 sm:mt-0 sm:w-4 sm:h-4 ease-in-out duration-200 text-slate-400 hover:text-black dark:text-slate-400 dark:group-hover:text-white rtl:rotate-180"
+        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
     </svg>
 
 
-    const rightIcon = <svg className="w-4 h-4 ease-in-out duration-200 text-slate-400 hover:text-black dark:text-slate-400 dark:group-hover:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+    const rightIcon = <svg className="h-6 w-6 mt-72 sm:mt-0 sm:w-4 sm:h-4 ease-in-out duration-200 text-slate-400 hover:text-black dark:text-slate-400 dark:group-hover:text-white rtl:rotate-180"
+        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
     </svg>
-
-
-
 
     return (
         <IconContext.Provider value={{ moonIcon, sunIcon, downArrow, upArrow, leftIcon, rightIcon }}>

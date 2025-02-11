@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import Chart from 'chart.js/auto'
 import { CategoryScale } from 'chart.js/auto';
 import LineChart from "./LineChart";
@@ -14,11 +13,7 @@ function GraphCard({ data }) {
     // animatedFadeOut.addEventListener("animationend", (e) => console.log("Animation has ended", e.target.value));
 
     return (
-        <div onChange={(e) => console.log("help")} className={`
-        graphcard p-4 m-4 rounded-lg shadow
-        bg-light-main dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
-        ${isChecked ? `animate__fadeInLeft` : `animate__fadeOutRight`}
-        `}>
+        <div className={`graphcard m-4 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700`}>
             <LineChart data={data} />
         </div>
     );
