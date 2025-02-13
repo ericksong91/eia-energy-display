@@ -14,19 +14,19 @@ function GraphParentContainer({ chartData }) {
 
     const graphList = datasets.map((dataObj, index) => {
         return <GraphCard key={`${index} - ${dataObj.description}`} data={dataObj} />
-    })
+    });
 
     return (
-        <section className='graphs container bg-light-background sm:bg-opacity-65 sm:bg-light-primary rounded-lg pb-5'>
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ x: 0, opacity: 100 }} exit={{ x: 10, opacity: 0 }} transition={{duration: 0.8}}>
-                {Object.keys(chartData).length === 0 ?
-                    <Carousel></Carousel>
-                    :
+        <section className='graphs container ease-in-out transition-all duration-400 bg-opacity-0 bg-light-background sm:bg-opacity-65 sm:bg-light-primary rounded-lg pb-5'>
+            {Object.keys(chartData).length === 0 ?
+                null
+                :
+                <motion.div initial={{ opacity: 0, x: -30 }} animate={{ x: 0, opacity: 100 }} exit={{ x: 10, opacity: 0 }} transition={{ duration: 0.8 }}>
                     <Carousel slide={false} leftControl={leftIcon} rightControl={rightIcon} indicators={false}>
                         {graphList}
                     </Carousel>
-                }
-            </motion.div>
+                </motion.div>
+            }
         </section>
     );
 };

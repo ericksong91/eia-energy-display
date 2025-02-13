@@ -13,8 +13,8 @@ function GraphCard({ data }) {
     // animatedFadeOut.addEventListener("animationend", (e) => console.log("Animation has ended", e.target.value));
 
     return (
-        <div className={`graphcard m-4 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700`}>
-            <LineChart data={data} />
+        <div className={`graphcard m-4 rounded-lg`}>
+            {<LineChart data={data} />}
         </div>
     );
 };

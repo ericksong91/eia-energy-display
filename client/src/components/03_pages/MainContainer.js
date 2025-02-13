@@ -365,10 +365,6 @@ function MainContainer() {
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
-
-        <div className='flex mt-5 mb-3 justify-center sm:hidden'>
-          <h1 className="heading-under-header text-2xl font-extrabold leading-none tracking-tight text-light-text dark:text-white">EIA Energy Display</h1>
-        </div>
         <SectionHeading />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isCheckedArr={isCheckedArr} onIsCheckedArr={setIsCheckedArr} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
