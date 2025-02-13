@@ -226,11 +226,11 @@ function MainContainer() {
   const [stateResults, setStateResults] = useState(states);
   const [isCheckedArr, setIsCheckedArr] = useState(Array(chartTypes.length).fill(true));
   const unitTypes = {
-    co2: "thousand metric tons (CO2)",
-    so2: "metric tons (SO2, NOx)",
-    nox: "metric tons (SO2, NOx)",
-    net_generation: "thousand megawatt hours",
-    avg_price: "¢s per kilowatt hours",
+    co2: "kmt (CO2)",
+    so2: "mt (SO2, NOx)",
+    nox: "mt",
+    net_generation: "thousand megawatt hours (kMWh)",
+    avg_price: "¢s per kilowatt hours (¢/KWh)",
   };
 
   /*
@@ -243,7 +243,7 @@ function MainContainer() {
     // Job for this function is to only convert stateData into individual data objects
     const dataPointSet = Object.keys(unitTypes).map((dataType, index) => {
       const dataObj = {
-        label: `${chartDataLabel[index]} (${unitTypes[dataType]})`,
+        label: `${chartDataLabel[index]}`,
         data: stateData.map((d) => d[dataType]),
         yAxisID: "y",
         units: unitTypes[dataType],
@@ -367,12 +367,11 @@ function MainContainer() {
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
 
         <div className='flex mt-5 mb-3 justify-center sm:hidden'>
-          <h1 className="heading-under-header text-4xl font-extrabold leading-none tracking-tight text-light-text dark:text-white">EIA Energy Display</h1>
+          <h1 className="heading-under-header text-2xl font-extrabold leading-none tracking-tight text-light-text dark:text-white">EIA Energy Display</h1>
         </div>
-
+        <SectionHeading />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isCheckedArr={isCheckedArr} onIsCheckedArr={setIsCheckedArr} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
-        <SectionHeading />
         <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
       </div>
     </main>

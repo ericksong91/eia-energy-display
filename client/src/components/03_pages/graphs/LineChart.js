@@ -16,6 +16,7 @@ function LineChart({ data }) {
             title: {
                 display: true,
                 text: `${units.length > 1 ? `${units[0]}, ${units[1]}` : units}`,
+                color: graphTextColor,
             },
             ticks: {
                 color: graphTextColor,
@@ -23,7 +24,7 @@ function LineChart({ data }) {
         },
         x: {
             ticks: {
-                color: graphTextColor
+                color: graphTextColor,
             },
         },
     }; // Can add another scale if needed; using y1, y2, etc
@@ -35,12 +36,21 @@ function LineChart({ data }) {
             intersect: true,
         },
         stacked: true,
-        scales: scales
+        scales: scales,
+        plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        size: 18,
+                    },
+                },
+            },
+        },
     };
 
     return (
         <div className='linechart p-0 sm:px-4 pt-4'>
-            <h2 className='chart-title-description text-center font-extrabold tracking-wide text-lg sm:pb-2 sm:text-2xl text-black dark:text-white'>{description}</h2>
+            <h2 className='chart-title-description text-center font-extrabold tracking-wide text-lg sm:pb-2 sm:text-4xl text-light-text dark:text-dark-text'>{description}</h2>
             <Line data={data} options={options} />
             <h3 className='units-period text-sm text-center hidden sm:block'>Year</h3>
         </div>

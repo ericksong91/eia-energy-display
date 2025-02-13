@@ -4,10 +4,10 @@ const DarkModeContext = createContext(); // 1 refers to biggest heading level\
 
 function DarkModeProvider({ children }) {
     const [darkMode, setDarkMode] = useState(false);
-    const [graphTextColor, setGraphTextColor] = useState("black");
+    const [graphTextColor, setGraphTextColor] = useState("bg-light-text");
 
     useEffect(() => {
-        setGraphTextColor(darkMode ? "white" : "black");
+        setGraphTextColor(darkMode ? "bg-light-text" : "bg-dark-text");
     }, [darkMode]);
     
 
