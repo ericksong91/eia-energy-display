@@ -1,220 +1,8 @@
 import { useState } from 'react';
 import fetchData from '../01_helpers/fetchData';
 import SectionHeading from './SectionHeading';
-import FilterAccordion from './FilterAccordion';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
-
-const states = [
-  {
-    "name": "United States",
-    "abbreviation": "USA"
-  },
-  {
-    "name": "Alabama",
-    "abbreviation": "AL"
-  },
-  {
-    "name": "Alaska",
-    "abbreviation": "AK"
-  },
-  {
-    "name": "Arizona",
-    "abbreviation": "AZ"
-  },
-  {
-    "name": "Arkansas",
-    "abbreviation": "AR"
-  },
-  {
-    "name": "California",
-    "abbreviation": "CA"
-  },
-  {
-    "name": "Colorado",
-    "abbreviation": "CO"
-  },
-  {
-    "name": "Connecticut",
-    "abbreviation": "CT"
-  },
-  {
-    "name": "Delaware",
-    "abbreviation": "DE"
-  },
-  {
-    "name": "District of Columbia",
-    "abbreviation": "DC"
-  },
-  {
-    "name": "Florida",
-    "abbreviation": "FL"
-  },
-  {
-    "name": "Georgia",
-    "abbreviation": "GA"
-  },
-  {
-    "name": "Hawaii",
-    "abbreviation": "HI"
-  },
-  {
-    "name": "Idaho",
-    "abbreviation": "ID"
-  },
-  {
-    "name": "Illinois",
-    "abbreviation": "IL"
-  },
-  {
-    "name": "Indiana",
-    "abbreviation": "IN"
-  },
-  {
-    "name": "Iowa",
-    "abbreviation": "IA"
-  },
-  {
-    "name": "Kansas",
-    "abbreviation": "KS"
-  },
-  {
-    "name": "Kentucky",
-    "abbreviation": "KY"
-  },
-  {
-    "name": "Louisiana",
-    "abbreviation": "LA"
-  },
-  {
-    "name": "Maine",
-    "abbreviation": "ME"
-  },
-  {
-    "name": "Maryland",
-    "abbreviation": "MD"
-  },
-  {
-    "name": "Massachusetts",
-    "abbreviation": "MA"
-  },
-  {
-    "name": "Michigan",
-    "abbreviation": "MI"
-  },
-  {
-    "name": "Minnesota",
-    "abbreviation": "MN"
-  },
-  {
-    "name": "Mississippi",
-    "abbreviation": "MS"
-  },
-  {
-    "name": "Missouri",
-    "abbreviation": "MO"
-  },
-  {
-    "name": "Montana",
-    "abbreviation": "MT"
-  },
-  {
-    "name": "Nebraska",
-    "abbreviation": "NE"
-  },
-  {
-    "name": "Nevada",
-    "abbreviation": "NV"
-  },
-  {
-    "name": "New Hampshire",
-    "abbreviation": "NH"
-  },
-  {
-    "name": "New Jersey",
-    "abbreviation": "NJ"
-  },
-  {
-    "name": "New Mexico",
-    "abbreviation": "NM"
-  },
-  {
-    "name": "New York",
-    "abbreviation": "NY"
-  },
-  {
-    "name": "North Carolina",
-    "abbreviation": "NC"
-  },
-  {
-    "name": "North Dakota",
-    "abbreviation": "ND"
-  },
-  {
-    "name": "Ohio",
-    "abbreviation": "OH"
-  },
-  {
-    "name": "Oklahoma",
-    "abbreviation": "OK"
-  },
-  {
-    "name": "Oregon",
-    "abbreviation": "OR"
-  },
-  {
-    "name": "Pennsylvania",
-    "abbreviation": "PA"
-  },
-  {
-    "name": "Rhode Island",
-    "abbreviation": "RI"
-  },
-  {
-    "name": "South Carolina",
-    "abbreviation": "SC"
-  },
-  {
-    "name": "South Dakota",
-    "abbreviation": "SD"
-  },
-  {
-    "name": "Tennessee",
-    "abbreviation": "TN"
-  },
-  {
-    "name": "Texas",
-    "abbreviation": "TX"
-  },
-  {
-    "name": "Utah",
-    "abbreviation": "UT"
-  },
-  {
-    "name": "Vermont",
-    "abbreviation": "VT"
-  },
-  {
-    "name": "Virginia",
-    "abbreviation": "VA"
-  },
-  {
-    "name": "Washington",
-    "abbreviation": "WA"
-  },
-  {
-    "name": "West Virginia",
-    "abbreviation": "WV"
-  },
-  {
-    "name": "Wisconsin",
-    "abbreviation": "WI"
-  },
-  {
-    "name": "Wyoming",
-    "abbreviation": "WY"
-  }
-];
 
 const resource = fetchData('/states');
 
@@ -222,9 +10,12 @@ function MainContainer() {
   const energyData = resource.read();
   const chartDataLabel = ["CO2", "SO2", "NOx", "Net Gen.", "Avg. Price"];
   const chartTypes = ["State Emissions", "State Net Generation", "State Average Retail Price"];
-  const [chartData, setChartData] = useState({});
-  const [stateResults, setStateResults] = useState(states);
-  const [isCheckedArr, setIsCheckedArr] = useState(Array(chartTypes.length).fill(true));
+  const states = energyData.filter((data) => {
+    return {
+      name: data.name,
+      abbreviation: data.abbrev,
+    };
+  })
   const unitTypes = {
     co2: "kmt (CO2)",
     so2: "mt (SO2, NOx)",
@@ -232,6 +23,8 @@ function MainContainer() {
     net_generation: "thousand megawatt hours (kMWh)",
     avg_price: "¢s per kilowatt hours (¢/KWh)",
   };
+  const [chartData, setChartData] = useState({});
+  const [stateResults, setStateResults] = useState(states);
 
   /*
 
@@ -287,21 +80,18 @@ function MainContainer() {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
             description: `Combined Emissions`,
-            isChecked: isCheckedArr[0],
           };
         case "netGenDataSet":
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
             description: `Total Net Generation`,
-            isChecked: isCheckedArr[1],
           };
         case "avgPriceDataSet":
           return {
             datasets: dataSetsObj[key],
             labels: xAxisLabels,
             description: `Average Retail Price`,
-            isChecked: isCheckedArr[2],
           };
         default:
           return {};
@@ -339,37 +129,13 @@ function MainContainer() {
     setStateResults(result);
   };
 
-  function handleAccordionFuelFilter(newChecks) {
-    if (Object.keys(chartData).length === 0) {
-      return
-    } else {
-      const updatedDatasets = chartData.datasets.map((chartData, index) => {
-        const newChartObj = {
-          ...chartData,
-          isChecked: newChecks[index],
-        };
-        return newChartObj;
-      });
-
-      const updatedChartData = {
-        ...chartData,
-        datasets: updatedDatasets
-      };
-
-      return setChartData(updatedChartData);
-    }; // Prevents update of chart data if no data is displayed
-  };
-
-  //
-
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
         <h1 className="description-title font-medium text-center text-xl mb-2 md:mt-2 md:mb-5 md:text-2xl lg:mt-4 lg:mb-10 lg:text-4xl hidden sm:block">Welcome to EIA Energy Display!</h1>
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
-        <FilterAccordion isCheckedArr={isCheckedArr} onIsCheckedArr={setIsCheckedArr} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
         <SectionHeading />
-        <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
+        <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
       </div>
     </main>
   );
