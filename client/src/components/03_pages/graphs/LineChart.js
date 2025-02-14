@@ -1,12 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import { DarkModeContext } from '../../00_context/DarkModeContext';
 import { Line } from 'react-chartjs-2';
+import useWindowSize from '../../01_helpers/useWindowSize';
 
 function LineChart({ data }) {
     const { description } = data;
     const { graphTextColor } = useContext(DarkModeContext);
-
     const units = data.datasets.map((d) => d.units);
+    const windowSize = useWindowSize();
+
+    console.log(windowSize)
 
     const scales = {
         y: {
@@ -47,9 +50,11 @@ function LineChart({ data }) {
             legend: {
                 labels: {
                     boxWidth: 20,
-                    font: {
-                        size: 18,
-                    },
+                    // font: (context) => {
+                    //     const width = context.chart.width;
+                    //     const size = Math.round(width / 32);
+                    //     return size
+                    // },
                 },
             },
         },
