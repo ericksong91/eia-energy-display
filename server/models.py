@@ -42,7 +42,10 @@ class Period(BaseTable):
     nox = db.Column(db.Integer) # short-tons
     so2 = db.Column(db.Integer) # short-tons
     co2 = db.Column(db.Integer) # co2-thousand-metric-tons
-
+    nox_per_mwh = db.Column(db.Float) # lbs per MWh
+    so2_per_mwh = db.Column(db.Float) # lbs per MWh
+    co2_per_mwh = db.Column(db.Float) # lbs per MWh
+    
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
     fuel_id = db.Column(db.Integer, db.ForeignKey('fuels.id'))
 

@@ -242,9 +242,9 @@ def api_request(url):
 ## SEEDING DATA ##
 with app.app_context():
     print('Deleting existing States, Fuels and Periods...')
+    Period.query.delete()
     State.query.delete()
     Fuel.query.delete()
-    Period.query.delete()
 
     print('Creating State objects...')
     for st in states:
@@ -269,60 +269,13 @@ with app.app_context():
     print('Setting data...')
     for d in data['response']['data']:
         state_id_query = State.query.filter_by(name=d['stateDescription']).first().id # load state ID using state's name as a search query
-        period = Period(year=int(d['period']), state_id=state_id_query, fuel_id=5, 
+        fuel_id_query = Fuel.query.filter_by(name="Combined").first().id
+        period = Period(year=int(d['period']), state_id=state_id_query, fuel_id=fuel_id_query, 
                                 nox=int(d['nitrogen-oxide']) * conversion_st_mt, so2=int(d['sulfer-dioxide']) * conversion_st_mt, co2=int(d['carbon-dioxide']),
-                                net_generation=int(d['net-generation']) / 1000, avg_price=float(d['average-retail-price']))
+                                net_generation=int(d['net-generation']) / 1000, avg_price=float(d['average-retail-price']), nox_per_mwh = float(d['nitrogen-oxide-lbs']),
+                                so2_per_mwh = float(d['sulfer-dioxide-lbs']), co2_per_mwh = float(d['carbon-dioxide-lbs']))
         db.session.add(period)
   
-    db.session.flush()
-
     print('Committing transaction...')
     db.session.commit()
     print('Complete.')
-
-
-    ## Pulling test data from testdata.json in client folder ##
-    # f = open('testdata.json')
-    # data = json.load(f)
-
-    ## RANDOM DATA ##
-    # for p in period:
-    #     first_state_id = State.query.first().id
-    #     last_state_id = State.query.order_by(State.id.desc()).first().id
-
-    #     current_state = random.randint(first_state_id, last_state_id) # each period gives a random state
-
-    #     for f in range(1, 4):
-    #         # each period with the set State gets Coal, Petroleum and Natural Gas
-    #         period = Period(year=p, state_id=current_state, fuel_id=f, nox=random.randint(0, 50000), so2=random.randint(0, 50000), co2=random.randint(0, 50000))
-    #         db.session.add(period)
-    
-    # conversion_st_mt = 0.9071847 
-    # offset_value = 0
-    # value_tracker = 0
-    # emissions_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=carbon-dioxide&data[1]=nitrogen-oxide&data[2]=sulfer-dioxide&sort[0][column]=period&sort[0][direction]=asc"
-    # net_gen_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=net-generation&sort[0][column]=period&sort[0][direction]=asc"
-    # avg_price_url = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&sort[0][column]=period&sort[0][direction]=asc"
-    # url_list = [emissions_url, net_gen_url, avg_price_url]
-    # data_list = [api_request(eia_url_offset(0, url)) for url in url_list] # using list comp to generate each url's data into one list. Solved Expression (in this case the function) for url in url_list 
-
-    # print('Setting data...')
-    # for data in data_list:
-    #     for i in data['response']['data']:
-    #         state_id_query = State.query.filter_by(name=i['stateDescription']).first().id # load state ID using state's name as a search query
-    #         period = Period.query.filter(and_(Period.year==int(i['period']), Period.state_id==state_id_query)).first() # find period with relate year and state id
-
-    #         if not period:
-    #             # if the period record is None, make a new one
-    #             period = Period(year=int(i['period']), state_id=state_id_query, fuel_id=5, 
-    #                             nox=int(i['nitrogen-oxide']) * conversion_st_mt, so2=int(i['sulfer-dioxide']) * conversion_st_mt, co2=int(i['carbon-dioxide']))
-    #             db.session.add(period)
-    #         else:
-    #             # if period exists, update record
-    #             period.avg_price = i.get('average-retail-price', period.avg_price)
-    #             period.net_generation = i.get('net-generation', period.net_generation)
-
-    #             if period.net_generation is not None:
-    #                 period.net_generation = int(period.net_generation) / 1000 #change to thousand mwh 
-    #             db.session.add(period)
-    #     db.session.flush()
