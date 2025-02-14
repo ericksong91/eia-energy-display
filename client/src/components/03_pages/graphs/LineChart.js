@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef } from 'react';
 import { DarkModeContext } from '../../00_context/DarkModeContext';
 import { Line } from 'react-chartjs-2';
 import useWindowSize from '../../01_helpers/useWindowSize';
@@ -8,8 +8,20 @@ function LineChart({ data }) {
     const { graphTextColor } = useContext(DarkModeContext);
     const units = data.datasets.map((d) => d.units);
     const windowSize = useWindowSize();
+    const chartRef = useRef(null);
 
-    console.log(windowSize)
+    function resizeLabelFontSize() {
+        // sm	640px	
+        // md	768px	
+        // lg	1024px	
+        // xl	1280px	
+        // 2xl	1536px
+
+        // Rework font size 
+        // return font size in obj
+
+        return { }
+    }
 
     const scales = {
         y: {
@@ -50,11 +62,9 @@ function LineChart({ data }) {
             legend: {
                 labels: {
                     boxWidth: 20,
-                    // font: (context) => {
-                    //     const width = context.chart.width;
-                    //     const size = Math.round(width / 32);
-                    //     return size
-                    // },
+                    font: {
+                        size: 15
+                    },
                 },
             },
         },
@@ -63,7 +73,7 @@ function LineChart({ data }) {
     return (
         <div className='linechart p-0 sm:px-4 pt-4'>
             <h2 className='chart-title-description text-center font-extrabold tracking-tight text-2xl sm:tracking-wide sm:pb-2 sm:text-4xl text-light-text dark:text-dark-text'>{description}</h2>
-            <Line data={data} options={options} />
+            <Line ref={chartRef} data={data} options={options} />
             <h3 className='units-period text-sm text-center hidden sm:block'>Year</h3>
         </div>
     );
