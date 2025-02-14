@@ -365,9 +365,10 @@ function MainContainer() {
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
-        <SectionHeading />
+        <h1 className="description-title font-medium text-center text-xl mb-2 md:mt-2 md:mb-5 md:text-2xl lg:mt-4 lg:mb-10 lg:text-4xl hidden sm:block">Welcome to EIA Energy Display!</h1>
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <FilterAccordion isCheckedArr={isCheckedArr} onIsCheckedArr={setIsCheckedArr} chartTypes={chartTypes} onAccordionFuelFilter={handleAccordionFuelFilter} />
+        <SectionHeading />
         <GraphParentContainer chartData={chartData} isCheckedArr={isCheckedArr} />
       </div>
     </main>
