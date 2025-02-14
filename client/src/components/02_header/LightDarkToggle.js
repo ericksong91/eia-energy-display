@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { IconContext } from "../00_context/IconContext";
 import { DarkModeContext } from "../00_context/DarkModeContext";
 
-
 function LightDarkToggle() {
     const { darkMode, setDarkMode } = useContext(DarkModeContext);
     const { sunIcon, moonIcon } = useContext(IconContext);

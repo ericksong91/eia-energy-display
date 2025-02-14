@@ -23,7 +23,7 @@ function SearchBar({ onStatesFilter, stateResults, onUpdateGraphs }) {
 
   return (
     <div className='searchbar container mx-auto'>
-      <form className="searchbar-form p-3" 
+      <form className="searchbar-form p-2 sm:py-4 sm:p-0" 
       // onSubmit={(e) => handleSubmit(e)}
       onSubmit={(e) => e.preventDefault()}
       >
