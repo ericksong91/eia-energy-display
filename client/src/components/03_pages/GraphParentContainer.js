@@ -14,7 +14,7 @@ function GraphParentContainer({ chartData }) {
     });
 
     return (
-        <section className='graphs container ease-in-out transition-all animate-appear bg-light-background sm:bg-opacity-65 sm:bg-light-primary rounded-lg pb-5'>
+        <section className='graphs container bg-light-background sm:bg-opacity-65 sm:bg-light-primary rounded-lg pb-5'>
             <Carousel slide={false} leftControl={leftIcon} rightControl={rightIcon} indicators={false}>
                 {graphList}
             </Carousel>
