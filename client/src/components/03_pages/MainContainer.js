@@ -28,7 +28,7 @@ function MainContainer() {
   const [chartData, setChartData] = useState({});
   const [stateResults, setStateResults] = useState(states);
   const currentState = chartData?.stateName || null;
-  
+
   /*
   ---HELPER FUNCTIONS FOR PACKAGING CHART DATA---
   */
@@ -83,13 +83,13 @@ function MainContainer() {
         datasets: dataSetsObj[key],
         labels: xAxisLabels,
         description: dataCategories[dataSetsObj[key][0].name].description,
-        units: {y: dataCategories[dataSetsObj[key][0].name].units},
+        units: { y: dataCategories[dataSetsObj[key][0].name].units },
         needsY1: false,
       };
 
       if (key === "CO2emissionsPerMWhDataSet" || key === "SO2NOxemissionsPerMWhDataSet") {
         dataset.description = dataCategories[dataSetsObj[key][1].name].description;
-        dataset.units = {y: dataCategories[dataSetsObj[key][0].name].units, y1: dataCategories[dataSetsObj[key][1].name].units};
+        dataset.units = { y: dataCategories[dataSetsObj[key][0].name].units, y1: dataCategories[dataSetsObj[key][1].name].units };
         dataset.needsY1 = true;
       };
       return dataset;
@@ -129,8 +129,16 @@ function MainContainer() {
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
-        <SectionHeading currentState={currentState} />
+        <SectionHeading />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
+
+        <div className="state-name text-center sm:mb-8">
+          {currentState ?
+            <h2 className="state-name font-bold md:tracking-widest text-2xl sm:text-3xl md:text-4xl">{currentState} data from 2008-2023</h2>
+            :
+            <h2 className="please-select-h2 font-bold tracking-widest text-4xl">Please select a state!</h2>}
+        </div>
+
         <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
       </div>
     </main>

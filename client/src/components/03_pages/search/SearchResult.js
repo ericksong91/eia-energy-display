@@ -9,6 +9,7 @@ function SearchResult({ stateResults, onSearchConfirmation, onIsFocused }) {
         return <p key={state.name} className={`${state.name} hover:bg-blue-100 hover:cursor-pointer`}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleClick(state.name)}
+            onKeyDown={() => handleClick(state.name)}
         >
             {state.name}
         </p>

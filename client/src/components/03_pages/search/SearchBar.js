@@ -16,15 +16,9 @@ function SearchBar({ onStatesFilter, stateResults, onUpdateGraphs }) {
     onUpdateGraphs(searchTerm);
   };
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-
-  // };
-
   return (
     <div className='searchbar container mx-auto'>
-      <form className="searchbar-form p-2 sm:py-4 sm:p-0" 
-      // onSubmit={(e) => handleSubmit(e)}
+      <form className="searchbar-form px-2 py-10 sm:px-0" 
       onSubmit={(e) => e.preventDefault()}
       >
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Click to select States or Search for States</label>
