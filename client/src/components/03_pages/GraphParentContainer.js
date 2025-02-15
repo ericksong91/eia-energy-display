@@ -35,6 +35,9 @@ function GraphParentContainer({ chartData }) {
     }
     const x = {
         ticks: {
+            callback: function (value, index) {
+                return index % 2 === 0 ? this.getLabelForValue(value) : '';
+            },
             color: graphTextColor,
         },
     };

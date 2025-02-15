@@ -20,7 +20,7 @@ function MainContainer() {
     co2: { type: "emissions", legendLabel: "CO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
     so2: { type: "emissions", legendLabel: "SO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
     nox: { type: "emissions", legendLabel: "NOx", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
-    net_generation: { type: "net_generation", legendLabel: "Net Gen.", description: "Total Net Generation", units: "thousand megawatt hour (kMWh)" },
+    net_generation: { type: "net_generation", legendLabel: "Net Gen.", description: "Total Net Generation", units: "megawatt hour (kMWh)" },
     avg_price: { type: "avg_price", legendLabel: "Avg. Price", description: "Average Retail Price", units: "cents per kilowatt hour (¢/KWh)" },
     co2_per_mwh: { type: "co2_emissions_per_mwh", legendLabel: "CO2 per MWh", description: "CO2 Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
     so2_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "SO2 per MWh", description: "SO2, NOx Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
