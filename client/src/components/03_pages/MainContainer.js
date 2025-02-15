@@ -43,9 +43,7 @@ function MainContainer() {
   const [stateResults, setStateResults] = useState(states);
 
   /*
-
-  HELPER FUNCTIONS FOR PACKAGING CHART DATA
-
+  --HELPER FUNCTIONS FOR PACKAGING CHART DATA--
   */
 
   function makeDataSets(stateData, xAxisLabels) {
@@ -61,9 +59,6 @@ function MainContainer() {
       
       return dataObj;
     }); // Gives an array with all data
-
-    console.log(dataPointSet)
-
 
     const dataSetsObj = makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
 
@@ -92,10 +87,10 @@ function MainContainer() {
     return {
       emissionsDataSet: emissionsData,
       netGenDataSet: netGenData,
-      avgPriceDataSet: avgPriceData,
       CO2emissionsPerMWhDataSet: CO2emissionsPerMWh,
       SO2emissionsPerMWhDataSet: SO2emissionsPerMWh,
       NOxemissionsPerMWhDataSet: NOxemissionsPerMWh,
+      avgPriceDataSet: avgPriceData,
     };
   };
 
