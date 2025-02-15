@@ -3,7 +3,6 @@ import fetchData from '../01_helpers/fetchData';
 import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
-import { data } from 'autoprefixer';
 
 const resource = fetchData('/states');
 
@@ -26,10 +25,10 @@ function MainContainer() {
     so2_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "SO2 per MWh", description: "SO2, NOx Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
     nox_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "NOx per MWH", description: "SO2, NOx Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
   };
-
   const [chartData, setChartData] = useState({});
   const [stateResults, setStateResults] = useState(states);
-
+  const currentState = chartData?.stateName || null;
+  
   /*
   ---HELPER FUNCTIONS FOR PACKAGING CHART DATA---
   */
@@ -93,9 +92,6 @@ function MainContainer() {
         dataset.units = {y: dataCategories[dataSetsObj[key][0].name].units, y1: dataCategories[dataSetsObj[key][1].name].units};
         dataset.needsY1 = true;
       };
-
-      console.log(dataset)
-
       return dataset;
     });
 
@@ -133,7 +129,7 @@ function MainContainer() {
   return (
     <main className="main flex-grow sm:pt-4">
       <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
-        <SectionHeading />
+        <SectionHeading currentState={currentState} />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
         <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
       </div>
