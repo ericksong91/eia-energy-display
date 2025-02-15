@@ -1,74 +1,8 @@
-import { useContext} from 'react';
-import { DarkModeContext } from '../../00_context/DarkModeContext';
+
 import { Line } from 'react-chartjs-2';
 
-function LineChart({ data }) {
+function LineChart({ data, options }) {
     const { description, needsY1 } = data;
-    const { graphTextColor } = useContext(DarkModeContext);
-    const units = data.datasets.map((d) => d.units);
-
-    const scales = {
-        y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
-            title: {
-                display: true,
-                text: `${units.length > 1 ? `${units[0]}, ${units[1]}` : units}`,
-                color: graphTextColor,
-            },
-            ticks: {
-                callback: function (value, index) {
-                    return index % 2 === 0 ? this.getLabelForValue(value) : '';
-                },
-                color: graphTextColor,
-            },
-        },
-        y1: {
-            type: 'linear',
-            display: needsY1,
-            position: 'right',
-            title: {
-                display: needsY1,
-                text: `${units[0]}`,
-                color: graphTextColor,
-            },
-            ticks: {
-                callback: function (value, index) {
-                    return index % 2 === 0 ? this.getLabelForValue(value) : '';
-                },
-                color: graphTextColor,
-            },
-        },
-        x: {
-            ticks: {
-                callback: function (value, index) {
-                    return index % 2 === 0 ? this.getLabelForValue(value) : '';
-                },
-                color: graphTextColor,
-            },
-        },
-    }; // Can add another scale if needed; using y1, y2, etc
-
-    const options = {
-        responsive: true,
-        interaction: {
-            mode: 'index',
-            intersect: true,
-        },
-        stacked: true,
-        scales: scales,
-        plugins: {
-            legend: {
-                labels: {
-                    boxWidth: 20,
-                    font: {
-                        size: 15
-                    },
-                },
-            },
-        },
-    };
 
     return (
         <div className='linechart p-0 sm:px-4 pt-4'>
