@@ -3,7 +3,6 @@ import fetchData from '../01_helpers/fetchData';
 import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
-import { data } from 'autoprefixer';
 
 const resource = fetchData('/states');
 
@@ -18,14 +17,14 @@ function MainContainer() {
   });
 
   const dataCategories = {
-    co2: {type: "emissions", legendLabel: "CO2", description: "Combined Emissions"},
-    so2: {type: "emissions", legendLabel: "SO2", description: "Combined Emissions"},
-    nox: {type: "emissions", legendLabel: "NOx", description: "Combined Emissions"},
-    net_generation: {type: "net_generation", legendLabel: "Net Gen.", description: 'Total Net Generation'},
-    avg_price: {type: "avg_price", legendLabel: "Avg. Price", description: 'Average Retail Price'},
-    co2_per_mwh: {type: "co2_emissions_per_mwh", legendLabel: "CO2 per MWh", description: ''},
-    so2_per_mwh: {type: "so2_nox_emissions_per_mwh", legendLabel: "SO2 per MWh"},
-    nox_per_mwh: {type: "so2_nox_emissions_per_mwh", legendLabel: "NOx per MWH"},
+    co2: { type: "emissions", legendLabel: "CO2", description: "Combined Emissions" },
+    so2: { type: "emissions", legendLabel: "SO2", description: "Combined Emissions" },
+    nox: { type: "emissions", legendLabel: "NOx", description: "Combined Emissions" },
+    net_generation: { type: "net_generation", legendLabel: "Net Gen.", description: "Total Net Generation" },
+    avg_price: { type: "avg_price", legendLabel: "Avg. Price", description: "Average Retail Price" },
+    co2_per_mwh: { type: "co2_emissions_per_mwh", legendLabel: "CO2 per MWh", description: "CO2 Emissions per MWh" },
+    so2_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "SO2 per MWh", description: "SO2, NOx Emissions per MWh" },
+    nox_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "NOx per MWH", description: "SO2, NOx Emissions per MWh" },
   };
 
   const [chartData, setChartData] = useState({});
@@ -47,6 +46,7 @@ function MainContainer() {
       return dataObj;
     }); // Gives an array with all data
 
+
     const dataSetsObj = makeDataObjects(dataPointSet); // Groups converted data (ie, [emissions], [net generation], etc) into one object with accessible keys
 
     return sortDataObjects(dataSetsObj, xAxisLabels)
@@ -62,11 +62,11 @@ function MainContainer() {
     const SO2NOxemissionsPerMWh = [];
 
     for (let i = 0; i < dataPointSet.length; i++) {
-      if (dataPointSet[i].dataCategory === "emissions") emissionsData.push(dataPointSet[i]);
-      if (dataPointSet[i].dataCategory === "net_generation") netGenData.push(dataPointSet[i]);
-      if (dataPointSet[i].dataCategory === "avg_price") avgPriceData.push(dataPointSet[i]);
-      if (dataPointSet[i].dataCategory === "co2_emissions_per_mwh" || dataPointSet[i].dataCategory === "net_generation") CO2emissionsPerMWh.push(dataPointSet[i]);
-      if (dataPointSet[i].dataCategory === "so2_nox_emissions_per_mwh" || dataPointSet[i].dataCategory === "net_generation") SO2NOxemissionsPerMWh.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory.type === "emissions") emissionsData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory.type === "net_generation") netGenData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory.type === "avg_price") avgPriceData.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory.type === "co2_emissions_per_mwh" || dataPointSet[i].dataCategory.type === "net_generation") CO2emissionsPerMWh.push(dataPointSet[i]);
+      if (dataPointSet[i].dataCategory.type === "so2_nox_emissions_per_mwh" || dataPointSet[i].dataCategory.type === "net_generation") SO2NOxemissionsPerMWh.push(dataPointSet[i]);
     };
 
     return {
@@ -79,54 +79,23 @@ function MainContainer() {
   };
 
   function sortDataObjects(dataSetsObj, xAxisLabels) {
-    return Object.keys(dataSetsObj)?.map(key => {
-      switch (key) {
-        case "emissionsDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `Combined Emissions`,
-            needsY1: false,
-          };
-        case "netGenDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `Total Net Generation`,
-            needsY1: false,
-          };
-        case "avgPriceDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `Average Retail Price`,
-            needsY1: false,
-          };
-        case "CO2emissionsPerMWhDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `CO2 Emissions per MWh`,
-            needsY1: true,
-          };
-        case "SO2emissionsPerMWhDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `SO2 Emissions per MWh`,
-            needsY1: true,
-          };
-        case "NOxemissionsPerMWhDataSet":
-          return {
-            datasets: dataSetsObj[key],
-            labels: xAxisLabels,
-            description: `NOx Emissions per MWh`,
-            needsY1: true,
-          };
-        default:
-          return {};
+    const dataArr = Object.keys(dataSetsObj)?.map((key) => {
+      const dataset = {
+        datasets: dataSetsObj[key],
+        labels: xAxisLabels,
+        description: dataSetsObj[key][0].dataCategory.description,
+        needsY1: false,
       };
+
+      if(key === "CO2emissionsPerMWhDataSet" || key === "SO2NOxemissionsPerMWhDataSet") {
+        dataset.description = dataSetsObj[key][1].dataCategory.description;
+        dataset.needsY1 = dataSetsObj[key][1].dataCategory.description === "y" ? false : true;
+      };
+
+      return dataset;
     });
+
+    return dataArr;
   };
 
   /*

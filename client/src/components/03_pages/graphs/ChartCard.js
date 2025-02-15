@@ -8,7 +8,7 @@ Chart.register(CategoryScale);
 function GraphCard({ data, options }) {
 
     return (
-        <div className={`graphcard m-4 rounded-lg cursor-default bg-white`}>
+        <div className={`graphcard m-4 rounded-lg cursor-default`}>
             <LineChart data={data} options={options}/>
             <TableChart data={data} />
         </div>
