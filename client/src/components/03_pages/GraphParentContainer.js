@@ -20,38 +20,43 @@ function GraphParentContainer({ chartData }) {
             color: graphTextColor,
         },
     };
+    const y1 = {
+        type: 'linear',
+        display: false,
+        position: 'right',
+        title: {
+            display: false,
+            text: ``,
+            color: graphTextColor,
+        },
+        ticks: {
+            color: graphTextColor,
+        },
+    }
     const x = {
         ticks: {
             color: graphTextColor,
         },
     };
-    const unitTypes = {
-        co2: "kmt (CO2)",
-        so2: "mt (SO2, NOx)",
-        nox: "mt",
-        net_generation: "thousand megawatt hour (kMWh)",
-        avg_price: "cents per kilowatt hour (¢/KWh)",
-        co2_per_mwh: "pounds per megawatt hour (lbs/mwh)",
-        so2_per_mwh: "pounds per megawatt hour (lbs/mwh)",
-        nox_per_mwh: "pounds per megawatt hour (lbs/mwh)",
-    };
 
     const graphList = Object.keys(chartData).length === 0 ? [] : chartData.datasets.map((dataObj, index) => {
         const scales = {
             x: x,
-            y: y,
-            y1: {
-                type: 'linear',
-                display: dataObj.needsY1,
-                position: 'right',
+            y: {
+                ...y,
                 title: {
+                    ...y.title,
+                    text: dataObj.units.y
+                },
+            },
+            y1: {
+                ...y1,
+                display: dataObj.needsY1,
+                title: {
+                    ...y1.title,
                     display: dataObj.needsY1,
-                    text: ``,
-                    color: graphTextColor,
-                },
-                ticks: {
-                    color: graphTextColor,
-                },
+                    text: dataObj.units.y1,
+                }
             },
         };
 
