@@ -3,6 +3,7 @@ import fetchData from '../01_helpers/fetchData';
 import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
+import Glossary from './Glossary';
 
 const resource = fetchData('/states');
 
@@ -140,6 +141,8 @@ function MainContainer() {
         </div>
 
         <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
+
+        <Glossary />
       </div>
     </main>
   );

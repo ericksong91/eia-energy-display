@@ -6,7 +6,8 @@ import { DarkModeContext } from "../00_context/DarkModeContext";
 
 function GraphParentContainer({ chartData }) {
     const { leftIcon, rightIcon } = useContext(IconContext);
-    const { graphTextColor } = useContext(DarkModeContext);
+    const { graphColors } = useContext(DarkModeContext);
+
     const y = {
         type: 'linear',
         display: true,
@@ -14,10 +15,13 @@ function GraphParentContainer({ chartData }) {
         title: {
             display: true,
             text: ``,
-            color: graphTextColor,
+            color: graphColors.text,
         },
         ticks: {
-            color: graphTextColor,
+            color: graphColors.text,
+        },
+        grid: {
+            color: graphColors.grid,
         },
     };
     const y1 = {
@@ -27,10 +31,13 @@ function GraphParentContainer({ chartData }) {
         title: {
             display: false,
             text: ``,
-            color: graphTextColor,
+            color: graphColors.text,
         },
         ticks: {
-            color: graphTextColor,
+            color: graphColors.text,
+        },
+        grid: {
+            display: false,
         },
     }
     const x = {
@@ -38,7 +45,10 @@ function GraphParentContainer({ chartData }) {
             callback: function (value, index) {
                 return index % 2 === 0 ? this.getLabelForValue(value) : '';
             },
-            color: graphTextColor,
+            color: graphColors.text,
+        },
+        grid: {
+            color: graphColors.grid,
         },
     };
 
@@ -90,7 +100,7 @@ function GraphParentContainer({ chartData }) {
         Object.keys(chartData).length === 0 ?
             null
             :
-            <section className='graphs container pb-5 transition-all duration-600 animate-appear bg-light-background sm:bg-opacity-65 sm:bg-light-primary sm:rounded-lg'>
+            <section className='graphs container pb-5 transition-all duration-600 animate-appear bg-light-background dark:bg-dark-background sm:bg-opacity-65 sm:bg-light-primary sm:dark:bg-dark-primary sm:rounded-lg'>
                 <Carousel slide={false} leftControl={leftIcon} rightControl={rightIcon} indicators={false}>
                     {graphList}
                 </Carousel>

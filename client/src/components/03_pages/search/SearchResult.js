@@ -20,7 +20,7 @@ function SearchResult({ stateResults, onSearchConfirmation, onIsFocused }) {
     };
 
     return (
-        <div className='w-full max-h-64 overflow-y-scroll bg-white flex-col rounded-lg shadow-lg p-3 absolute z-50'>
+        <div className='w-full max-h-64 overflow-y-scroll bg-white flex-col rounded-lg shadow-lg p-3 absolute z-50 dark:bg-dark-background'>
             {stateList}
         </div>
     );
