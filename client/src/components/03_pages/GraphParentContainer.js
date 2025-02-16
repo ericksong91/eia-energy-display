@@ -90,6 +90,12 @@ function GraphParentContainer({ chartData }) {
                             size: 15
                         },
                     },
+                    onHover: function (e, activeElement) {
+                        if (activeElement) e.native.target.style.cursor="pointer";
+                    },
+                    onLeave: function (e) {
+                        e.native.target.style.cursor="default";
+                    }
                 },
             },
         };
