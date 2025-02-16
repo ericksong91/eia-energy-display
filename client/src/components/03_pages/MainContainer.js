@@ -20,7 +20,7 @@ function MainContainer() {
     co2: { type: "emissions", legendLabel: "CO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
     so2: { type: "emissions", legendLabel: "SO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
     nox: { type: "emissions", legendLabel: "NOx", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
-    net_generation: { type: "net_generation", legendLabel: "Net Gen.", description: "Total Net Generation", units: "megawatt hour (kMWh)" },
+    net_generation: { type: "net_generation", legendLabel: "Net Gen.", description: "Total Net Generation", units: "thousand megawatt hour (kMWh)" },
     avg_price: { type: "avg_price", legendLabel: "Avg. Price", description: "Average Retail Price", units: "cents per kilowatt hour (¢/KWh)" },
     co2_per_mwh: { type: "co2_emissions_per_mwh", legendLabel: "CO2 per MWh", description: "CO2 Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
     so2_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "SO2 per MWh", description: "SO2, NOx Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
@@ -43,6 +43,7 @@ function MainContainer() {
         data: stateData.map((d) => d[category]),
         yAxisID: dataCategories[category].type === "emissions" || dataCategories[category].type === "net_generation" || dataCategories[category].type === "avg_price" ? "y" : "y1",
         dataCategory: dataCategories[category].type,
+        fill: true,
       };
       return dataObj;
     }); // Gives an array with all data
@@ -129,7 +130,7 @@ function MainContainer() {
 
   return (
     <main className="main flex-grow sm:pt-4">
-      <div className='container mx-auto sm:rounded-lg sm:drop-shadow-md'>
+      <div className='container mx-auto'>
         <SectionHeading />
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
 

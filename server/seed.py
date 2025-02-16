@@ -272,7 +272,7 @@ with app.app_context():
         fuel_id_query = Fuel.query.filter_by(name="Combined").first().id
         period = Period(year=int(d['period']), state_id=state_id_query, fuel_id=fuel_id_query, 
                                 nox=int(d['nitrogen-oxide']) * conversion_st_mt, so2=int(d['sulfer-dioxide']) * conversion_st_mt, co2=int(d['carbon-dioxide']),
-                                net_generation=int(d['net-generation']), avg_price=float(d['average-retail-price']), nox_per_mwh = float(d['nitrogen-oxide-lbs']),
+                                net_generation=int(d['net-generation']) / 1000, avg_price=float(d['average-retail-price']), nox_per_mwh = float(d['nitrogen-oxide-lbs']),
                                 so2_per_mwh = float(d['sulfer-dioxide-lbs']), co2_per_mwh = float(d['carbon-dioxide-lbs']))
         db.session.add(period)
   

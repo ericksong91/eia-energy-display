@@ -101,10 +101,9 @@ function GraphParentContainer({ chartData }) {
         Object.keys(chartData).length === 0 ?
             null
             :
-            <section className='graphs container pb-5 transition-all duration-600 animate-appear bg-light-background dark:bg-dark-background sm:bg-opacity-65 sm:bg-light-primary sm:dark:bg-dark-primary sm:rounded-lg'>
-                <Carousel slide={false} leftControl={leftIcon} rightControl={rightIcon} indicators={false}>
-                    {graphList}
-                </Carousel>
+            <section className='graphs container flex flex-col gap-10 p-5 transition-all duration-700 animate-appear 
+            bg-light-background dark:bg-dark-background'>
+                {graphList}
             </section>
     );
 };

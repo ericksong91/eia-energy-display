@@ -7,7 +7,7 @@ Chart.register(CategoryScale);
 function GraphCard({ data, options }) {
 
     return (
-        <div className={`graphcard m-4 rounded-lg cursor-default`}>
+        <div className={`graphcard transition-all duration-800 animate-appear`}>
             <LineChart data={data} options={options}/>
         </div>
     );

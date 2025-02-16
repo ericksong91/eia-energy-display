@@ -13,6 +13,7 @@ client/build
 client/src/css/output.css
 server/instance/
 notes.txt
+EIABackupData.json
 
 # misc
 .DS_Store
