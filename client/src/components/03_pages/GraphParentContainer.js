@@ -85,6 +85,7 @@ function GraphParentContainer({ chartData }) {
                 legend: {
                     labels: {
                         boxWidth: 20,
+                        color: graphColors.text,
                         font: {
                             size: 15
                         },
