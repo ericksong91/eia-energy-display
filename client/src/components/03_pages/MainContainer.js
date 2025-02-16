@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import fetchData from '../01_helpers/fetchData';
+import { useState, useContext } from 'react';
 import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
 import Glossary from './Glossary';
+import fetchData from '../01_helpers/fetchData';
+import { IconContext } from '../00_context/IconContext';
 
 const resource = fetchData('/states');
 
@@ -29,6 +30,7 @@ function MainContainer() {
   const [chartData, setChartData] = useState({});
   const [stateResults, setStateResults] = useState(states);
   const currentState = chartData?.stateName || null;
+  const { headingRule } = useContext(IconContext);
 
   /*
   ---HELPER FUNCTIONS FOR PACKAGING CHART DATA---
@@ -136,11 +138,11 @@ function MainContainer() {
           Welcome to EIA Energy Display!
         </h1>
 
-        <hr className='hr-below-heading h-px my-10 bg-gray-200' />
+        {headingRule}
 
         <SectionHeading />
 
-        <hr className='hr-below-heading h-px my-10 bg-gray-200' />
+        {headingRule}
 
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
 

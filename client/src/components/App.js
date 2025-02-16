@@ -1,9 +1,10 @@
-import { Suspense, useContext, useEffect } from 'react';
-import MainContainer from './03_pages/MainContainer';
+import React, { Suspense, lazy, useContext, useEffect } from 'react';
 import Header from './02_header/Header';
 import Footer from './footer/Footer';
 import FallBack from './01_helpers/FallBack';
 import { DarkModeContext } from './00_context/DarkModeContext';
+
+const MainContainer = React.lazy(() => import('./03_pages/MainContainer'));
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);

@@ -34,9 +34,11 @@ function IconProvider({ children }) {
             d="m4.5 15.75 7.5-7.5 7.5 7.5" />
     </svg>
 
+    const headingRule = <hr className='hr-below-heading h-px my-10 bg-gray-200'/>;
+
 
     return (
-        <IconContext.Provider value={{ moonIcon, sunIcon, downArrow, upArrow }}>
+        <IconContext.Provider value={{ moonIcon, sunIcon, downArrow, upArrow, headingRule }}>
             {children}
         </IconContext.Provider>
     );
