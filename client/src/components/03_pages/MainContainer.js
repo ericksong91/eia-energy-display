@@ -130,20 +130,27 @@ function MainContainer() {
 
   return (
     <main className="main flex-grow sm:pt-4">
+
       <div className='container mx-auto'>
+        <h1 className="description-site-header font-medium text-center text-4xl animate-appear hidden sm:block">
+          Welcome to EIA Energy Display!
+        </h1>
+
+        <hr className='hr-below-heading h-px my-10 bg-gray-200' />
+
         <SectionHeading />
+
+        <hr className='hr-below-heading h-px my-10 bg-gray-200' />
+
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
 
-        <div className="state-name text-center sm:mb-8">
-          {currentState ?
-            <h2 className="state-name font-bold md:tracking-widest text-2xl sm:text-3xl md:text-4xl">{currentState} data from 2008-2023</h2>
-            :
-            <h2 className="please-select-h2 font-bold tracking-widest text-4xl">Please select a state!</h2>}
-        </div>
-
-        <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
+        <h2 className="state-name-text text-center font-bold md:tracking-widest text-2xl sm:text-3xl md:text-4xl transition-transform">
+          {currentState ? `${currentState} data from 2008-2023` : 'Please select a state!'}
+        </h2>
 
         <Glossary />
+
+        <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
       </div>
     </main>
   );

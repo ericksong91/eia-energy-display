@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app min-h-screen text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background flex flex-col">
+      <div className="app flex flex-col min-h-screen text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background transition-colors">
         <Suspense fallback={<FallBack />}>
           <Header />
           <MainContainer />

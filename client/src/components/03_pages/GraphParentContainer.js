@@ -1,11 +1,8 @@
 import { useContext } from "react";
 import ChartCard from "./graphs/ChartCard"
-import { Carousel } from "flowbite-react";
-import { IconContext } from "../00_context/IconContext";
 import { DarkModeContext } from "../00_context/DarkModeContext";
 
 function GraphParentContainer({ chartData }) {
-    const { leftIcon, rightIcon } = useContext(IconContext);
     const { graphColors } = useContext(DarkModeContext);
 
     const y = {
@@ -107,8 +104,7 @@ function GraphParentContainer({ chartData }) {
         Object.keys(chartData).length === 0 ?
             null
             :
-            <section className='graphs container flex flex-col gap-10 p-5 transition-all duration-700 animate-appear 
-            bg-light-background dark:bg-dark-background'>
+            <section className='graphs container flex flex-col animate-appear'>
                 {graphList}
             </section>
     );
