@@ -18,7 +18,7 @@ function wrapPromise(promise) {
             case 'pending':
                 throw suspender
             case 'error':
-                return response
+                throw response
             default:
                 return response
         };

@@ -3,12 +3,9 @@ import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
 import SearchBar from './search/SearchBar';
 import Glossary from './Glossary';
-import fetchData from '../01_helpers/fetchData';
 import { IconContext } from '../00_context/IconContext';
 
-const resource = fetchData('/states');
-
-function MainContainer() {
+function MainContainer({ resource }) {
   const energyData = resource.read();
   const chartTypes = ["State Emissions", "State Net Generation", "State Average Retail Price"];
   const states = energyData.map((data) => {
