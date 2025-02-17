@@ -99,4 +99,5 @@ A demo of the application can be found here: https://eia-energy-display.onrender
 This application was created by Eric Song.
 
 [EIA API](https://www.eia.gov/opendata/)
+
 [EIA Govt. Glossary](https://www.eia.gov/tools/glossary/)
