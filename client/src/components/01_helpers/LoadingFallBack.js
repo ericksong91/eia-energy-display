@@ -1,9 +1,18 @@
-import { Spinner } from "flowbite-react";
+import { ring2 } from "ldrs";
+
+ring2.register();
 
 function LoadingFallBack() {
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <Spinner size='xl' />
+            <l-ring-2
+                size="50"
+                stroke="6"
+                stroke-length="0.25"
+                bg-opacity="0.1"
+                speed="0.8"
+                color="#35585F"
+            ></l-ring-2>
         </div>
     );
 };
