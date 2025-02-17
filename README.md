@@ -69,7 +69,19 @@ A demo of the application can be found here: https://eia-energy-display.onrender
 
 ## How To Use:
 
+1. Click on the search bar below to open a drop down menu with all U.S. states.
 
+2. Start typing U.S. State names or abbreviations and the list will automatically update.
+
+    - (e.g. Typing 'Maryland' or 'MD' will give you results for Maryland)
+
+3. Click on the state name to update the graph.
+
+4. You can hide data on each graph by clicking on their respective labels in the legend.
+
+5. Click on the glossary below to get some background on terms.
+
+![How to use Gif](/readme_images/eiawebsitegif1.gif)
 
 ## Updates
 
@@ -78,6 +90,7 @@ A demo of the application can be found here: https://eia-energy-display.onrender
 ## To-Do
 
 - Replace search bar with a component that is more user friendly
+    - Keyboard disabled at the moment
 - Add tables for each graph
 - Automatic pulls from EIA.gov API once a week
 
