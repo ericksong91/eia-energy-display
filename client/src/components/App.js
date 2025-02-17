@@ -7,7 +7,7 @@ import LoadingFallBack from './01_helpers/LoadingFallBack';
 import { DarkModeContext } from './00_context/DarkModeContext';
 const MainContainer = lazy(() => import('./03_pages/MainContainer'));
 
-const resource = fetchData('/states/1');
+const resource = fetchData('/states');
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -30,7 +30,12 @@ function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app flex flex-col min-h-screen text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background transition-colors">
+      <div className="app flex flex-col gap-y-5 
+              min-h-screen 
+              text-light-text dark:text-dark-text 
+              bg-light-background dark:bg-dark-background 
+              transition-colors"
+      >
         <ErrorBoundary fallbackRender={fallbackRender}>
           <Suspense fallback={<LoadingFallBack />}>
             <Header />

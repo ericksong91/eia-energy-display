@@ -7,7 +7,7 @@ Chart.register(CategoryScale);
 function GraphCard({ data, options }) {
 
     return (
-        <div className={`graphcard animate-appear`}>
+        <div className={`graphcard`}>
             <LineChart data={data} options={options}/>
         </div>
     );

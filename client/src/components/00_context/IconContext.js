@@ -34,7 +34,7 @@ function IconProvider({ children }) {
             d="m4.5 15.75 7.5-7.5 7.5 7.5" />
     </svg>
 
-    const headingRule = <hr className='hr-below-heading h-px my-10 bg-gray-200'/>;
+    const headingRule = <hr className='hr-below-heading h-px my-10 bg-gray-200 sm:block hidden'/>;
 
 
     return (

@@ -128,9 +128,7 @@ function MainContainer({ resource }) {
   };
 
   return (
-    <main className="main flex-grow sm:pt-4">
-
-      <div className='container mx-auto'>
+    <main className="main container flex-col flex-grow sm:pt-4 mx-auto">
         <h1 className="description-site-header font-medium text-center text-4xl animate-appear hidden sm:block">
           Welcome to EIA Energy Display!
         </h1>
@@ -143,14 +141,10 @@ function MainContainer({ resource }) {
 
         <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
 
-        <h2 className="state-name-text text-center font-bold md:tracking-widest text-2xl sm:text-3xl md:text-4xl transition-transform">
-          {currentState ? `${currentState} data from 2008-2023` : 'Please select a state!'}
-        </h2>
-
         <Glossary />
 
-        <GraphParentContainer chartData={chartData} chartTypes={chartTypes} />
-      </div>
+        <GraphParentContainer chartData={chartData} currentState={currentState} />
+
     </main>
   );
 };
