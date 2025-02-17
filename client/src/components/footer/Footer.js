@@ -6,6 +6,7 @@ function Footer() {
             <div className='p-3 text-xs'>
                 <p>App built by Eric Song</p>
                 <p>Data from https://www.eia.gov/opendata/</p>
+                <p><sup>[1]</sup>Glossary Definitions from: https://www.eia.gov/tools/glossary/index.php</p>
             </div>
         </footer>
     )
