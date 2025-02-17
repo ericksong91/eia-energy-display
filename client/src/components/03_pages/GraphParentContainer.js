@@ -2,9 +2,8 @@ import { useContext } from "react";
 import ChartCard from "./graphs/ChartCard"
 import { DarkModeContext } from "../00_context/DarkModeContext";
 
-function GraphParentContainer({ chartData, currentState }) {
+function GraphParentContainer({ chartData }) {
     const { graphColors } = useContext(DarkModeContext);
-
     const y = {
         type: 'linear',
         display: true,
@@ -49,7 +48,7 @@ function GraphParentContainer({ chartData, currentState }) {
         },
     };
 
-    const graphList = Object.keys(chartData).length === 0 ? [] : chartData.datasets.map((dataObj, index) => {
+    const graphList = chartData.datasets.map((dataObj, index) => {
         const scales = {
             x: x,
             y: {
@@ -101,18 +100,9 @@ function GraphParentContainer({ chartData, currentState }) {
     });
 
     return (
-        <>
-            {currentState ?
-                <section className='graphs container flex flex-col'>
-                    <h2 className="state-name-year text-center font-bold mt-10 md:tracking-widest text-2xl sm:text-3xl md:text-4xl animate-appear">
-                        {currentState} data from 2008-2023
-                    </h2>
-                    {graphList}
-                </section>
-                :
-                null
-            }
-        </>
+        <section className='graphs flex flex-col animate-appear'>
+            {graphList}
+        </section>
     );
 };
 

@@ -30,10 +30,11 @@ function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="app flex flex-col gap-y-5 
+      <div className="app flex flex-col
               min-h-screen 
               text-light-text dark:text-dark-text 
-              bg-light-background dark:bg-dark-background 
+              bg-light-background dark:bg-dark-background
+              duration-500
               transition-colors"
       >
         <ErrorBoundary fallbackRender={fallbackRender}>

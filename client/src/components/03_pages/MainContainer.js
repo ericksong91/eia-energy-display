@@ -1,13 +1,12 @@
 import { useState, useContext } from 'react';
 import SectionHeading from './SectionHeading';
 import GraphParentContainer from './GraphParentContainer';
-import SearchBar from './search/SearchBar';
 import Glossary from './Glossary';
+import SearchBar from './search/SearchBar';
 import { IconContext } from '../00_context/IconContext';
 
 function MainContainer({ resource }) {
   const energyData = resource.read();
-  const chartTypes = ["State Emissions", "State Net Generation", "State Average Retail Price"];
   const states = energyData.map((data) => {
     return {
       name: data.name,
@@ -128,23 +127,31 @@ function MainContainer({ resource }) {
   };
 
   return (
-    <main className="main container flex-col flex-grow sm:pt-4 mx-auto">
-        <h1 className="description-site-header font-medium text-center text-4xl animate-appear hidden sm:block">
-          Welcome to EIA Energy Display!
-        </h1>
+    <main className="main container flex flex-col flex-grow gap-y-5 py-5 mx-auto">
+      <h1 className="description-site-header font-medium text-center text-4xl animate-appear hidden sm:block">
+        Welcome to EIA Energy Display!
+      </h1>
 
-        {headingRule}
+      {headingRule}
 
-        <SectionHeading />
+      <SectionHeading />
 
-        {headingRule}
+      {headingRule}
 
-        <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
+      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
 
-        <Glossary />
+      <Glossary />
 
-        <GraphParentContainer chartData={chartData} currentState={currentState} />
-
+      {currentState ?
+        <>
+          <h2 className="state-name-year text-center font-bold mt-10 md:tracking-widest text-2xl sm:text-3xl md:text-4xl animate-appear">
+            {currentState} data from 2008-2023
+          </h2>
+          <GraphParentContainer chartData={chartData} />
+          {headingRule}
+        </>
+        :
+        null}
     </main>
   );
 };

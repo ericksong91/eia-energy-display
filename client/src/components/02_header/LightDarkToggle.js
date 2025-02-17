@@ -8,7 +8,7 @@ function LightDarkToggle() {
 
     return (
         <label className={`flex items-center align-middle cursor-pointer`}>
-            <span className="sm:mr-3 animate-appear">
+            <span className="sm:mr-3">
                 {darkMode ? moonIcon : sunIcon}
             </span>
 
