@@ -124,7 +124,7 @@ function MainContainer({ resource }) {
     });
 
     setStateResults(result);
-  };
+  }; // filters search terms
 
   return (
     <main className="main container flex flex-col flex-grow gap-y-5 py-5 mx-auto">

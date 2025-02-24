@@ -1,5 +1,5 @@
 function SearchResult({ stateResults, onSearchConfirmation, onIsFocused }) {
-    
+
     function handleClick(value) {
         onSearchConfirmation(value);
         onIsFocused(false);
