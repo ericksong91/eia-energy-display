@@ -24,7 +24,6 @@ function MainContainer({ resource }) {
     nox_per_mwh: { type: "so2_nox_emissions_per_mwh", legendLabel: "NOx per MWH", description: "SO2, NOx Emissions per MWh", units: "pounds per megawatt hour (lbs/mwh)" },
   };
   const [chartData, setChartData] = useState({});
-  const [stateResults, setStateResults] = useState(states);
   const currentState = chartData?.stateName || null;
   const { headingRule } = useContext(IconContext);
 
@@ -116,16 +115,6 @@ function MainContainer({ resource }) {
     setChartData(chartDataObj);
   };
 
-  // SEARCH BAR AND FILTER ACCORDION
-
-  function handleStatesFilter(value) {
-    const result = states.filter((state) => {
-      return state.name.toLowerCase().includes(value.toLowerCase()) || state.abbreviation.toLowerCase().includes(value.toLowerCase())
-    });
-
-    setStateResults(result);
-  }; // filters search terms
-
   return (
     <main className="main container flex flex-col flex-grow gap-y-5 py-5 mx-auto">
       <h1 className="description-site-header font-medium text-center text-4xl animate-appear hidden sm:block">
@@ -138,7 +127,7 @@ function MainContainer({ resource }) {
 
       {headingRule}
 
-      <SearchBar onStatesFilter={handleStatesFilter} stateResults={stateResults} onUpdateGraphs={handleUpdateGraphs} />
+      <SearchBar onUpdateGraphs={handleUpdateGraphs} />
 
       <Glossary />
 
