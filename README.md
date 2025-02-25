@@ -73,8 +73,6 @@ A demo of the application can be found here: https://eia-energy-display.onrender
 
 2. Start typing U.S. State names or abbreviations and the list will automatically update.
 
-    - (e.g. Typing 'Maryland' or 'MD' will give you results for Maryland)
-
 3. Click on the state name to update the graph.
 
 4. You can hide data on each graph by clicking on their respective labels in the legend.
@@ -85,12 +83,12 @@ A demo of the application can be found here: https://eia-energy-display.onrender
 
 ## Updates
 
+25/02/24 - 1.01 - Fixed minor bugs with styling and changed search bar into a ComboBox.
 25/02/17 - 1.0 Complete
 
 ## To-Do
 
-- Replace search bar with a component that is more user friendly
-    - Keyboard disabled at the moment
+- Add the ability to search for State abbreviations again (new bug)
 - Add tables for each graph
 - Automatic pulls from EIA.gov API once a week
 
