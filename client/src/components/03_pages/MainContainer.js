@@ -7,12 +7,12 @@ import { IconContext } from '../00_context/IconContext';
 
 function MainContainer({ resource }) {
   const energyData = resource.read();
-  const states = energyData.map((data) => {
-    return {
-      name: data.name,
-      abbreviation: data.abbrev,
-    };
-  });
+  // const states = energyData.map((data) => {
+  //   return {
+  //     name: data.name,
+  //     abbreviation: data.abbrev,
+  //   };
+  // });
   const dataCategories = {
     co2: { type: "emissions", legendLabel: "CO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
     so2: { type: "emissions", legendLabel: "SO2", description: "Combined Emissions", units: "kmt (CO2), mt (SO2, NOx)" },
