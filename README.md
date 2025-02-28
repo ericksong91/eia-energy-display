@@ -2,11 +2,15 @@
 
 ## Description
 
-This application was made to show different U.S. State statistics listed on [EIA Gov. API](https://www.eia.gov/opendata/browser/electricity/state-electricity-profiles/summary).
+This application was made to show different U.S. State statistics listed on the [EIA Gov. API](https://www.eia.gov/opendata/browser/electricity/state-electricity-profiles/summary). 
+
+The app uses a ReactJS front-end with a Flask-SQLAlchemy back-end with postgreSQL. Flask back-end is used as an intermediary for the data coming from EIA's API (to obfuscate the API key) and data is inserted into a postgreSQL database. The relational database was made to tie U.S. states with their key energy statistics along with data about the fuel types used. It was designed to be scalable as the EIA API changes.
+
+Front-end was styled with TailwindCSS and designed to be user friendly on desktop and mobile devices. 
 
 A demo of the application can be found here: https://eia-energy-display.onrender.com/
 
-*(Takes a minute or two to spin up the instance)*
+*(Takes a minute or two to spin up the instance; will have to manually refresh)*
 
 ### Some key statistics include:
 
